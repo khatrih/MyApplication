@@ -34,18 +34,16 @@ public class getDetailsActivity extends AppCompatActivity {
         recyclerViewItem.setAdapter(adapterList);
         recyclerViewItem.setElevation(2);
 
-        if (getIntent().getStringExtra("type").equals("grid")){
+        if (getIntent().getStringExtra("type").equals("grid")) {
             gridLayoutManager = new GridLayoutManager(this, 2);
             recyclerViewItem.setLayoutManager(gridLayoutManager);
-        }else if (getIntent().getStringExtra("type").equals("staggered")){
+        } else if (getIntent().getStringExtra("type").equals("staggered")) {
             staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
             recyclerViewItem.setLayoutManager(staggeredGridLayoutManager);
-        }else {
+        } else {
             linearLayoutManager = new LinearLayoutManager(this);
             recyclerViewItem.setLayoutManager(linearLayoutManager);
         }
-
-
 
 
     }

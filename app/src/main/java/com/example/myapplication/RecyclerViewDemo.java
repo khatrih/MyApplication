@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewDemo extends AppCompatActivity{
+public class RecyclerViewDemo extends AppCompatActivity {
 
     AppCompatButton name, linearViewBtn, gridViewBtn, staggeredViewBtn;
     modelView model = new modelView();
@@ -37,7 +37,7 @@ public class RecyclerViewDemo extends AppCompatActivity{
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RecyclerViewDemo.this,BaseActivity.class);
+                Intent in = new Intent(RecyclerViewDemo.this, BaseActivity.class);
                 startActivity(in);
             }
         });
@@ -45,8 +45,8 @@ public class RecyclerViewDemo extends AppCompatActivity{
         linearViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RecyclerViewDemo.this,getDetailsActivity.class);
-                in.putExtra("type","linear");
+                Intent in = new Intent(RecyclerViewDemo.this, getDetailsActivity.class);
+                in.putExtra("type", "linear");
                 startActivity(in);
             }
         });
@@ -54,8 +54,8 @@ public class RecyclerViewDemo extends AppCompatActivity{
         gridViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RecyclerViewDemo.this,getDetailsActivity.class);
-                in.putExtra("type","grid");
+                Intent in = new Intent(RecyclerViewDemo.this, getDetailsActivity.class);
+                in.putExtra("type", "grid");
                 startActivity(in);
             }
         });
@@ -63,13 +63,14 @@ public class RecyclerViewDemo extends AppCompatActivity{
         staggeredViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RecyclerViewDemo.this,getDetailsActivity.class);
-                in.putExtra("type","staggered");
+                Intent in = new Intent(RecyclerViewDemo.this, getDetailsActivity.class);
+                in.putExtra("type", "staggered");
                 startActivity(in);
             }
         });
 
     }
+
     public void getData() {
         model.setName("Android");
     }
