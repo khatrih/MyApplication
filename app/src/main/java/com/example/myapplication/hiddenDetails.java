@@ -11,5 +11,6 @@ public class hiddenDetails extends BaseActivity{
 
     void getName(){
         System.out.println(countryName);
+        getData();
     }
 }
