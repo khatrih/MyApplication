@@ -8,4 +8,8 @@ public class hiddenDetails extends BaseActivity{
         super.getData();
 
     }
+
+    void getName(){
+        System.out.println(countryName);
+    }
 }
