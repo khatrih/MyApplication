@@ -15,17 +15,17 @@ import java.util.ArrayList;
 public class AdapterList extends RecyclerView.Adapter<AdapterList.viewHolder> {
 
     private modelView[] model;
-    Context context;
+    Context cntx;
 
     public AdapterList(modelView[] model, Context context) {
         this.model = model;
-        this.context = context;
+        this.cntx = context;
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.sample_list, parent, false);
+        View view = LayoutInflater.from(cntx).inflate(R.layout.sample_list, parent, false);
         return new viewHolder(view);
     }
 
