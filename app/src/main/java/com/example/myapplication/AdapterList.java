@@ -41,6 +41,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.viewHolder> {
     public int getItemCount() {
         return model.length;
     }
+    
 
     public static class viewHolder extends RecyclerView.ViewHolder {
         ImageView image;
