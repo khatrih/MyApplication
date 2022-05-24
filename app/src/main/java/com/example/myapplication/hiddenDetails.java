@@ -6,3 +6,4 @@ public class hiddenDetails extends BaseActivity {
         super.getData();
     }
 }
+

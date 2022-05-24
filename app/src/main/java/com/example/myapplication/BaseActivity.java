@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
 //class
 //inheritance
-public class BaseActivity extends RecyclerViewDemo implements Runnable{
+public class BaseActivity extends RecyclerViewDemo implements Runnable {
     modelView model = new modelView();  //object
     TextView setName, firstNumber, secondNumber, Answer;
 
@@ -23,7 +24,7 @@ public class BaseActivity extends RecyclerViewDemo implements Runnable{
         secondNumber = findViewById(R.id.secondNumber);
         Answer = findViewById(R.id.Answer);
 
-        Log.d("TAG","oncreate");
+        Log.d("TAG", "oncreate");
 
         //encapsulation
         getData();
