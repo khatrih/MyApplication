@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +21,44 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".databasedemo.FetchingDataActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".databasedemo.ViewCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".multiplethreading.MultipleThreadsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".databasedemo.DataBaseMainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".threading.MainThreadActivity"
+            android:exported="true" />
+        <activity
+            android:name=".jsonUsingApi.JsonLoadActivity"
+            android:exported="true" />
+        <activity
+            android:name=".layouts.HomeProductActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".loginflow.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".loginflow.SplashScreenActivity"
+            android:exported="true" />
+        <activity
+            android:name=".loginflow.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".loginflow.RegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
@@ -25,12 +66,7 @@
             android:exported="false" />
         <activity
             android:name=".RecyclerViewDemo"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ShowDetailsActivity"
             android:exported="false" />

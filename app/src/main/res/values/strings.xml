@@ -2,4 +2,32 @@
     <string name="app_name">My Application</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="gender">Gender</string>
+    <string name="full_name">Full Name</string>
+    <string name="sign_up">sign up</string>
+    <string name="have_account">Have Account?</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="register">Register</string>
+    <string name="don_t_have_an_account">Don\'t Have An Account?</string>
+    <string name="gender_label">Gender</string>
+    <string name="fragment1">Gallery</string>
+    <string name="fragment2">Search</string>
+    <string name="fragment3">Setting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image">Image</string>
+    <string name="student_qualification">Qualification</string>
+    <string name="student_phone_number">Enter phone number</string>
+    <string name="student_address">Enter Address</string>
+    <string name="enter_student_email">Enter Email</string>
+    <string name="enter_student_name">Enter Name</string>
+    <string name="add_to_database">Add to DataBase</string>
+    <string name="read_to_database">Read Data</string>
+
+    <string name="add_details">ADD</string>
 </resources>

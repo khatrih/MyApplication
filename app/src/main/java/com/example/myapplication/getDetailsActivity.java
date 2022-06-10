@@ -23,11 +23,11 @@ public class getDetailsActivity extends AppCompatActivity {
         recyclerViewItem = findViewById(R.id.recyclerItemView);
 
         modelView[] model = new modelView[]{
-                new modelView("apple", "fruits", R.drawable.thumnail),
-                new modelView("banana", "fruits", R.drawable.thumnail),
-                new modelView("beetroot", "fruits", R.drawable.thumnail),
-                new modelView("watermelon", "fruits", R.drawable.thumnail),
-                new modelView("caret", "fruits", R.drawable.thumnail),
+                new modelView("apple", "fruits", R.drawable.thumbnail),
+                new modelView("banana", "fruits", R.drawable.thumbnail),
+                new modelView("beetroot", "fruits", R.drawable.thumbnail),
+                new modelView("watermelon", "fruits", R.drawable.thumbnail),
+                new modelView("caret", "fruits", R.drawable.thumbnail),
         };
 
         AdapterList adapterList = new AdapterList(model, getDetailsActivity.this);
