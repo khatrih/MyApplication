@@ -1,8 +1,6 @@
 package com.example.myapplication.layouts;
 
 import android.content.Context;
-
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 

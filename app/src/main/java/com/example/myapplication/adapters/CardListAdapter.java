@@ -4,7 +4,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.CardItemModel;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHolder> {
 
@@ -44,11 +47,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         CardItemModel model = list.get(position);
-        SharedPreferences preferences = context.getSharedPreferences("savedDataItems", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+//        SharedPreferences preferences = context.getSharedPreferences("savedDataItems", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = preferences.edit();
 
-        int resId = context.getResources().getIdentifier(model.getProduct_image(), "drawable", context.getPackageName());
-        @SuppressLint("UseCompatLoadingForDrawables") Drawable getImage = context.getResources().getDrawable(resId);
+        int resId = context.getResources().getIdentifier(model.getProduct_image(),
+                "drawable", context.getPackageName());
+        @SuppressLint("UseCompatLoadingForDrawables")
+        Drawable getImage = context.getResources().getDrawable(resId);
         holder.productImage.setImageDrawable(getImage);
         holder.productName.setText(model.getProduct_name());
         holder.productDescription.setText(model.getProduct_description());
@@ -81,11 +86,22 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
             int counter = Integer.parseInt(holder.productQuantity.getText().toString());
             counter++;
             holder.productQuantity.setText(String.valueOf(counter));
-            String pQuantityAdd = holder.productQuantity.getText().toString();
+            //write into the file
+            //OutputStream − This is used to write data to a destination
+            try {
+                FileOutputStream fOut = context.openFileOutput("veggiesMenu.json" + position, MODE_PRIVATE);
+                String getData = holder.productQuantity.getText().toString();
+                fOut.write(getData.getBytes());
+                fOut.close();
+                Toast.makeText(context, "update quantity", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            /*String pQuantityAdd = holder.productQuantity.getText().toString();
             for (int i = 0; i < list.size(); i++) {
                 editor.putString(QUANTITY + position, pQuantityAdd);
                 editor.apply();
-            }
+            }*/
         });
 
         holder.removeProductQuality.setOnClickListener(v -> {
@@ -93,43 +109,50 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
             if (counter > 1) {
                 counter--;
                 holder.productQuantity.setText(String.valueOf(counter));
-                String pQuantityRemove = holder.productQuantity.getText().toString();
+                //write into the file
+                //OutputStream − This is used to write data to a destination
+                try {
+                    FileOutputStream fOut = context.openFileOutput("veggiesMenu.json" + position, MODE_PRIVATE);
+                    String getData = holder.productQuantity.getText().toString();
+                    fOut.write(getData.getBytes());
+                    fOut.close();
+                    Toast.makeText(context, "update quantity", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                /*String pQuantityRemove = holder.productQuantity.getText().toString();
                 for (int i = 0; i < list.size(); i++) {
                     editor.putString(QUANTITY + position, pQuantityRemove);
+                    editor.apply();
+                }*/
+            }
+        });
+
+        /*holder.checkPinned.setOnClickListener(v -> {
+            if (check_pin) {
+
+                holder.checkPinned.setImageResource(R.drawable.dark_pin);
+                Toast.makeText(context, "pinned ", Toast.LENGTH_LONG).show();
+                check_pin = false;
+
+                for (int i = 0; i < list.size(); i++) {
+                    editor.putBoolean("click" + position, true);
+                    editor.apply();
+                }
+            } else {
+
+                check_pin = true;
+                holder.checkPinned.setImageResource(R.drawable.pin);
+                Toast.makeText(context, "Unpinned ", Toast.LENGTH_LONG).show();
+
+                for (int i = 0; i < list.size(); i++) {
+                    editor.putBoolean("click" + position, false);
                     editor.apply();
                 }
             }
         });
 
-        holder.checkPinned.setOnClickListener(v -> {
-            if (check_pin) {
-                holder.checkPinned.setImageResource(R.drawable.dark_pin);
-                Toast.makeText(context, "pinned ", Toast.LENGTH_LONG).show();
-                check_pin = false;
-                /*int count = Integer.parseInt(holder.productPin.getText().toString());
-                count++;
-                holder.productPin.setText(String.valueOf(count));
-                String pinCount = holder.productPin.getText().toString();*/
-                for (int i = 0; i < list.size(); i++) {
-                    editor.putBoolean("click" + position, true);
-                    //editor.putString("pinCount" + position, pinCount);
-                    editor.apply();
-                }
-            } else {
-                check_pin = true;
-                holder.checkPinned.setImageResource(R.drawable.pin);
-                Toast.makeText(context, "Unpinned ", Toast.LENGTH_LONG).show();
-                /*int count = Integer.parseInt(holder.productPin.getText().toString());
-                count--;
-                holder.productPin.setText(String.valueOf(count));
-                String pinCount = holder.productPin.getText().toString();*/
-                for (int i = 0; i < list.size(); i++) {
-                    editor.putBoolean("click" + position, false);
-                    //editor.putString("pinCount" + position, pinCount);
-                    editor.apply();
-                }
-            }
-        });
         SharedPreferences p = context.getSharedPreferences("savedDataItems", MODE_PRIVATE);
         for (int i = 0; i < list.size(); i++) {
             String getValue = p.getString(QUANTITY + position, holder.productQuantity.getText().toString());
@@ -141,12 +164,34 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
             } else {
                 holder.checkPinned.setImageResource(R.drawable.pin);
             }
-            /*String setPinCount = p.getString("pinCount" + position, holder.productPin.getText().toString());
-            holder.productPin.setText(setPinCount);*/
+        }*/
 
+        /*  read file and retrieve data
+            InputStream − This is used to read data from a source*/
+        try {
+
+            /*FileInputStream fis = context.openFileInput("veggiesMenu.txt"+position);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            holder.productQuantity.setText(sb);*/
+
+            FileInputStream fin = context.openFileInput("veggiesMenu.json" + position);
+            int c;
+            String temp = "";
+            while ((c = fin.read()) != -1) {
+                temp = temp + (char) c;
+            }
+            holder.productQuantity.setText(temp);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
+
 
     @Override
     public int getItemCount() {

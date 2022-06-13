@@ -1,7 +1,6 @@
 package com.example.myapplication.layouts;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.collection.CircularArray;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,7 +8,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapters.CardListAdapter;
 import com.example.myapplication.model.CardItemModel;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -66,7 +64,7 @@ public class HomeProductActivity extends AppCompatActivity {
                             object.getDouble("product_price"), object.getString("check_type_food"),
                             object.getString("check_spices"), object.getString("rating_bar"),
                             object.getInt("number_rating"), object.getInt("product_quantity")
-                            ));//object.getString("check_pin_type")
+                    ));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -81,15 +79,6 @@ public class HomeProductActivity extends AppCompatActivity {
             CardListAdapter cardListAdapter = new CardListAdapter(cardItemModels, HomeProductActivity.this);
             recyclerView.setAdapter(cardListAdapter);
             Toast.makeText(HomeProductActivity.this, "finished", Toast.LENGTH_LONG).show();
-
-
-            /*SharedPreferences preferences = getSharedPreferences("myPref", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("product_quantity", String.valueOf(cardItemModels.get(0).getProduct_quantity()));
-            editor.apply();
-
-            SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
-            sharedPreferences.getString("product_quantity","10");*/
         }
     }
 }
