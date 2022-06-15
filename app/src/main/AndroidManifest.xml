@@ -11,7 +11,7 @@
         android:required="true" />
 
     <application
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -57,7 +57,7 @@
             android:exported="true" />
         <activity
             android:name=".loginflow.RegistrationActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".BaseActivity"
             android:exported="false" />

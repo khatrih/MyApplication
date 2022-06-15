@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,26 +12,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.CardItemModel;
+import com.google.gson.Gson;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHolder> {
 
-    ArrayList<CardItemModel> list;
+    private final ArrayList<CardItemModel> list;
     Context context;
-    private static final String QUANTITY = "product_quantity";
-    private boolean check_pin = true;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor prefEditor;
+    private static final String PREFERENCES = "my_prefs";
+    private static final String CARD_ITEM_LIST = "items_list";
 
     public CardListAdapter(ArrayList<CardItemModel> list, Context context) {
         this.list = list;
@@ -44,11 +43,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
         return new viewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull viewHolder holder, @SuppressLint("RecyclerView") int position) {
         CardItemModel model = list.get(position);
-//        SharedPreferences preferences = context.getSharedPreferences("savedDataItems", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
 
         int resId = context.getResources().getIdentifier(model.getProduct_image(),
                 "drawable", context.getPackageName());
@@ -64,6 +62,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
         holder.foodRating.setRating(Float.parseFloat(model.getRating_bar()));
         holder.ratingNumber.setText(String.valueOf(model.getNumber_rating()));
 
+        //set when notifyItemChanged
+        if (model.isCheck_pin_type()) {
+            holder.checkPinned.setImageResource(R.drawable.dark_pin);
+        } else {
+            holder.checkPinned.setImageResource(R.drawable.pin);
+        }
+
+        if (model.getCheck_spices().equalsIgnoreCase("spices")) {
+            holder.checkSpices.setImageResource(R.drawable.chilli);
+        } else {
+            holder.checkSpices.setImageDrawable(null);
+        }
+
         switch (model.getCheck_type_food()) {
             case "veg":
                 holder.checkTypeFood.setImageResource(R.drawable.veg);
@@ -76,122 +87,49 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
                 break;
         }
 
-        if (model.getCheck_spices().equalsIgnoreCase("spices")) {
-            holder.checkSpices.setImageResource(R.drawable.chilli);
-        } else {
-            holder.checkSpices.setImageDrawable(null);
-        }
-
         holder.addProductQuality.setOnClickListener(v -> {
-            int counter = Integer.parseInt(holder.productQuantity.getText().toString());
-            counter++;
-            holder.productQuantity.setText(String.valueOf(counter));
-            //write into the file
-            //OutputStream − This is used to write data to a destination
-            try {
-                FileOutputStream fOut = context.openFileOutput("veggiesMenu.json" + position, MODE_PRIVATE);
-                String getData = holder.productQuantity.getText().toString();
-                fOut.write(getData.getBytes());
-                fOut.close();
-                Toast.makeText(context, "update quantity", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            /*String pQuantityAdd = holder.productQuantity.getText().toString();
-            for (int i = 0; i < list.size(); i++) {
-                editor.putString(QUANTITY + position, pQuantityAdd);
-                editor.apply();
-            }*/
+            list.get(position).setProduct_quantity(model.getProduct_quantity() + 1);
+            notifyItemChanged(position);
+            saveDataIntoPreferences();
         });
 
         holder.removeProductQuality.setOnClickListener(v -> {
-            int counter = Integer.parseInt(holder.productQuantity.getText().toString());
-            if (counter > 1) {
-                counter--;
-                holder.productQuantity.setText(String.valueOf(counter));
-                //write into the file
-                //OutputStream − This is used to write data to a destination
-                try {
-                    FileOutputStream fOut = context.openFileOutput("veggiesMenu.json" + position, MODE_PRIVATE);
-                    String getData = holder.productQuantity.getText().toString();
-                    fOut.write(getData.getBytes());
-                    fOut.close();
-                    Toast.makeText(context, "update quantity", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                /*String pQuantityRemove = holder.productQuantity.getText().toString();
-                for (int i = 0; i < list.size(); i++) {
-                    editor.putString(QUANTITY + position, pQuantityRemove);
-                    editor.apply();
-                }*/
+            if (model.getProduct_quantity() > 1) {
+                list.get(position).setProduct_quantity(model.getProduct_quantity() - 1);
+                notifyItemChanged(position);
+                saveDataIntoPreferences();
             }
         });
 
-        /*holder.checkPinned.setOnClickListener(v -> {
-            if (check_pin) {
-
-                holder.checkPinned.setImageResource(R.drawable.dark_pin);
-                Toast.makeText(context, "pinned ", Toast.LENGTH_LONG).show();
-                check_pin = false;
-
-                for (int i = 0; i < list.size(); i++) {
-                    editor.putBoolean("click" + position, true);
-                    editor.apply();
-                }
-            } else {
-
-                check_pin = true;
-                holder.checkPinned.setImageResource(R.drawable.pin);
-                Toast.makeText(context, "Unpinned ", Toast.LENGTH_LONG).show();
-
-                for (int i = 0; i < list.size(); i++) {
-                    editor.putBoolean("click" + position, false);
-                    editor.apply();
-                }
-            }
+        holder.checkPinned.setOnClickListener(v -> {
+            list.get(position).setCheck_pin_type(!list.get(position).isCheck_pin_type());
+            notifyItemChanged(position);
+            saveDataIntoPreferences();
         });
 
-        SharedPreferences p = context.getSharedPreferences("savedDataItems", MODE_PRIVATE);
-        for (int i = 0; i < list.size(); i++) {
-            String getValue = p.getString(QUANTITY + position, holder.productQuantity.getText().toString());
-            holder.productQuantity.setText(getValue);
+    }
 
-            boolean clickedValue = p.getBoolean("click" + position, false);
-            if (clickedValue) {
-                holder.checkPinned.setImageResource(R.drawable.dark_pin);
-            } else {
-                holder.checkPinned.setImageResource(R.drawable.pin);
-            }
-        }*/
-
-        /*  read file and retrieve data
-            InputStream − This is used to read data from a source*/
+    /*public void saveDataIntoFile() {
         try {
-
-            /*FileInputStream fis = context.openFileInput("veggiesMenu.txt"+position);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader bufferedReader = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
-            }
-            holder.productQuantity.setText(sb);*/
-
-            FileInputStream fin = context.openFileInput("veggiesMenu.json" + position);
-            int c;
-            String temp = "";
-            while ((c = fin.read()) != -1) {
-                temp = temp + (char) c;
-            }
-            holder.productQuantity.setText(temp);
+            FileOutputStream writeData = context.openFileOutput("veggiesMenu.json", MODE_PRIVATE);
+            Gson getFileData = new Gson();
+            String writeFile = getFileData.toJson(list);
+            writeData.write(writeFile.getBytes());
+            writeData.close();
+            Toast.makeText(context, "update quantity", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
+    public void saveDataIntoPreferences() {
+        sharedPreferences = context.getSharedPreferences(PREFERENCES, MODE_PRIVATE);
+        prefEditor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        prefEditor.putString(CARD_ITEM_LIST, json);
+        prefEditor.apply();
+    }
 
     @Override
     public int getItemCount() {

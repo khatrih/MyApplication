@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.CardListAdapter;
 import com.example.myapplication.model.CardItemModel;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -17,13 +19,16 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class HomeProductActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
+    //String json;
+    private static final String PREFERENCES = "my_prefs";
+    private static final String CARD_ITEM_LIST = "items_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,6 @@ public class HomeProductActivity extends AppCompatActivity {
         JsonDataBackGround jdg = new JsonDataBackGround();
         jdg.execute();
 
-
     }
 
     public class JsonDataBackGround extends AsyncTask<JSONArray, Integer, ArrayList<CardItemModel>> {
@@ -55,7 +59,7 @@ public class HomeProductActivity extends AppCompatActivity {
         protected ArrayList<CardItemModel> doInBackground(JSONArray... jsonArrays) {
             ArrayList<CardItemModel> items = new ArrayList<>();
             try {
-                JSONArray jsonArray = new JSONArray(ReadingFile.getJsonFromAssets(HomeProductActivity.this));
+                JSONArray jsonArray = new JSONArray(ReadingFile.getJsonFromAssets(HomeProductActivity.this, "veggiesMenu.json"));
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     items.add(new CardItemModel(object.getString("product_image"),
@@ -75,10 +79,43 @@ public class HomeProductActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<CardItemModel> cardItemModels) {
             super.onPostExecute(cardItemModels);
+            CardListAdapter cardListAdapter;
             progressBar.setVisibility(View.GONE);
-            CardListAdapter cardListAdapter = new CardListAdapter(cardItemModels, HomeProductActivity.this);
+
+            SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
+            String json = sharedPreferences.getString(CARD_ITEM_LIST, null);
+            if (json != null) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<CardItemModel>>() {}.getType();
+                cardItemModels = gson.fromJson(json, type);
+                cardListAdapter = new CardListAdapter(cardItemModels, HomeProductActivity.this);
+                recyclerView.setAdapter(cardListAdapter);
+                Toast.makeText(HomeProductActivity.this, "read data", Toast.LENGTH_SHORT).show();
+            } else {
+            cardListAdapter = new CardListAdapter(cardItemModels, HomeProductActivity.this);
             recyclerView.setAdapter(cardListAdapter);
             Toast.makeText(HomeProductActivity.this, "finished", Toast.LENGTH_LONG).show();
+            }
+
+            /*
+            // save data using file
+            File fileEvents = new File("/data/data/com.example.myapplication/files/veggiesMenu.json");
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(fileEvents));
+                String line;
+                while ((line = br.readLine()) != null){
+                    json = line;
+                    //text.append(line);
+                }
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<CardItemModel>>() {}.getType();
+                cardItemModels = gson.fromJson(json, type);
+                cardListAdapter = new CardListAdapter(cardItemModels, HomeProductActivity.this);
+                recyclerView.setAdapter(cardListAdapter);
+            } catch (IOException e) {
+                Toast.makeText(HomeProductActivity.this, "something wrong "+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }*/
+
         }
     }
 }

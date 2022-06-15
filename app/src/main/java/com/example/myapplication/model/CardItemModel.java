@@ -8,11 +8,31 @@ public class CardItemModel {
     private String check_spices;
     private String rating_bar;
     private boolean check_pin;
+    private double product_price;
     private int product_comment_review;
     private int product_pin_review;
-    private double product_price;
     private int number_rating;
     private int product_quantity;
+
+    public String toString(String temp) {
+        return "CardItemModel{" +
+                "product_image='" + product_image + '\'' +
+                ", product_name='" + product_name + '\'' +
+                ", product_description='" + product_description + '\'' +
+                ", check_type_food='" + check_type_food + '\'' +
+                ", check_spices='" + check_spices + '\'' +
+                ", rating_bar='" + rating_bar + '\'' +
+                ", check_pin=" + check_pin +
+                ", product_price=" + product_price +
+                ", product_comment_review=" + product_comment_review +
+                ", product_pin_review=" + product_pin_review +
+                ", number_rating=" + number_rating +
+                ", product_quantity=" + product_quantity +
+                '}';
+    }
+
+    public CardItemModel() {
+    }
 
     public CardItemModel(String product_image, String product_name, String product_description, int product_comment_review,
                          int product_pin_review, double product_price, String check_type_food, String check_spices,

@@ -1,12 +1,13 @@
 package com.example.myapplication.layouts;
 
 import android.content.Context;
+
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class ReadingFile {
 
-    static String getJsonFromAssets(Context context){
+    public static String getJsonFromAssets(Context context, String filename) {
         String jsonString = null;
         try {
             InputStream inputStream = context.getAssets().open("veggiesMenu.json");
@@ -15,12 +16,11 @@ public class ReadingFile {
             inputStream.read(buffer);
             inputStream.close();
             jsonString = new String(buffer, StandardCharsets.UTF_8);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return jsonString;
     }
-
 
 
 }
