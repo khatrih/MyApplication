@@ -30,4 +30,7 @@
     <string name="read_to_database">Read Data</string>
 
     <string name="add_details">ADD</string>
+
+    <string name="contacts_list">Contacts</string>
+    <string name="no_contacts_list">NO Contacts available</string>
 </resources>

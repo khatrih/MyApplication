@@ -1,8 +1,5 @@
 package com.example.myapplication.adapters;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -14,26 +11,28 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.layouts.interfaces.UpdatedLists;
 import com.example.myapplication.model.CardItemModel;
 import com.google.gson.Gson;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHolder> {
 
-    private final ArrayList<CardItemModel> list;
+    ArrayList<CardItemModel> cardItemModels;
     Context context;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor prefEditor;
-    private static final String PREFERENCES = "my_prefs";
-    private static final String CARD_ITEM_LIST = "items_list";
+    UpdatedLists getCardItemList;
 
-    public CardListAdapter(ArrayList<CardItemModel> list, Context context) {
-        this.list = list;
+    public CardListAdapter(ArrayList<CardItemModel> list, Context context, UpdatedLists getCardItemList) {
+        this.cardItemModels = list;
         this.context = context;
+        this.getCardItemList = getCardItemList;
     }
 
     @NonNull
@@ -43,27 +42,26 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
         return new viewHolder(view);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, @SuppressLint("RecyclerView") int position) {
-        CardItemModel model = list.get(position);
+    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+        CardItemModel model = cardItemModels.get(position);
 
         int resId = context.getResources().getIdentifier(model.getProduct_image(),
                 "drawable", context.getPackageName());
-        @SuppressLint("UseCompatLoadingForDrawables")
-        Drawable getImage = context.getResources().getDrawable(resId);
+
+        Drawable getImage = ContextCompat.getDrawable(context, resId);
         holder.productImage.setImageDrawable(getImage);
         holder.productName.setText(model.getProduct_name());
         holder.productDescription.setText(model.getProduct_description());
         holder.productPrice.setText(String.format("₹ %s", model.getProduct_price()));
         holder.productPin.setText(String.valueOf(model.getProduct_pin_review()));
-        holder.productComment.setText(String.valueOf(model.getProduct_comment_review()));
         holder.productQuantity.setText(String.valueOf(model.getProduct_quantity()));
+        holder.productComment.setText(String.valueOf(model.getProduct_comment_review()));
         holder.foodRating.setRating(Float.parseFloat(model.getRating_bar()));
         holder.ratingNumber.setText(String.valueOf(model.getNumber_rating()));
 
         //set when notifyItemChanged
-        if (model.isCheck_pin_type()) {
+        if (model.isCheck_pin()) {
             holder.checkPinned.setImageResource(R.drawable.dark_pin);
         } else {
             holder.checkPinned.setImageResource(R.drawable.pin);
@@ -87,53 +85,55 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
                 break;
         }
 
+
         holder.addProductQuality.setOnClickListener(v -> {
-            list.get(position).setProduct_quantity(model.getProduct_quantity() + 1);
+            cardItemModels.get(position).setProduct_quantity(model.getProduct_quantity() + 1);
             notifyItemChanged(position);
-            saveDataIntoPreferences();
+            getCardItemList.getUpdateList(cardItemModels);
+
         });
 
         holder.removeProductQuality.setOnClickListener(v -> {
             if (model.getProduct_quantity() > 1) {
-                list.get(position).setProduct_quantity(model.getProduct_quantity() - 1);
                 notifyItemChanged(position);
-                saveDataIntoPreferences();
+                getCardItemList.getUpdateList(cardItemModels.get(position).
+                        setProduct_quantity(model.getProduct_quantity() - 1));
+//                saveDataIntoPreferences();
             }
         });
 
         holder.checkPinned.setOnClickListener(v -> {
-            list.get(position).setCheck_pin_type(!list.get(position).isCheck_pin_type());
             notifyItemChanged(position);
-            saveDataIntoPreferences();
+            getCardItemList.getUpdateList(cardItemModels.get(position).
+                    setCheck_pin(!cardItemModels.get(position).isCheck_pin()));
         });
-
     }
 
-    /*public void saveDataIntoFile() {
+
+   /*  public void saveDataIntoFile() {
         try {
-            FileOutputStream writeData = context.openFileOutput("veggiesMenu.json", MODE_PRIVATE);
+            FileOutputStream writeData = context.openFileOutput("veggiesMenu.json", Context.MODE_PRIVATE);
             Gson getFileData = new Gson();
-            String writeFile = getFileData.toJson(list);
+            String writeFile = getFileData.toJson(cardItemModels);
             writeData.write(writeFile.getBytes());
             writeData.close();
-            Toast.makeText(context, "update quantity", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }*/
 
-    public void saveDataIntoPreferences() {
-        sharedPreferences = context.getSharedPreferences(PREFERENCES, MODE_PRIVATE);
-        prefEditor = sharedPreferences.edit();
+     /*public void saveDataIntoPreferences() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(list);
-        prefEditor.putString(CARD_ITEM_LIST, json);
+        String json = gson.toJson(cardItemModels); //serialize
+        prefEditor.putString("items_list", json);
         prefEditor.apply();
-    }
+    }*/
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return cardItemModels.size();
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {

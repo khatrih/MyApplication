@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -20,9 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
+        <activity
+            android:name=".contentproviders.ContactActivity"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".databasedemo.FetchingDataActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".databasedemo.ViewCourseActivity"
             android:exported="false" />
@@ -43,6 +51,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -57,7 +66,7 @@
             android:exported="true" />
         <activity
             android:name=".loginflow.RegistrationActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".BaseActivity"
             android:exported="false" />

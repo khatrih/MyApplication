@@ -1,5 +1,7 @@
 package com.example.myapplication.model;
 
+import java.util.ArrayList;
+
 public class CardItemModel {
     private String product_image;
     private String product_name;
@@ -13,26 +15,6 @@ public class CardItemModel {
     private int product_pin_review;
     private int number_rating;
     private int product_quantity;
-
-    public String toString(String temp) {
-        return "CardItemModel{" +
-                "product_image='" + product_image + '\'' +
-                ", product_name='" + product_name + '\'' +
-                ", product_description='" + product_description + '\'' +
-                ", check_type_food='" + check_type_food + '\'' +
-                ", check_spices='" + check_spices + '\'' +
-                ", rating_bar='" + rating_bar + '\'' +
-                ", check_pin=" + check_pin +
-                ", product_price=" + product_price +
-                ", product_comment_review=" + product_comment_review +
-                ", product_pin_review=" + product_pin_review +
-                ", number_rating=" + number_rating +
-                ", product_quantity=" + product_quantity +
-                '}';
-    }
-
-    public CardItemModel() {
-    }
 
     public CardItemModel(String product_image, String product_name, String product_description, int product_comment_review,
                          int product_pin_review, double product_price, String check_type_food, String check_spices,
@@ -74,30 +56,6 @@ public class CardItemModel {
         this.product_description = product_description;
     }
 
-    public int getProduct_comment_review() {
-        return product_comment_review;
-    }
-
-    public void setProduct_comment_review(int product_comment_review) {
-        this.product_comment_review = product_comment_review;
-    }
-
-    public int getProduct_pin_review() {
-        return product_pin_review;
-    }
-
-    public void setProduct_pin_review(int product_pin_review) {
-        this.product_pin_review = product_pin_review;
-    }
-
-    public double getProduct_price() {
-        return product_price;
-    }
-
-    public void setProduct_price(double product_price) {
-        this.product_price = product_price;
-    }
-
     public String getCheck_type_food() {
         return check_type_food;
     }
@@ -122,6 +80,42 @@ public class CardItemModel {
         this.rating_bar = rating_bar;
     }
 
+    public boolean isCheck_pin() {
+        return check_pin;
+    }
+
+      public ArrayList<CardItemModel> setCheck_pin(boolean check_pin) {
+          this.check_pin = check_pin;
+          return null;
+      }
+ /*   public void setCheck_pin(boolean check_pin) {
+        this.check_pin = check_pin;
+    }*/
+
+    public double getProduct_price() {
+        return product_price;
+    }
+
+    public void setProduct_price(double product_price) {
+        this.product_price = product_price;
+    }
+
+    public int getProduct_comment_review() {
+        return product_comment_review;
+    }
+
+    public void setProduct_comment_review(int product_comment_review) {
+        this.product_comment_review = product_comment_review;
+    }
+
+    public int getProduct_pin_review() {
+        return product_pin_review;
+    }
+
+    public void setProduct_pin_review(int product_pin_review) {
+        this.product_pin_review = product_pin_review;
+    }
+
     public int getNumber_rating() {
         return number_rating;
     }
@@ -134,15 +128,12 @@ public class CardItemModel {
         return product_quantity;
     }
 
+    public ArrayList<CardItemModel> setProduct_quantity(int product_quantity) {
+        this.product_quantity = product_quantity;
+        return null;
+    }
+/*
     public void setProduct_quantity(int product_quantity) {
         this.product_quantity = product_quantity;
-    }
-
-    public boolean isCheck_pin_type() {
-        return check_pin;
-    }
-
-    public void setCheck_pin_type(boolean check_pin_type) {
-        this.check_pin = check_pin_type;
-    }
+    }*/
 }

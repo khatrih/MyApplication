@@ -21,6 +21,4 @@ public class ReadingFile {
         }
         return jsonString;
     }
-
-
 }
