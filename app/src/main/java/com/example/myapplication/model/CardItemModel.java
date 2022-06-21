@@ -1,6 +1,6 @@
 package com.example.myapplication.model;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
 
 public class CardItemModel {
     private String product_image;
@@ -84,13 +84,9 @@ public class CardItemModel {
         return check_pin;
     }
 
-      public ArrayList<CardItemModel> setCheck_pin(boolean check_pin) {
-          this.check_pin = check_pin;
-          return null;
-      }
- /*   public void setCheck_pin(boolean check_pin) {
+    public void setCheck_pin(boolean check_pin) {
         this.check_pin = check_pin;
-    }*/
+    }
 
     public double getProduct_price() {
         return product_price;
@@ -128,12 +124,26 @@ public class CardItemModel {
         return product_quantity;
     }
 
-    public ArrayList<CardItemModel> setProduct_quantity(int product_quantity) {
-        this.product_quantity = product_quantity;
-        return null;
-    }
-/*
     public void setProduct_quantity(int product_quantity) {
         this.product_quantity = product_quantity;
-    }*/
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "{" +
+                "\"product_image\"" + ":" + "\"" + product_image + "\"," +
+                "\"product_name\"" + ":" + "\"" + product_name + "\"," +
+                "\"product_description\"" + ":" + "\"" + product_description + "\"," +
+                "\"check_type_food\"" + ":" + "\"" + check_type_food + "\"," +
+                "\"check_spices\"" + ":" + "\"" + check_spices + "\"," +
+                "\"rating_bar\"" + ":" + "\"" + rating_bar + "\"," +
+                "\"check_pin\"" + ":" + check_pin + "," +
+                "\"product_price\"" + ":" + product_price + "," +
+                "\"product_comment_review\"" + ":" + product_comment_review + "," +
+                "\"product_pin_review\"" + ":" + product_pin_review + "," +
+                "\"number_rating\"" + ":" + number_rating + "," +
+                "\"product_quantity\"" + ":" + product_quantity +
+                "}";
+    }
 }

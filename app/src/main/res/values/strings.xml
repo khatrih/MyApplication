@@ -33,4 +33,6 @@
 
     <string name="contacts_list">Contacts</string>
     <string name="no_contacts_list">NO Contacts available</string>
+    <string name="permission">permission</string>
+    <string name="recyclerview_demo">RecyclerView Demo</string>
 </resources>

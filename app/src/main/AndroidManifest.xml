@@ -22,18 +22,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".MainHomeActivity.MainContainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".contentproviders.ContactActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".databasedemo.FetchingDataActivity"
             android:exported="true" />
         <activity
             android:name=".databasedemo.ViewCourseActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".multiplethreading.MultipleThreadsActivity"
             android:exported="true" />
@@ -48,13 +53,7 @@
             android:exported="true" />
         <activity
             android:name=".layouts.HomeProductActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".loginflow.HomeActivity"
             android:exported="true" />

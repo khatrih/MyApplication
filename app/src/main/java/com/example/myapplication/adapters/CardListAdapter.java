@@ -1,7 +1,6 @@
 package com.example.myapplication.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.layouts.interfaces.UpdatedLists;
 import com.example.myapplication.model.CardItemModel;
-import com.google.gson.Gson;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHolder> {
@@ -95,41 +91,18 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
 
         holder.removeProductQuality.setOnClickListener(v -> {
             if (model.getProduct_quantity() > 1) {
+                cardItemModels.get(position).setProduct_quantity(model.getProduct_quantity() - 1);
                 notifyItemChanged(position);
-                getCardItemList.getUpdateList(cardItemModels.get(position).
-                        setProduct_quantity(model.getProduct_quantity() - 1));
-//                saveDataIntoPreferences();
+                getCardItemList.getUpdateList(cardItemModels);
             }
         });
 
-        holder.checkPinned.setOnClickListener(v -> {
+        /*holder.checkPinned.setOnClickListener(v -> {
+            cardItemModels.get(position).setCheck_pin(!model.isCheck_pin());
             notifyItemChanged(position);
-            getCardItemList.getUpdateList(cardItemModels.get(position).
-                    setCheck_pin(!cardItemModels.get(position).isCheck_pin()));
-        });
+            getCardItemList.getUpdateList(cardItemModels);
+        });*/
     }
-
-
-   /*  public void saveDataIntoFile() {
-        try {
-            FileOutputStream writeData = context.openFileOutput("veggiesMenu.json", Context.MODE_PRIVATE);
-            Gson getFileData = new Gson();
-            String writeFile = getFileData.toJson(cardItemModels);
-            writeData.write(writeFile.getBytes());
-            writeData.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-     /*public void saveDataIntoPreferences() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(cardItemModels); //serialize
-        prefEditor.putString("items_list", json);
-        prefEditor.apply();
-    }*/
 
     @Override
     public int getItemCount() {
