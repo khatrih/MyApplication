@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,92 +10,116 @@
         android:id="@+id/student_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="15dp"
-        android:hint="@string/enter_student_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:autofillHints="java"
-        android:inputType="text"/>
+        android:hint="@string/enter_student_name"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/student_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="15dp"
-        android:hint="@string/enter_student_email"
-        app:layout_constraintTop_toBottomOf="@id/student_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:autofillHints="10 Hours"
-        android:inputType="textEmailAddress"/>
+        android:hint="@string/enter_student_email"
+        android:inputType="textEmailSubject"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_name" />
 
     <EditText
         android:id="@+id/student_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="15dp"
-        android:hint="@string/student_address"
-        app:layout_constraintTop_toBottomOf="@id/student_email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:autofillHints="10 Hours"
-        android:inputType="text"/>
+        android:hint="@string/student_address"
+        android:inputType="text"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_email" />
 
     <EditText
         android:id="@+id/student_mobile_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="15dp"
-        android:maxLength="10"
-        android:hint="@string/student_phone_number"
-        app:layout_constraintTop_toBottomOf="@id/student_address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:autofillHints="10 Hours"
-        android:inputType="number" />
+        android:hint="@string/student_phone_number"
+        android:inputType="number"
+        android:maxLength="10"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_address" />
 
     <EditText
         android:id="@+id/student_qualification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="15dp"
-        android:hint="@string/student_qualification"
-        app:layout_constraintTop_toBottomOf="@id/student_mobile_number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:autofillHints="10 Hours"
-        android:inputType="text" />
+        android:hint="@string/student_qualification"
+        android:inputType="text"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_mobile_number" />
+
+    <!--<androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/student_qualification"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_mobile_number" />-->
+
+    <ImageView
+        android:id="@+id/img_student_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="12dp"
+        android:contentDescription="@string/not_found_image"
+        android:src="@drawable/ic_round_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_qualification" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/student_qualification"
         android:layout_margin="15dp"
-        android:padding="5dp"
         android:background="#CB1EACA0"
-        android:text="@string/add_to_database"/>
+        android:padding="5dp"
+        android:text="@string/add_to_database"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_student_image" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/read_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_data"
         android:layout_margin="15dp"
-        android:padding="5dp"
         android:background="#CB1EACA0"
-        android:text="@string/read_to_database"/>
+        android:padding="5dp"
+        android:text="@string/read_to_database"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_data" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

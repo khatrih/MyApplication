@@ -2,6 +2,7 @@ package com.example.myapplication.databasedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -17,11 +18,11 @@ import java.util.ArrayList;
 
 public class FetchingDataActivity extends AppCompatActivity {
 
-    private AppCompatSpinner isSelected;
-    private RecyclerView mList;
-    private ArrayList<String> degreeList;
+    private AppCompatSpinner isSelectedItem;
+    private RecyclerView mStudentList;
+    private ArrayList<String> courseList;
     private ArrayList<CourseDataModel> courseDataModels;
-    private Button addingStudentData;
+    private Button addStudentData;
     private DatabaseHandler dbHandler;
     private CourseAdapter courseAdapter;
 
@@ -30,50 +31,63 @@ public class FetchingDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetching_data);
 
-        mList = findViewById(R.id.rv_mList);
-        isSelected = findViewById(R.id.spin_field);
-        addingStudentData = findViewById(R.id.adding_data);
+        mStudentList = findViewById(R.id.rv_mList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mStudentList.setLayoutManager(layoutManager);
+        isSelectedItem = findViewById(R.id.spin_field);
+        addStudentData = findViewById(R.id.adding_data);
 
-        degreeList = new ArrayList<>();
-        degreeList.add("All");
-        degreeList.add("MCA");
-        degreeList.add("MBA");
+        courseList = new ArrayList<>();
+        courseList.add("All");
+        courseList.add("MCA");
+        courseList.add("MBA");
 
-        ArrayAdapter adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, degreeList);
-        isSelected.setAdapter(adapter);
+        ArrayAdapter adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, courseList);
+        isSelectedItem.setAdapter(adapter);
 
         dbHandler = new DatabaseHandler(FetchingDataActivity.this);
 
-
-        isSelected.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        isSelectedItem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Object itemPosition = adapterView.getItemAtPosition(position);
-                if (courseDataModels.get(position).getsDegreeType().equals("MCA")){
+                String degreeType = (String) adapterView.getItemAtPosition(position);
+
+                courseDataModels = dbHandler.fetchData(degreeType);
+                courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
+                mStudentList.setAdapter(courseAdapter);
+
+                /*if (courseDataModels.get(position).getsDegreeType().equals("MCA")) {
+                    courseDataModels = dbHandler.fetchMCAData();
                     courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
-                    mList.setAdapter(courseAdapter);
-                }else if (courseDataModels.get(position).getsDegreeType().equals("MBA")){
+                    mStudentList.setAdapter(courseAdapter);
+                } else if (courseDataModels.get(position).getsDegreeType().equals("MBA")) {
                     courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
-                    mList.setAdapter(courseAdapter);
-                }else {
+                    mStudentList.setAdapter(courseAdapter);
+                } else {
                     courseDataModels = dbHandler.fetchAllData();
                     courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
-                    mList.setAdapter(courseAdapter);
+                    mStudentList.setAdapter(courseAdapter);
                 }
+
+                courseDataModels = dbHandler.fetchMCAData();
+                courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
+                mStudentList.setAdapter(courseAdapter);
+
+                if (itemPosition.equals("MCA") == courseDataModels.get(position).getsDegreeType().equals("MCA")) {
+                    courseDataModels = dbHandler.fetchAllData();
+                    courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
+                    mStudentList.setAdapter(courseAdapter);
+                }*/
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
-        addingStudentData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goIntent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
-                startActivity(goIntent);
-            }
+        addStudentData.setOnClickListener(v -> {
+            Intent goIntent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
+            startActivity(goIntent);
         });
     }
 }

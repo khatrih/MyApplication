@@ -1,10 +1,16 @@
 package com.example.myapplication.contentproviders;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,15 +37,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-
-       /* Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null, null, null, null);
-        String Name = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME;
-        int Number = Integer.parseInt(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        holder.tvCallDisPlayName.setText(Name);
-        holder.tvCallDisplayNumber.setText(Number);
-
-*/
+        ContactsModel contactsModel = contactsList.get(position);
+        holder.tvCallDisPlayName.setText(contactsModel.getContactName());
+        holder.tvCallDisplayNumber.setText(contactsModel.getContactsNumber());
     }
 
     @Override

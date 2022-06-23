@@ -32,7 +32,11 @@
     <string name="add_details">ADD</string>
 
     <string name="contacts_list">Contacts</string>
-    <string name="no_contacts_list">NO Contacts available</string>
+    <string name="no_contacts_list">NO Contacts Available</string>
     <string name="permission">permission</string>
     <string name="recyclerview_demo">RecyclerView Demo</string>
+    <string name="content_provider_demo">Content Provider Demo</string>
+    <string name="sqlite_demo">SQLite Demo</string>
+    <string name="not_found_image">not found image</string>
+    <string name="update_data">UPDATE DATA</string>
 </resources>

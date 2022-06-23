@@ -2,25 +2,22 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:backgroundTint="#DEE6EA"
-    app:cardElevation="3dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:backgroundTint="#00020202"
+    app:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/list_student_image"
+        <ImageView
+            android:id="@+id/img_studentImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="10dp"
+            android:contentDescription="@string/not_found_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +29,8 @@
             android:ellipsize="end"
             android:maxEms="10"
             android:maxLines="1"
-            app:layout_constraintStart_toEndOf="@id/list_student_image"
-            app:layout_constraintTop_toTopOf="@id/list_student_image"
+            app:layout_constraintStart_toEndOf="@id/img_studentImage"
+            app:layout_constraintTop_toTopOf="@id/img_studentImage"
             tools:text="steve vegas" />
 
         <TextView
@@ -45,7 +42,7 @@
             android:maxEms="11"
             android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@id/list_student_phone"
-            app:layout_constraintStart_toEndOf="@id/list_student_image"
+            app:layout_constraintStart_toEndOf="@id/img_studentImage"
             app:layout_constraintTop_toBottomOf="@+id/list_Student_name"
             tools:text="stevevegs123@gmail.com" />
 
@@ -57,8 +54,8 @@
             android:ellipsize="end"
             android:maxEms="10"
             android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/list_student_image"
-            app:layout_constraintStart_toEndOf="@id/list_student_image"
+            app:layout_constraintBottom_toBottomOf="@id/img_studentImage"
+            app:layout_constraintStart_toEndOf="@id/img_studentImage"
             tools:text="123456789" />
 
         <TextView
@@ -70,7 +67,7 @@
             android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/list_student_image"
+            app:layout_constraintTop_toBottomOf="@id/img_studentImage"
             tools:text="Lake, Ahmedabad One mall 261, Upper basement, Plot No-216, T.P, Scheme-1, near Vastrapur, Ahmedabad, Gujarat 380054" />
 
         <TextView
@@ -78,8 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:maxEms="4"
             android:maxLines="1"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/list_Student_name"
             tools:text="MCA" />

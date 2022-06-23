@@ -97,11 +97,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.viewHo
             }
         });
 
-        /*holder.checkPinned.setOnClickListener(v -> {
+        holder.checkPinned.setOnClickListener(v -> {
             cardItemModels.get(position).setCheck_pin(!model.isCheck_pin());
             notifyItemChanged(position);
             getCardItemList.getUpdateList(cardItemModels);
-        });*/
+        });
     }
 
     @Override
