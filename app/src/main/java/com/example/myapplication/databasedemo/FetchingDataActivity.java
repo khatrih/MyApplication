@@ -20,9 +20,9 @@ public class FetchingDataActivity extends AppCompatActivity {
 
     private AppCompatSpinner isSelectedItem;
     private RecyclerView mStudentList;
-    private ArrayList<String> courseList;
+    private ArrayList<String> mCourseList;
     private ArrayList<CourseDataModel> courseDataModels;
-    private Button addStudentData;
+    private Button btnAddStudentData;
     private DatabaseHandler dbHandler;
     private CourseAdapter courseAdapter;
 
@@ -35,14 +35,14 @@ public class FetchingDataActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mStudentList.setLayoutManager(layoutManager);
         isSelectedItem = findViewById(R.id.spin_field);
-        addStudentData = findViewById(R.id.adding_data);
+        btnAddStudentData = findViewById(R.id.adding_data);
 
-        courseList = new ArrayList<>();
-        courseList.add("All");
-        courseList.add("MCA");
-        courseList.add("MBA");
+        mCourseList = new ArrayList<>();
+        mCourseList.add("All");
+        mCourseList.add("MCA");
+        mCourseList.add("MBA");
 
-        ArrayAdapter adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, courseList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mCourseList);
         isSelectedItem.setAdapter(adapter);
 
         dbHandler = new DatabaseHandler(FetchingDataActivity.this);
@@ -51,7 +51,6 @@ public class FetchingDataActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String degreeType = (String) adapterView.getItemAtPosition(position);
-
                 courseDataModels = dbHandler.fetchData(degreeType);
                 courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
                 mStudentList.setAdapter(courseAdapter);
@@ -84,10 +83,10 @@ public class FetchingDataActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        addStudentData.setOnClickListener(v -> {
-            Intent goIntent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
-            startActivity(goIntent);
+        btnAddStudentData.setOnClickListener(v -> {
+            Intent intent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
+            startActivity(intent);
         });
+
     }
 }

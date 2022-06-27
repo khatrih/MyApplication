@@ -37,6 +37,15 @@
     <string name="recyclerview_demo">RecyclerView Demo</string>
     <string name="content_provider_demo">Content Provider Demo</string>
     <string name="sqlite_demo">SQLite Demo</string>
+    <string name="room_db">Room DB Demo</string>
     <string name="not_found_image">not found image</string>
     <string name="update_data">UPDATE DATA</string>
+    <string name="add_records">add records</string>
+
+    <string name="name_s">Student Name</string>
+    <string name="email_s">Student Email</string>
+    <string name="address_s">Student Address</string>
+    <string name="phone_number_s">Student Mobile No.</string>
+    <string name="qualification_s">Student Qualification</string>
+    <string name="save_btn">Save</string>
 </resources>

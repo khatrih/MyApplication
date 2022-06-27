@@ -1,6 +1,8 @@
 package com.example.myapplication.databasedemo;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 
@@ -19,8 +22,10 @@ import java.util.ArrayList;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHolder> {
 
-    private ArrayList<CourseDataModel> dataModel;
-    private Context context;
+    private final ArrayList<CourseDataModel> dataModel;
+    private final Context context;
+    DatabaseHandler dbHandler;
+    private static final String STUDENT_ID = "id";
     private static final String STUDENT_NAME = "NAME";
     private static final String STUDENT_EMAIL = "EMAIL";
     private static final String STUDENT_ADDRESS = "ADDRESS";
@@ -43,6 +48,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         CourseDataModel model = dataModel.get(position);
+        dbHandler = new DatabaseHandler(context);
 
         holder.studentName.setText(model.getsName().trim());
         holder.studentEmail.setText(model.getsEmail().trim());
@@ -54,7 +60,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
         holder.ivStudentImage.setImageBitmap(bitImage);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent i = new Intent(context, DataBaseMainActivity.class);
+            Intent i = new Intent(context, UpdatesStudentActivity.class);
+            //pass model class
+            i.putExtra(STUDENT_ID, model.getsId());
             i.putExtra(STUDENT_NAME, model.getsName());
             i.putExtra(STUDENT_EMAIL, model.getsEmail());
             i.putExtra(STUDENT_ADDRESS, model.getSAddress());
@@ -64,12 +72,25 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
             context.startActivity(i);
         });
 
-
-       /* ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitImage, "Title", null);
-        Uri.parse(path);
-        Picasso.get().load().placeholder(R.drawable.ic_round_image).into(holder.ivStudentImage);*/
+        holder.ivDelete.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Item")
+                    .setMessage("Are you sure if you want to delete this")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dbHandler.deleteData(model.getsName());
+                            Toast.makeText(context, "item deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        });
 
     }
 
@@ -78,13 +99,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
         return dataModel.size();
     }
 
-    public class myViewHolder extends RecyclerView.ViewHolder {
-        private TextView studentName;
-        private TextView studentEmail;
-        private TextView studentAddress;
-        private TextView studentPhone;
-        private TextView degreeStatus;
-        private ImageView ivStudentImage;
+    public static class myViewHolder extends RecyclerView.ViewHolder {
+        private final TextView studentName;
+        private final TextView studentEmail;
+        private final TextView studentAddress;
+        private final TextView studentPhone;
+        private final TextView degreeStatus;
+        private final ImageView ivStudentImage;
+        private final ImageView ivDelete;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +117,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
             studentPhone = itemView.findViewById(R.id.list_student_phone);
             degreeStatus = itemView.findViewById(R.id.degree_type);
             ivStudentImage = itemView.findViewById(R.id.img_studentImage);
+            ivDelete = itemView.findViewById(R.id.img_delete);
         }
     }
 }

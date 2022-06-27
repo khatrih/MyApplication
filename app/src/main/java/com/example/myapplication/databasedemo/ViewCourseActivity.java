@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_course);
 
         mCourseList = findViewById(R.id.course_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mCourseList.setLayoutManager(layoutManager);
 
         courseDataModelArrayList = new ArrayList<>();
@@ -31,7 +32,7 @@ public class ViewCourseActivity extends AppCompatActivity {
 
         courseDataModelArrayList = dbhandler.readCourse();
 
-        mCourseAdapter = new CourseAdapter(courseDataModelArrayList ,ViewCourseActivity.this);
+        mCourseAdapter = new CourseAdapter(courseDataModelArrayList, ViewCourseActivity.this);
         mCourseList.setAdapter(mCourseAdapter);
     }
 }

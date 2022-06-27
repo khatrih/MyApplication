@@ -24,8 +24,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PHONE_NO_COL = "student_phone";
     private static final String QUALIFICATION_COL = "student_qualification";
     private static final String IMAGE_COL = "student_images";
-    private byte[] studentImageBitmap;
-    private byte[] updatedStudentBitmap;
 
     //creating database
     public DatabaseHandler(Context context) {
@@ -49,16 +47,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //inserting data
     public void addNewCourse(String studentName, String studentEmail, String studentAddress,
-                             String studentPhone, String studentQualification, Bitmap studentImage)
-            throws SQLException {
+                             String studentPhone, String studentQualification, Bitmap studentImage) throws SQLException {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         studentImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
-        studentImageBitmap = stream.toByteArray();
+        byte[] studentImageBitmap = stream.toByteArray();
 
         values.put(NAME_COL, studentName);
         values.put(EMAIL_COL, studentEmail);
@@ -91,34 +87,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return dataModels;
     }
 
-    //filter fetch all data
-    public ArrayList<CourseDataModel> fetchAllData() {
-        SQLiteDatabase sdb = this.getReadableDatabase();
-        Cursor cursor = sdb.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        ArrayList<CourseDataModel> dataModels = new ArrayList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            if (cursor.moveToFirst()) {
-                do {
-                    dataModels.add(new CourseDataModel(cursor.getString(1),
-                            cursor.getString(2), cursor.getString(3),
-                            cursor.getString(4), cursor.getString(5),
-                            cursor.getBlob(6)));
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-        }
-        return dataModels;
-    }
-
-    //fetching MCA
+    //fetching data
     public ArrayList<CourseDataModel> fetchData(String degreeType) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String query;
-        if (degreeType.equalsIgnoreCase("All")){
+        if (degreeType.equalsIgnoreCase("All")) {
             query = "SELECT * FROM " + TABLE_NAME;
-        }else {
-            query= "SELECT * FROM student WHERE student_qualification='" + degreeType + "'";
+        } else {
+            query = "SELECT * FROM student WHERE student_qualification='" + degreeType + "'";
         }
         Cursor c = sqLiteDatabase.rawQuery(query, null);
         ArrayList<CourseDataModel> mcaData = new ArrayList<>();
@@ -131,42 +107,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                             c.getBlob(6)));
                 } while (c.moveToNext());
             }
-
             c.close();
         }
         return mcaData;
     }
-/*
-    //fetching MBA
-    public ArrayList<CourseDataModel> fetchMBAData() {
-        String degreeType = "MBA";
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String query = "SELECT * FROM student WHERE student_qualification='" + degreeType + "'";
-        Cursor c = sqLiteDatabase.rawQuery(query, null);
-        ArrayList<CourseDataModel> mcaData = new ArrayList<>();
-        if (c != null && c.getCount() > 0) {
-            if (c.moveToFirst()) {
-                do {
-                    mcaData.add(new CourseDataModel(c.getString(1),
-                            c.getString(2), c.getString(3),
-                            c.getString(4), c.getString(5),
-                            c.getBlob(6)));
-                } while (c.moveToNext());
-            }
-            c.close();
-        }
-        return mcaData;
-    }*/
 
-    public void updateStudentDetails(String sNAME, String studentName, String studentEmail, String studentAddress,
-                             String studentPhone, String studentQualification, Bitmap studentImage){
+    public void updateStudentDetails(String name, String studentName, String studentEmail, String studentAddress,
+                                     String studentPhone, String studentQualification, Bitmap studImage) {
         SQLiteDatabase liteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        studentImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
-        updatedStudentBitmap = stream.toByteArray();
-
+        studImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+        byte[] updatedStudentBitmap = stream.toByteArray();
         values.put(NAME_COL, studentName);
         values.put(EMAIL_COL, studentEmail);
         values.put(ADDRESS_COL, studentAddress);
@@ -174,16 +127,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(QUALIFICATION_COL, studentQualification);
         values.put(IMAGE_COL, updatedStudentBitmap);
 
-        liteDatabase.update(TABLE_NAME, values, "id=?", new String[]{sNAME});
+        liteDatabase.update(TABLE_NAME, values, NAME_COL + " = ? ", new String[]{name});
+        //liteDatabase.update(TABLE_NAME,values, ID_COL +"=?", new String[]{id});
+        Log.d("TAG", "addNewCourse: " + values);
         liteDatabase.close();
     }
 
-
+    public void deleteData(String name) {
+        SQLiteDatabase sdb = this.getWritableDatabase();
+        sdb.delete(TABLE_NAME, NAME_COL + " = ? ", new String[]{name});
+        sdb.close();
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-
 }

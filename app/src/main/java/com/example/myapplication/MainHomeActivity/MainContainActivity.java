@@ -11,12 +11,14 @@ import com.example.myapplication.R;
 import com.example.myapplication.contentproviders.ContactActivity;
 import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
+import com.example.myapplication.roomdb.RoomDBMainActivity;
 
 
 public class MainContainActivity extends AppCompatActivity implements View.OnClickListener {
     private AppCompatButton btnRecyclerViewDemo;
     private AppCompatButton btnContentProviderDemo;
     private AppCompatButton btnSQLiteDemo;
+    private AppCompatButton btnRoomDBDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +28,12 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnRecyclerViewDemo = findViewById(R.id.recyclerDemo);
         btnContentProviderDemo = findViewById(R.id.contentProviderDemo);
         btnSQLiteDemo = findViewById(R.id.sqlite_demo);
+        btnRoomDBDemo = findViewById(R.id.room_db);
 
         btnRecyclerViewDemo.setOnClickListener(this);
         btnContentProviderDemo.setOnClickListener(this);
         btnSQLiteDemo.setOnClickListener(this);
+        btnRoomDBDemo.setOnClickListener(this);
     }
 
     @Override
@@ -40,9 +44,12 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         } else if (v.getId() == R.id.contentProviderDemo) {
             Intent inContentProvider = new Intent(MainContainActivity.this, ContactActivity.class);
             startActivity(inContentProvider);
-        }else {
+        }else if (v.getId() == R.id.sqlite_demo){
             Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
             startActivity(intent);
+        }else {
+            Intent intentRoomDB = new Intent(MainContainActivity.this, RoomDBMainActivity.class);
+            startActivity(intentRoomDB);
         }
     }
 }
