@@ -28,25 +28,23 @@ public class RoomDBMainActivity extends AppCompatActivity implements View.OnClic
         rvStudentData.setLayoutManager(lm);
         Button btnAddRecords = findViewById(R.id.btn_add_records);
 
-        /*StudentDataBase dataBase = Room.databaseBuilder(RoomDBMainActivity.this,
+        StudentDataBase dataBase = Room.databaseBuilder(RoomDBMainActivity.this,
                 StudentDataBase.class, "student_database").allowMainThreadQueries().build();
 
         StudentDao studentDao = dataBase.getStudentDao();
         List<StudentsModel> models = studentDao.getAllStudentData();
         RoomDBAdapter adapter = new RoomDBAdapter(models, RoomDBMainActivity.this);
-        rvStudentData.setAdapter(adapter);*/
-
-        new fetchDataFromBackGround().start();
+        rvStudentData.setAdapter(adapter);
 
         btnAddRecords.setOnClickListener(this);
     }
 
-    class fetchDataFromBackGround extends Thread {
+    /*class fetchDataFromBackGround extends Thread {
         @Override
         public void run() {
             super.run();
             StudentDataBase dataBase = Room.databaseBuilder(RoomDBMainActivity.this,
-                    StudentDataBase.class, "student_database").build();
+                    StudentDataBase.class, "student_database").allowMainThreadQueries().build();
 
             StudentDao studentDao = dataBase.getStudentDao();
             List<StudentsModel> models = studentDao.getAllStudentData();
@@ -54,7 +52,7 @@ public class RoomDBMainActivity extends AppCompatActivity implements View.OnClic
             rvStudentData.setAdapter(adapter);
             finish();
         }
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

@@ -60,14 +60,14 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
         });
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(holder.tvStudentPhoneNo.getContext(), UpdateStudentRDBActivity.class);
+            Intent intent = new Intent(context, UpdateStudentRDBActivity.class);
             intent.putExtra(STUDENT_ID, String.valueOf(model.getsId()));
             intent.putExtra(STUDENT_NAME, model.getsName());
             intent.putExtra(STUDENT_EMAIL, model.getsEmail());
             intent.putExtra(STUDENT_ADDRESS, model.getsAddress());
             intent.putExtra(STUDENT_PHONE_NO, model.getsMobileNo());
             intent.putExtra(STUDENT_QUALIFICATION, model.getsQualification());
-            holder.tvStudentPhoneNo.getContext().startActivity(intent);
+            context.startActivity(intent);
         });
     }
 

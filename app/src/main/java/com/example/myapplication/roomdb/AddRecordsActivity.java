@@ -79,8 +79,10 @@ public class AddRecordsActivity extends AppCompatActivity {
             etStudentAddress.setText("");
             etStudentPhoneNo.setText("");
             etStudentQualification.setText("");
+
             Intent intent = new Intent(AddRecordsActivity.this, RoomDBMainActivity.class);
             startActivity(intent);
+
             finish();
         });
     }
@@ -126,6 +128,32 @@ public class AddRecordsActivity extends AppCompatActivity {
             String address = etStudentAddress.getText().toString();
             String phoneNo = etStudentPhoneNo.getText().toString();
             String qualified = etStudentQualification.getText().toString();
+
+            if (name.matches("")) {
+                etStudentName.setError("error");
+                etStudentName.requestFocus();
+                return;
+            }
+            if (email.matches("") || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etStudentEmail.setError("please enter valid email");
+                etStudentEmail.requestFocus();
+                return;
+            }
+            if (address.matches("")) {
+                etStudentAddress.setError("please fill address field");
+                etStudentAddress.requestFocus();
+                return;
+            }
+            if (phoneNo.matches("") || !Patterns.PHONE.matcher(phoneNo).matches()) {
+                etStudentPhoneNo.setError("please enter valid number");
+                etStudentPhoneNo.requestFocus();
+                return;
+            }
+            if (qualified.matches("")) {
+                etStudentQualification.setError("please fill Qualification field");
+                etStudentQualification.requestFocus();
+                return;
+            }
 
             StudentDataBase dataBase = Room.databaseBuilder(AddRecordsActivity.this, StudentDataBase.class,
                     "student_database").allowMainThreadQueries().build();

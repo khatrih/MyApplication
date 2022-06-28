@@ -52,18 +52,9 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
         etStudentMobileNo.setText(getIntent().getStringExtra(STUDENT_PHONE_NO));
         etStudentQualification.setText(getIntent().getStringExtra(STUDENT_QUALIFICATION));
 
-        String name = etStudentName.getText().toString();
-        String email = etStudentEmail.getText().toString();
-        String address = etStudentAddress.getText().toString();
-        String mobileNo = etStudentMobileNo.getText().toString();
-        String qualification = etStudentQualification.getText().toString();
-
         btnUpdate.setOnClickListener(v -> {
 
-            /*new bgThread().start();
-            Intent intent = new Intent(UpdateStudentRDBActivity.this, RoomDBMainActivity.class);
-            startActivity(intent);*/
-
+            /*
             if (name.matches("")) {
                 etStudentName.setError("please fill name field");
                 etStudentName.requestFocus();
@@ -88,24 +79,40 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
                 etStudentQualification.setError("please fill Qualification field");
                 etStudentQualification.requestFocus();
                 return;
-            }
+            }*/
+
+            /*String name = etStudentName.getText().toString();
+            String email = etStudentEmail.getText().toString();
+            String address = etStudentAddress.getText().toString();
+            String mobileNo = etStudentMobileNo.getText().toString();
+            String qualification = etStudentQualification.getText().toString();
 
             StudentDataBase dataBase = Room.databaseBuilder(UpdateStudentRDBActivity.this,
                     StudentDataBase.class, "student_database").allowMainThreadQueries().build();
             StudentDao studentDao = dataBase.getStudentDao();
 
-            studentDao.updateStudentData(sId, name, email, address, mobileNo, qualification);//
+            studentDao.updateStudentData(sId, name, email, address, mobileNo, qualification);
 
             Intent intent = new Intent(UpdateStudentRDBActivity.this, RoomDBMainActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
+            new bgThread().start();
+            Intent intent = new Intent(UpdateStudentRDBActivity.this, RoomDBMainActivity.class);
+            startActivity(intent);
         });
     }
 
-    /*class bgThread extends Thread {
+    class bgThread extends Thread {
         @Override
         public void run() {
             super.run();
+
+            String name = etStudentName.getText().toString();
+            String email = etStudentEmail.getText().toString();
+            String address = etStudentAddress.getText().toString();
+            String mobileNo = etStudentMobileNo.getText().toString();
+            String qualification = etStudentQualification.getText().toString();
+
             StudentDataBase dataBase = Room.databaseBuilder(UpdateStudentRDBActivity.this,
                     StudentDataBase.class, "student_database").build();
             StudentDao dao = dataBase.getStudentDao();
@@ -118,5 +125,5 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
             etStudentQualification.setText("");
             finish();
         }
-    }*/
+    }
 }
