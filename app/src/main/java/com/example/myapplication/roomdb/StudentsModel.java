@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "student_tbl")
 public class StudentsModel {
     @PrimaryKey(autoGenerate = true)
-    public int sid;
+    public int sId;
     @ColumnInfo(name = "student_name")
     public String sName;
     @ColumnInfo(name = "student_email")
@@ -15,38 +15,26 @@ public class StudentsModel {
     @ColumnInfo(name = "student_address")
     public String sAddress;
     @ColumnInfo(name = "student_mobile_no")
-    public String SMobileNo;
+    public String sMobileNo;
     @ColumnInfo(name = "student_qualified")
     public String sQualification;
 
-    @Override
-    public String toString() {
-        return "StudentsModel{" +
-                "sid=" + sid +
-                ", sName='" + sName + '\'' +
-                ", sEmail='" + sEmail + '\'' +
-                ", sAddress='" + sAddress + '\'' +
-                ", SMobileNo='" + SMobileNo + '\'' +
-                ", sQualification='" + sQualification + '\'' +
-                '}';
-    }
-
-    public StudentsModel(String sName, String sEmail, String sAddress, String SMobileNo,
+    public StudentsModel(int sId, String sName, String sEmail, String sAddress, String sMobileNo,
                          String sQualification) {
-
+        this.sId = sId;
         this.sName = sName;
         this.sEmail = sEmail;
         this.sAddress = sAddress;
-        this.SMobileNo = SMobileNo;
+        this.sMobileNo = sMobileNo;
         this.sQualification = sQualification;
     }
 
-    public int getSid() {
-        return sid;
+    public int getsId() {
+        return sId;
     }
 
-    public void setSid(int sid) {
-        this.sid = sid;
+    public void setsId(int sId) {
+        this.sId = sId;
     }
 
     public String getsName() {
@@ -73,12 +61,12 @@ public class StudentsModel {
         this.sAddress = sAddress;
     }
 
-    public String getSMobileNo() {
-        return SMobileNo;
+    public String getsMobileNo() {
+        return sMobileNo;
     }
 
-    public void setSMobileNo(String SMobileNo) {
-        this.SMobileNo = SMobileNo;
+    public void setsMobileNo(String sMobileNo) {
+        this.sMobileNo = sMobileNo;
     }
 
     public String getsQualification() {

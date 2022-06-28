@@ -42,10 +42,11 @@
     <string name="update_data">UPDATE DATA</string>
     <string name="add_records">add records</string>
 
-    <string name="name_s">Student Name</string>
+    <string name="name_s">Student Name</string>f
     <string name="email_s">Student Email</string>
     <string name="address_s">Student Address</string>
     <string name="phone_number_s">Student Mobile No.</string>
     <string name="qualification_s">Student Qualification</string>
     <string name="save_btn">Save</string>
+    <string name="update_btn">update</string>
 </resources>
