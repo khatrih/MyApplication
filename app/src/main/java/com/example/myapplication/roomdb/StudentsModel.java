@@ -18,15 +18,18 @@ public class StudentsModel {
     public String sMobileNo;
     @ColumnInfo(name = "student_qualified")
     public String sQualification;
+    @ColumnInfo(name = "gender")
+    public String sGender;
 
     public StudentsModel(int sId, String sName, String sEmail, String sAddress, String sMobileNo,
-                         String sQualification) {
+                         String sQualification, String sGender) {
         this.sId = sId;
         this.sName = sName;
         this.sEmail = sEmail;
         this.sAddress = sAddress;
         this.sMobileNo = sMobileNo;
         this.sQualification = sQualification;
+        this.sGender = sGender;
     }
 
     public int getsId() {
@@ -75,5 +78,13 @@ public class StudentsModel {
 
     public void setsQualification(String sQualification) {
         this.sQualification = sQualification;
+    }
+
+    public String getsGender() {
+        return sGender;
+    }
+
+    public void setsGender(String sGender) {
+        this.sGender = sGender;
     }
 }

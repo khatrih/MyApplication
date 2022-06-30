@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class ContactActivity extends AppCompatActivity {
 
     private ListView listView;
+    private TextView noContacts;
     private static final String TAG = "TAG";
     private static final int REQUEST_CODE = 1;
 
@@ -30,25 +31,25 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        TextView noContacts = findViewById(R.id.no_contacts);
+        noContacts = findViewById(R.id.no_contacts);
         listView = findViewById(R.id.contacts_list);
         Button btnPermission = findViewById(R.id.btn_permission);
 
-       /* if (listView!=null) {
-            listView.setEmptyView(noContacts);
+        if (listView==null) {
+            noContacts.setText(R.string.no_data);
         }else{
             noContacts.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             getContacts();
-        }*/
-        if (listView != null) {
+        }
+        /*if (listView != null) {
             noContacts.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             getContacts();
         } else {
             noContacts.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-        }
+        }*/
         btnPermission.setOnClickListener(v -> requestPermissions());
     }
 
@@ -61,7 +62,7 @@ public class ContactActivity extends AppCompatActivity {
                     .setMessage("please apply permission to access contacts")
                     .setPositiveButton("ok", (dialog, which) ->
                             ActivityCompat.requestPermissions(ContactActivity.this, new String[]{
-                                    Manifest.permission.READ_CONTACTS}, REQUEST_CODE))
+                            Manifest.permission.READ_CONTACTS}, REQUEST_CODE))
                     .setNegativeButton("cancel", (dialog, which) -> Log.d(TAG, "cancel"))
                     .create()
                     .show();
@@ -81,9 +82,15 @@ public class ContactActivity extends AppCompatActivity {
                     ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone._ID};
             int[] to = {android.R.id.text1, android.R.id.text2};
 
-            SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2
-                    , cursor, data, to);
-            listView.setAdapter(adapter);
+            /*if (cursor==null){
+                noContacts.setText(R.string.no_data);
+            }else {}*/
+                noContacts.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
+                SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2
+                        , cursor, data, to);
+                listView.setAdapter(adapter);
+
         }
     }
 

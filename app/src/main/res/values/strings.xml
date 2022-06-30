@@ -49,4 +49,6 @@
     <string name="qualification_s">Student Qualification</string>
     <string name="save_btn">Save</string>
     <string name="update_btn">update</string>
+
+    <string name="no_data">No Data Available</string>
 </resources>

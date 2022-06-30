@@ -1,12 +1,10 @@
 package com.example.myapplication.roomdb;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -27,6 +25,7 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
     private static final String STUDENT_ADDRESS = "address";
     private static final String STUDENT_PHONE_NO = "mobile_no";
     private static final String STUDENT_QUALIFICATION = "qualification";
+
     /*String name;
     String email;
     String address;
@@ -96,10 +95,24 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
             Intent intent = new Intent(UpdateStudentRDBActivity.this, RoomDBMainActivity.class);
             startActivity(intent);
             finish();*/
+
             new bgThread().start();
             Intent intent = new Intent(UpdateStudentRDBActivity.this, RoomDBMainActivity.class);
             startActivity(intent);
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(UpdateStudentRDBActivity.this)
+                .setTitle("Back")
+                .setMessage("Are you sure you don't want to update?")
+                .setCancelable(false)
+                .setPositiveButton("yes", (dialog, which) -> finish())
+                .setNegativeButton("no", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
     class bgThread extends Thread {
@@ -113,16 +126,11 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
             String mobileNo = etStudentMobileNo.getText().toString();
             String qualification = etStudentQualification.getText().toString();
 
-            StudentDataBase dataBase = Room.databaseBuilder(UpdateStudentRDBActivity.this,
-                    StudentDataBase.class, "student_database").build();
+            StudentDataBase dataBase = StudentDataBase.getInstance(UpdateStudentRDBActivity.this);
+
             StudentDao dao = dataBase.getStudentDao();
 
             dao.updateStudentData(sId, name, email, address, mobileNo, qualification);
-            etStudentName.setText("");
-            etStudentEmail.setText("");
-            etStudentAddress.setText("");
-            etStudentMobileNo.setText("");
-            etStudentQualification.setText("");
             finish();
         }
     }

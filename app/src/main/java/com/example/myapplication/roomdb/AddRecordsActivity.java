@@ -1,15 +1,19 @@
 package com.example.myapplication.roomdb;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+import androidx.appcompat.widget.AppCompatSpinner;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
 
 public class AddRecordsActivity extends AppCompatActivity {
 
@@ -18,8 +22,13 @@ public class AddRecordsActivity extends AppCompatActivity {
     private EditText etStudentEmail;
     private EditText etStudentPhoneNo;
     private EditText etStudentAddress;
-    private EditText etStudentQualification;
     private Button btnSaveData;
+    private ArrayList<String> mCourseList;
+    private ArrayList<String> sGenderList;
+    private AppCompatSpinner isSelectQualification;
+    private AppCompatSpinner isSelectGender;
+    private String getQualificationText;
+    private String getGenderText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +39,50 @@ public class AddRecordsActivity extends AppCompatActivity {
         etStudentEmail = findViewById(R.id.et_email);
         etStudentAddress = findViewById(R.id.et_address);
         etStudentPhoneNo = findViewById(R.id.et_phone_number);
-        etStudentQualification = findViewById(R.id.et_qualification);
         btnSaveData = findViewById(R.id.btn_save);
+        isSelectQualification = findViewById(R.id.spin_qualification);
+        isSelectGender = findViewById(R.id.spin_gender);
+
+        mCourseList = new ArrayList<>();
+        mCourseList.add("select course");
+        mCourseList.add("MCA");
+        mCourseList.add("MBA");
+
+        sGenderList = new ArrayList<>();
+        sGenderList.add("select gender");
+        sGenderList.add("Male");
+        sGenderList.add("Female");
+
+        ArrayAdapter<String> courseList = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mCourseList);
+        isSelectQualification.setAdapter(courseList);
+
+        ArrayAdapter<String> genderList = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sGenderList);
+        isSelectGender.setAdapter(genderList);
+
+        isSelectQualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getQualificationText = isSelectQualification.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        isSelectGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getGenderText = isSelectGender.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btnSaveData.setOnClickListener(v -> {
             //new backGroundTaskThread().start();
@@ -39,10 +90,11 @@ public class AddRecordsActivity extends AppCompatActivity {
             String email = etStudentEmail.getText().toString();
             String address = etStudentAddress.getText().toString();
             String phoneNo = etStudentPhoneNo.getText().toString();
-            String qualified = etStudentQualification.getText().toString();
+            String qualified = getQualificationText;
+            String gender = getGenderText;
 
             if (name.matches("")) {
-                etStudentName.setError("error");
+                etStudentName.setError("enter valid name");
                 etStudentName.requestFocus();
                 return;
             }
@@ -56,34 +108,27 @@ public class AddRecordsActivity extends AppCompatActivity {
                 etStudentAddress.requestFocus();
                 return;
             }
-            if (phoneNo.matches("") || !Patterns.PHONE.matcher(phoneNo).matches()) {
-                etStudentPhoneNo.setError("please enter valid number");
+            if (phoneNo.length() < 10) {
+                etStudentPhoneNo.setError("please enter 10 digits number");
                 etStudentPhoneNo.requestFocus();
                 return;
             }
-            if (qualified.matches("")) {
-                etStudentQualification.setError("please fill Qualification field");
-                etStudentQualification.requestFocus();
+            if (qualified.matches("select course")) {
+                isSelectQualification.requestFocus();
                 return;
             }
-
-            StudentDataBase dataBase = Room.databaseBuilder(AddRecordsActivity.this, StudentDataBase.class,
-                    "student_database").allowMainThreadQueries().build();
+            if (gender.matches("select gender")) {
+                isSelectGender.requestFocus();
+                return;
+            }
+            StudentDataBase dataBase = StudentDataBase.getInstance(AddRecordsActivity.this);
 
             StudentDao studentDao = dataBase.getStudentDao();
-            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified);
+            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified, gender);
             studentDao.insertRecords(studentsModel);
 
-            etStudentName.setText("");
-            etStudentEmail.setText("");
-            etStudentAddress.setText("");
-            etStudentPhoneNo.setText("");
-            etStudentQualification.setText("");
+            onBackPressed();
 
-            Intent intent = new Intent(AddRecordsActivity.this, RoomDBMainActivity.class);
-            startActivity(intent);
-
-            finish();
         });
     }
 

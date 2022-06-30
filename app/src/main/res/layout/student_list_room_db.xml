@@ -34,13 +34,15 @@
 
         <TextView
             android:id="@+id/tv_phone_no"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:maxEms="8"
+            android:maxLines="1"
             android:padding="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_email"
-            tools:text="12345678" />
+            tools:text="12345678910" />
 
         <TextView
             android:id="@+id/tv_address"
@@ -68,25 +70,27 @@
             app:layout_constraintTop_toTopOf="@+id/tv_phone_no"
             tools:text="MCA" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/iv_btn_delete"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <ImageView
+            android:id="@+id/option_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/not_found_image"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_more"
             app:layout_constraintEnd_toEndOf="@+id/tv_qualified"
             app:layout_constraintTop_toTopOf="parent" />
 
-       <!-- <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/iv_btn_edit"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/not_found_image"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintEnd_toStartOf="@id/iv_btn_delete"
-            app:layout_constraintTop_toTopOf="parent" />-->
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="4"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_phone_no"
+            app:layout_constraintEnd_toStartOf="@id/tv_qualified"
+            app:layout_constraintStart_toEndOf="@id/tv_phone_no"
+            app:layout_constraintTop_toTopOf="@id/tv_phone_no"
+            tools:text="male" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

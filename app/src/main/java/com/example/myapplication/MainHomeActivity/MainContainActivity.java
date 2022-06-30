@@ -44,10 +44,10 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         } else if (v.getId() == R.id.contentProviderDemo) {
             Intent inContentProvider = new Intent(MainContainActivity.this, ContactActivity.class);
             startActivity(inContentProvider);
-        }else if (v.getId() == R.id.sqlite_demo){
+        } else if (v.getId() == R.id.sqlite_demo) {
             Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
             startActivity(intent);
-        }else {
+        } else {
             Intent intentRoomDB = new Intent(MainContainActivity.this, RoomDBMainActivity.class);
             startActivity(intentRoomDB);
         }

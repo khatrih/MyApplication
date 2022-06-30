@@ -87,6 +87,5 @@ public class FetchingDataActivity extends AppCompatActivity {
             Intent intent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
             startActivity(intent);
         });
-
     }
 }

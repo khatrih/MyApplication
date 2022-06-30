@@ -1,28 +1,35 @@
 package com.example.myapplication.roomdb;
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
+import android.content.Context;
 
-@Database(entities = {StudentsModel.class}, version = 1)
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
+@Database(entities = {StudentsModel.class}, version = 2)
 public abstract class StudentDataBase extends RoomDatabase {
     public abstract StudentDao getStudentDao();
 
-    /*public static StudentDataBase studentDB;
+    static Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE student_tbl ADD COLUMN gender TEXT DEFAULT 'male'");
+        }
+    };
+
+    public static StudentDataBase studentDB;
 
     public static StudentDataBase getInstance(Context context) {
         if (studentDB == null) {
-            studentDB = buildDatabaseInstance(context);
+            studentDB = Room.databaseBuilder(context, StudentDataBase.class, "student_database")
+                    .addMigrations(MIGRATION_1_2)
+                    .allowMainThreadQueries()
+                    .build();
         }
         return studentDB;
     }
 
-    private static StudentDataBase buildDatabaseInstance(Context context) {
-        return Room.databaseBuilder(context, StudentDataBase.class, "student_database")
-                .allowMainThreadQueries().build();
-    }
-
-    public void cleanUp() {
-        studentDB = null;
-    }*/
 
 }
