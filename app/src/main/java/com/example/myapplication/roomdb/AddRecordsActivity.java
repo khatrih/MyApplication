@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.myapplication.R;
 
@@ -26,7 +27,7 @@ public class AddRecordsActivity extends AppCompatActivity {
     private ArrayList<String> mCourseList;
     private ArrayList<String> sGenderList;
     private AppCompatSpinner isSelectQualification;
-    private AppCompatSpinner isSelectGender;
+    private Spinner isSelectGender;
     private String getQualificationText;
     private String getGenderText;
 
@@ -63,12 +64,10 @@ public class AddRecordsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getQualificationText = isSelectQualification.getSelectedItem().toString();
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -80,12 +79,10 @@ public class AddRecordsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
         btnSaveData.setOnClickListener(v -> {
-            //new backGroundTaskThread().start();
             String name = etStudentName.getText().toString();
             String email = etStudentEmail.getText().toString();
             String address = etStudentAddress.getText().toString();
@@ -126,94 +123,8 @@ public class AddRecordsActivity extends AppCompatActivity {
             StudentDao studentDao = dataBase.getStudentDao();
             StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified, gender);
             studentDao.insertRecords(studentsModel);
-
-            onBackPressed();
+            finish();
 
         });
     }
-
-    /* //new InsertTask(AddRecordsActivity.this, studentsModel).execute();
-    private void setResult(StudentsModel studentsModel, int i) {
-        setResult(i, new Intent().putExtra("studentsModel", studentsModel.toString()));
-        finish();
-    }
-
-    public static class InsertTask extends AsyncTask<Void, Void, Boolean> {
-
-        private WeakReference<AddRecordsActivity> activityReference;
-        private StudentsModel studentsModel;
-
-        InsertTask(AddRecordsActivity context, StudentsModel studentsModel) {
-            activityReference = new WeakReference<>(context);
-            this.studentsModel = studentsModel;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... object) {
-            activityReference.get().dataBase.getStudentDao().insertRecords(studentsModel);
-            activityReference.get().dataBase.getStudentDao().getData();
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean) {
-                activityReference.get().setResult(studentsModel, 1);
-            }
-        }
-    }*/
-
-    /*public class backGroundTaskThread extends Thread {
-        @Override
-        public void run() {
-            super.run();
-
-            String name = etStudentName.getText().toString();
-            String email = etStudentEmail.getText().toString();
-            String address = etStudentAddress.getText().toString();
-            String phoneNo = etStudentPhoneNo.getText().toString();
-            String qualified = etStudentQualification.getText().toString();
-
-            if (name.matches("")) {
-                etStudentName.setError("error");
-                etStudentName.requestFocus();
-                return;
-            }
-            if (email.matches("") || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etStudentEmail.setError("please enter valid email");
-                etStudentEmail.requestFocus();
-                return;
-            }
-            if (address.matches("")) {
-                etStudentAddress.setError("please fill address field");
-                etStudentAddress.requestFocus();
-                return;
-            }
-            if (phoneNo.matches("") || !Patterns.PHONE.matcher(phoneNo).matches()) {
-                etStudentPhoneNo.setError("please enter valid number");
-                etStudentPhoneNo.requestFocus();
-                return;
-            }
-            if (qualified.matches("")) {
-                etStudentQualification.setError("please fill Qualification field");
-                etStudentQualification.requestFocus();
-                return;
-            }
-
-            StudentDataBase dataBase = Room.databaseBuilder(AddRecordsActivity.this, StudentDataBase.class,
-                    "student_database").allowMainThreadQueries().build();
-
-            StudentDao studentDao = dataBase.getStudentDao();
-            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified);
-            studentDao.insertRecords(studentsModel);
-
-            etStudentName.setText("");
-            etStudentEmail.setText("");
-            etStudentAddress.setText("");
-            etStudentPhoneNo.setText("");
-            etStudentQualification.setText("");
-            finish();
-        }
-    }*/
-
 }

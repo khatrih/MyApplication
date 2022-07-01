@@ -25,23 +25,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".contentproviders.SingleCallDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".roomdb.UpdateStudentRDBActivity"
             android:exported="false" />
-
         <activity
             android:name=".roomdb.AddRecordsActivity"
             android:exported="false" />
-
         <activity
             android:name=".roomdb.RoomDBMainActivity"
             android:exported="false" />
-
         <activity
             android:name=".databasedemo.UpdatesStudentActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainHomeActivity.MainContainActivity"
             android:exported="true">
@@ -50,74 +48,57 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".contentproviders.ContactActivity"
             android:exported="true" />
-
         <activity
             android:name=".databasedemo.FetchingDataActivity"
             android:exported="true" />
-
         <activity
             android:name=".databasedemo.ViewCourseActivity"
             android:exported="true" />
-
         <activity
             android:name=".multiplethreading.MultipleThreadsActivity"
             android:exported="true" />
-
         <activity
             android:name=".databasedemo.DataBaseMainActivity"
             android:exported="true" />
-
         <activity
             android:name=".threading.MainThreadActivity"
             android:exported="true" />
-
         <activity
             android:name=".jsonUsingApi.JsonLoadActivity"
             android:exported="true" />
-
         <activity
             android:name=".layouts.HomeProductActivity"
             android:exported="true" />
         <activity
             android:name=".loginflow.HomeActivity"
             android:exported="true" />
-
         <activity
             android:name=".loginflow.SplashScreenActivity"
             android:exported="true" />
-
         <activity
             android:name=".loginflow.LoginActivity"
             android:exported="true" />
-
         <activity
             android:name=".loginflow.RegistrationActivity"
             android:exported="true" />
-
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
-
         <activity
             android:name=".getDetailsActivity"
             android:exported="false" />
-
         <activity
             android:name=".RecyclerViewDemo"
             android:exported="true" />
-
         <activity
             android:name=".ShowDetailsActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>

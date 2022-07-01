@@ -66,27 +66,15 @@
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spin_qualification"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="6dp"
+        android:background="@drawable/outline_spinner"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_phone_number" />
-
-    <!--<EditText
-        android:id="@+id/et_qualification"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="4dp"
-        android:autofillHints="name"
-        android:hint="@string/qualification_s"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_phone_number" />-->
 
     <Button
         android:id="@+id/btn_save"
@@ -98,13 +86,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
+    <Spinner
         android:id="@+id/spin_gender"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="6dp"
+        android:background="@drawable/outline_spinner"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spin_qualification" />

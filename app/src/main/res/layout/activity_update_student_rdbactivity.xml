@@ -14,7 +14,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="4dp"
         android:autofillHints="name"
-        android:hint="@string/name_s"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +27,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
         android:autofillHints="name"
-        android:hint="@string/email_s"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +40,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
         android:autofillHints="name"
-        android:hint="@string/address_s"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +53,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
         android:autofillHints="name"
-        android:hint="@string/phone_number_s"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,11 +66,45 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
         android:autofillHints="name"
-        android:hint="@string/qualification_s"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_update_phone_number" />
+
+    <EditText
+        android:id="@+id/et_update_gender"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="4dp"
+        android:autofillHints="name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_update_qualification" />
+
+    <!-- <androidx.appcompat.widget.AppCompatSpinner
+         android:id="@+id/spin_qualification"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_marginStart="6dp"
+         android:layout_marginTop="5dp"
+         android:layout_marginEnd="6dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/et_update_phone_number" />
+
+     <androidx.appcompat.widget.AppCompatSpinner
+         android:id="@+id/spin_gender"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_marginStart="6dp"
+         android:layout_marginTop="5dp"
+         android:layout_marginEnd="6dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/spin_qualification" />-->
 
     <Button
         android:id="@+id/btn_update"

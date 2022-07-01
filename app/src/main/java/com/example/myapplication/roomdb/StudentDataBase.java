@@ -15,7 +15,7 @@ public abstract class StudentDataBase extends RoomDatabase {
     static Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE student_tbl ADD COLUMN gender TEXT DEFAULT 'male'");
+            database.execSQL("ALTER TABLE student_tbl ADD COLUMN gender TEXT DEFAULT 'female'");
         }
     };
 
@@ -30,6 +30,4 @@ public abstract class StudentDataBase extends RoomDatabase {
         }
         return studentDB;
     }
-
-
 }

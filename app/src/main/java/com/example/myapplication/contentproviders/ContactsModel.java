@@ -1,37 +1,58 @@
 package com.example.myapplication.contentproviders;
 
+import android.net.Uri;
+
 public class ContactsModel {
-    private String contactName;
-    private int ContactsNumber;
-    private int contactsID;
+    private String callName;
+    private String callNumber;
+    private String callID;
+    private int callImage;
+    private Uri image;
 
-    public ContactsModel(String contactName, int contactsNumber, int contactsID) {
-        this.contactName = contactName;
-        ContactsNumber = contactsNumber;
-        this.contactsID = contactsID;
+    public ContactsModel(String contactName, String contactsNumber, Uri image) {
+        this.callName = contactName;
+        this.callNumber = contactsNumber;
+//        this.callImage = callImage;
+        this.image = image;
     }
 
-    public String getContactName() {
-        return contactName;
+    public Uri getImage() {
+        return image;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setImage(Uri image) {
+        this.image = image;
     }
 
-    public int getContactsNumber() {
-        return ContactsNumber;
+    public String getCallName() {
+        return callName;
     }
 
-    public void setContactsNumber(int contactsNumber) {
-        ContactsNumber = contactsNumber;
+    public void setCallName(String callName) {
+        this.callName = callName;
     }
 
-    public int getContactsID() {
-        return contactsID;
+    public String getCallNumber() {
+        return callNumber;
     }
 
-    public void setContactsID(int contactsID) {
-        this.contactsID = contactsID;
+    public void setCallNumber(String callNumber) {
+        this.callNumber = callNumber;
+    }
+
+    public String getCallID() {
+        return callID;
+    }
+
+    public void setCallID(String callID) {
+        this.callID = callID;
+    }
+
+    public int getCallImage() {
+        return callImage;
+    }
+
+    public void setCallImage(int callImage) {
+        this.callImage = callImage;
     }
 }

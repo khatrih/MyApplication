@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
-
 import java.util.List;
 
 public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder> {
@@ -26,6 +23,7 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
     private static final String STUDENT_ADDRESS = "address";
     private static final String STUDENT_PHONE_NO = "mobile_no";
     private static final String STUDENT_QUALIFICATION = "qualification";
+    private static final String STUDENT_GENDER = "gender";
 
     public RoomDBAdapter(List<StudentsModel> studentsModels, Context context) {
         this.studentsModels = studentsModels;
@@ -63,6 +61,7 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
                     intent.putExtra(STUDENT_ADDRESS, model.getsAddress());
                     intent.putExtra(STUDENT_PHONE_NO, model.getsMobileNo());
                     intent.putExtra(STUDENT_QUALIFICATION, model.getsQualification());
+                    intent.putExtra(STUDENT_GENDER, model.getsGender());
                     context.startActivity(intent);
                 } else if (itemId == R.id.menu_delete) {
                     new AlertDialog.Builder(context)
@@ -70,10 +69,6 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
                             .setMessage("if want to delete this record")
                             .setCancelable(false)
                             .setPositiveButton("yes", (dialog, which) -> {
-                                /*StudentDataBase dataBase = Room.databaseBuilder(context, StudentDataBase.class,
-                                        "student_database")
-                                        .allowMainThreadQueries()
-                                        .build();*/
                                 StudentDataBase dataBase = StudentDataBase.getInstance(context);
                                 StudentDao studentDao = dataBase.getStudentDao();
                                 studentDao.deletedStudentData(model.getsId());

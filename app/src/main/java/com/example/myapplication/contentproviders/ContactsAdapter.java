@@ -1,21 +1,16 @@
 package com.example.myapplication.contentproviders;
 
-import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.provider.ContactsContract;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,8 +33,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         ContactsModel contactsModel = contactsList.get(position);
-        holder.tvCallDisPlayName.setText(contactsModel.getContactName());
-        holder.tvCallDisplayNumber.setText(contactsModel.getContactsNumber());
+        holder.tvCallDisPlayName.setText(contactsModel.getCallName());
+        //holder.tvCallDisplayNumber.setText(contactsModel.getCallNumber());
+        Picasso.get().load(contactsModel.getImage()).placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
+
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent in = new Intent(context, SingleCallDetailActivity.class);
+            context.startActivity(in);
+        });
     }
 
     @Override
@@ -48,13 +50,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
+        private ImageView ivCallDisplayImage;
         private TextView tvCallDisPlayName;
         private TextView tvCallDisplayNumber;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            tvCallDisPlayName = itemView.findViewById(R.id.tv_call_name);
-            tvCallDisplayNumber = itemView.findViewById(R.id.tv_call_number);
+            ivCallDisplayImage = itemView.findViewById(R.id.call_image);
+            tvCallDisPlayName = itemView.findViewById(R.id.call_name);
+            //tvCallDisplayNumber = itemView.findViewById(R.id.call_number);
         }
     }
 }
