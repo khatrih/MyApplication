@@ -10,16 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_call_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_margin="20dp"
+            android:padding="20dp"
             android:src="@drawable/ic_call_image"
             app:civ_circle_background_color="#D1D1D1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
         <TextView
             android:id="@+id/tv_call_name"
@@ -109,33 +122,36 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_margin="18dp"
-            android:background="#B6D5E6"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="#EBF2F4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_drawback2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/text_contact_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:text="Contact info"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Contact info" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/card_view_call"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="25dp"
                     android:contentDescription="@string/not_found_image"
+                    android:padding="2dp"
                     android:src="@drawable/ic_call"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_contact_info" />
@@ -145,26 +161,59 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:padding="2dp"
+                    android:text="8544548584"
                     app:layout_constraintStart_toEndOf="@+id/card_view_call"
-                    app:layout_constraintTop_toTopOf="@id/card_view_call"
-                    tools:text="8544548584" />
+                    app:layout_constraintTop_toTopOf="@id/card_view_call" />
 
                 <TextView
                     android:id="@+id/tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="2dp"
-                    app:layout_constraintBottom_toBottomOf="@id/card_view_call"
+                    android:padding="2dp"
+                    android:text="home"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_view_call"
                     app:layout_constraintStart_toEndOf="@+id/card_view_call"
-                    app:layout_constraintTop_toBottomOf="@id/tv_user_number"
-                    tools:text="mobile" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_user_number" />
+
+                <ImageView
+                    android:id="@+id/card_view_email"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="25dp"
+                    android:contentDescription="@string/not_found_image"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_mail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_call" />
+
+                <TextView
+                    android:id="@+id/tv_user_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:padding="2dp"
+                    android:text="test123@gmai.com"
+                    app:layout_constraintStart_toEndOf="@+id/card_view_call"
+                    app:layout_constraintTop_toTopOf="@id/card_view_email" />
+
+                <TextView
+                    android:id="@+id/tv_email_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:padding="2dp"
+                    android:text="home"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_view_email"
+                    app:layout_constraintStart_toEndOf="@+id/card_view_email"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_user_email" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </ScrollView>

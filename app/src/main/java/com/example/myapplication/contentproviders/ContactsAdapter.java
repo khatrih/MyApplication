@@ -2,15 +2,18 @@ package com.example.myapplication.contentproviders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myapplication.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,12 +37,33 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         ContactsModel contactsModel = contactsList.get(position);
         holder.tvCallDisPlayName.setText(contactsModel.getCallName());
-        //holder.tvCallDisplayNumber.setText(contactsModel.getCallNumber());
-        Picasso.get().load(contactsModel.getImage()).placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
+        holder.tvCallDisplayNumber.setText(contactsModel.getCallNumber());
 
+        Bitmap image = null;
+        if (!contactsModel.getCallImage().equals("")
+                && contactsModel.getCallImage() != null) {
+            image = BitmapFactory.decodeFile(contactsModel.getCallImage());
+            if (image != null)
+                holder.ivCallDisplayImage.setImageBitmap(image);
+            else {
+                image = BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.ic_call_image);
+                holder.ivCallDisplayImage.setImageBitmap(image);
+            }
+        } else {
+            image = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.ic_call_image);
+            holder.ivCallDisplayImage.setImageBitmap(image);
+        }
+
+        //Picasso.get().load().placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
 
         holder.itemView.setOnClickListener(v -> {
             Intent in = new Intent(context, SingleCallDetailActivity.class);
+            in.putExtra("name", contactsModel.getCallName());
+            in.putExtra("number", contactsModel.getCallNumber());
+            in.putExtra("callerId", contactsModel.getCallID());
+            in.putExtra("callerImage", contactsModel.getImage());
             context.startActivity(in);
         });
     }
@@ -58,7 +82,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
             super(itemView);
             ivCallDisplayImage = itemView.findViewById(R.id.call_image);
             tvCallDisPlayName = itemView.findViewById(R.id.call_name);
-            //tvCallDisplayNumber = itemView.findViewById(R.id.call_number);
+            tvCallDisplayNumber = itemView.findViewById(R.id.call_number);
         }
     }
 }

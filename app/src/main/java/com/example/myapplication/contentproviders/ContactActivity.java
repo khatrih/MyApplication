@@ -5,20 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myapplication.R;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ContactActivity extends AppCompatActivity {
@@ -58,8 +69,8 @@ public class ContactActivity extends AppCompatActivity {
             listView.setVisibility(View.GONE);
         }*/
 
-        getAdater();
-
+        // getAdapter();
+        getContacts();
         requestPermissions();
 
         btnPermission.setOnClickListener(v -> {
@@ -69,7 +80,7 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
 
-    private void getAdater() {
+    private void getAdapter() {
         adapter = new ContactsAdapter(ContactActivity.this, contactsModels);
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
@@ -95,7 +106,6 @@ public class ContactActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("Range")
     public void getContacts() {
         if (checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE);
@@ -115,9 +125,8 @@ public class ContactActivity extends AppCompatActivity {
                     , cursor, data, to);
             listView.setAdapter(adapter);*/
 
-            String contactId = "";
+            /*String contactId = "";
             String contactName = "";
-            //int contactImage;
             Uri Image;
 
             Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -129,7 +138,7 @@ public class ContactActivity extends AppCompatActivity {
                     if (contactPhoneNumber > 0) {
                         contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
                         contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                        //contactImage = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI)));
+                        //int contactImage = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI)));
 
                         Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                 null, ContactsContract.CommonDataKinds.Phone._ID + " = ?",
@@ -147,7 +156,12 @@ public class ContactActivity extends AppCompatActivity {
                 }
             }
             cursor.close();
-            adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();*/
+
+            contactsModels = readContacts();
+            adapter = new ContactsAdapter(ContactActivity.this, contactsModels);
+            listView.setLayoutManager(new LinearLayoutManager(this));
+            listView.setAdapter(adapter);
         }
     }
 
@@ -174,7 +188,7 @@ public class ContactActivity extends AppCompatActivity {
         return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
     }*/
 
-    @Override
+/*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -186,5 +200,79 @@ public class ContactActivity extends AppCompatActivity {
                 Log.d(TAG, "permission denied");
             }
         }
+    }*/
+
+    @SuppressLint("Range")
+    private ArrayList<ContactsModel> readContacts() {
+        ArrayList<ContactsModel> contactsList = new ArrayList<>();
+
+        Uri uri = ContactsContract.Contacts.CONTENT_URI;
+        Cursor contactCursor = getContentResolver().query(uri, null, null, null,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
+        if (contactCursor.moveToFirst()) {
+            long contactId = contactCursor.getLong(contactCursor.getColumnIndex("_ID"));
+            do {
+                Cursor dataCursor = getContentResolver().query(ContactsContract.Data.CONTENT_URI, null,
+                        ContactsContract.Data.CONTACT_ID + "=" + contactId, null, null);
+
+                String callerName = "";
+                String callerNumber = "";
+                String callerEmail = "";
+                String imagePath = "" + R.drawable.ic_call_image;
+                byte[] callerImage = null;
+
+                if (dataCursor.moveToFirst()) {
+                    callerName = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    do {
+                        if (dataCursor.getString(dataCursor.getColumnIndex("mimetype"))
+                                .equals(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)) {
+                            switch (dataCursor.getInt(dataCursor.getColumnIndex("data2"))) {
+                                /*case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+                                    String Home_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
+                                    callerNumber += Home_NUMBER;
+                                    break;
+                                case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+                                    String Work_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
+                                    callerNumber += Work_NUMBER;
+                                    break;*/
+                                case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                                    String Mobile_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
+                                    callerNumber += Mobile_NUMBER;
+                                    break;
+                            }
+                        }
+                        if (dataCursor.getString(dataCursor.getColumnIndex("mimetype"))
+                                .equals(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)) {
+                            switch (dataCursor.getInt(dataCursor.getColumnIndex("data2"))) {
+                                case ContactsContract.CommonDataKinds.Email.TYPE_HOME:
+                                    String homeEmail = dataCursor.getString(dataCursor.getColumnIndex("data1"));
+                                    callerEmail += homeEmail;
+                                    break;
+                            }
+                        }
+                        if (dataCursor.getString(dataCursor.getColumnIndex("mimetype"))
+                                .equals(ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)) {
+                            callerImage = dataCursor.getBlob(dataCursor.getColumnIndex("data15"));
+                            if (callerImage != null) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(callerImage, 0, callerImage.length);
+                                File cacheDirectory = getBaseContext().getCacheDir();
+                                File tmp = new File(cacheDirectory.getPath() + "/_androidCache" + contactId + ".png");
+                                try {
+                                    FileOutputStream fileOutputStream = new FileOutputStream(tmp);
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, fileOutputStream);
+                                    fileOutputStream.flush();
+                                    fileOutputStream.close();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                imagePath = tmp.getPath();
+                            }
+                        }
+                    } while (dataCursor.moveToNext());
+                    contactsModels.add(new ContactsModel(Long.toString(contactId), callerName, callerNumber, imagePath, callerEmail));
+                }
+            } while (contactCursor.moveToNext());
+        }
+        return contactsList;
     }
 }

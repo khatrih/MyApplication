@@ -6,14 +6,16 @@ public class ContactsModel {
     private String callName;
     private String callNumber;
     private String callID;
-    private int callImage;
+    private String callImage;
     private Uri image;
+    private String callEmail;
 
-    public ContactsModel(String contactName, String contactsNumber, Uri image) {
+    public ContactsModel(String id, String contactName, String contactsNumber, String contactImage, String contactEmail) {
+        this.callID = id;
         this.callName = contactName;
         this.callNumber = contactsNumber;
-//        this.callImage = callImage;
-        this.image = image;
+        this.callImage = contactImage;
+        this.callEmail = contactEmail;
     }
 
     public Uri getImage() {
@@ -48,11 +50,11 @@ public class ContactsModel {
         this.callID = callID;
     }
 
-    public int getCallImage() {
+    public String getCallImage() {
         return callImage;
     }
 
-    public void setCallImage(int callImage) {
+    public void setCallImage(String callImage) {
         this.callImage = callImage;
     }
 }

@@ -38,6 +38,7 @@
     <string name="content_provider_demo">Content Provider Demo</string>
     <string name="sqlite_demo">SQLite Demo</string>
     <string name="room_db">Room DB Demo</string>
+    <string name="new_cp">new Content provider</string>
     <string name="not_found_image">not found image</string>
     <string name="update_data">UPDATE DATA</string>
     <string name="add_records">add records</string>

@@ -11,6 +11,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.contentproviders.ContactActivity;
 import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
+import com.example.myapplication.newcontentprovider.NewContactsActivity;
 import com.example.myapplication.roomdb.RoomDBMainActivity;
 
 
@@ -19,6 +20,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
     private AppCompatButton btnContentProviderDemo;
     private AppCompatButton btnSQLiteDemo;
     private AppCompatButton btnRoomDBDemo;
+    private AppCompatButton btnNewCPDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,13 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnContentProviderDemo = findViewById(R.id.contentProviderDemo);
         btnSQLiteDemo = findViewById(R.id.sqlite_demo);
         btnRoomDBDemo = findViewById(R.id.room_db);
+        btnNewCPDemo = findViewById(R.id.new_cp);
 
         btnRecyclerViewDemo.setOnClickListener(this);
         btnContentProviderDemo.setOnClickListener(this);
         btnSQLiteDemo.setOnClickListener(this);
         btnRoomDBDemo.setOnClickListener(this);
+        btnNewCPDemo.setOnClickListener(this);
     }
 
     @Override
@@ -47,9 +51,12 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         } else if (v.getId() == R.id.sqlite_demo) {
             Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
             startActivity(intent);
-        } else {
+        } else if (v.getId() == R.id.room_db){
             Intent intentRoomDB = new Intent(MainContainActivity.this, RoomDBMainActivity.class);
             startActivity(intentRoomDB);
+        }else if (v.getId() == R.id.new_cp){
+            Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
+            startActivity(intentCP);
         }
     }
 }
