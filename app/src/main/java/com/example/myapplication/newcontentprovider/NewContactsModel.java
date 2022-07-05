@@ -90,23 +90,17 @@ public class NewContactsModel {
     private String callNumber;
     private String callID;
     private String callImage;
-    private Uri image;
     private String callEmail;
+    private String otherDetails;
 
-    public NewContactsModel(String id, String contactName, String contactsNumber, String contactImage, String contactEmail) {
+    public NewContactsModel(String id, String contactName, String contactNumber, String contactImage,
+            String contactEmail) {
         this.callID = id;
         this.callName = contactName;
-        this.callNumber = contactsNumber;
+        this.callNumber = contactNumber;
         this.callImage = contactImage;
         this.callEmail = contactEmail;
-    }
-
-    public Uri getImage() {
-        return image;
-    }
-
-    public void setImage(Uri image) {
-        this.image = image;
+//        this.otherDetails = other;
     }
 
     public String getCallName() {
@@ -141,4 +135,11 @@ public class NewContactsModel {
         this.callImage = callImage;
     }
 
+    public String getCallEmail() {
+        return callEmail;
+    }
+
+    public void setCallEmail(String callEmail) {
+        this.callEmail = callEmail;
+    }
 }

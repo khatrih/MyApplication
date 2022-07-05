@@ -188,7 +188,7 @@ public class ContactActivity extends AppCompatActivity {
         return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
     }*/
 
-/*    @Override
+    /*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -227,14 +227,6 @@ public class ContactActivity extends AppCompatActivity {
                         if (dataCursor.getString(dataCursor.getColumnIndex("mimetype"))
                                 .equals(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)) {
                             switch (dataCursor.getInt(dataCursor.getColumnIndex("data2"))) {
-                                /*case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                                    String Home_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
-                                    callerNumber += Home_NUMBER;
-                                    break;
-                                case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                                    String Work_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
-                                    callerNumber += Work_NUMBER;
-                                    break;*/
                                 case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
                                     String Mobile_NUMBER = dataCursor.getString(dataCursor.getColumnIndex("data1"));
                                     callerNumber += Mobile_NUMBER;

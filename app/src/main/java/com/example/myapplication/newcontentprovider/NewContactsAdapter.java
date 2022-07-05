@@ -2,8 +2,14 @@ package com.example.myapplication.newcontentprovider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +18,19 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.contentproviders.ContactsAdapter;
 import com.example.myapplication.contentproviders.ContactsModel;
 import com.example.myapplication.contentproviders.SingleCallDetailActivity;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.viewHolder> {
@@ -51,24 +62,22 @@ public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.
             if (image != null)
                 holder.ivCallDisplayImage.setImageBitmap(image);
             else {
-                image = BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.ic_call_image);
+                image = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_call_image);
                 holder.ivCallDisplayImage.setImageBitmap(image);
             }
         } else {
-            image = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.ic_call_image);
+            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_call_image);
             holder.ivCallDisplayImage.setImageBitmap(image);
         }
 
-        //Picasso.get().load().placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
-
+        //Picasso.get().load(contactsModel.getCallImage()).placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
         holder.itemView.setOnClickListener(v -> {
             Intent in = new Intent(context, SingleCallDetailActivity.class);
             in.putExtra("name", contactsModel.getCallName());
             in.putExtra("number", contactsModel.getCallNumber());
             in.putExtra("callerId", contactsModel.getCallID());
-            in.putExtra("callerImage", contactsModel.getImage());
+            in.putExtra("callerImage", contactsModel.getCallImage());
+            in.putExtra("callerEmail", contactsModel.getCallEmail());
             context.startActivity(in);
         });
     }

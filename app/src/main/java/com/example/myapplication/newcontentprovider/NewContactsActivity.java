@@ -1,12 +1,18 @@
 package com.example.myapplication.newcontentprovider;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,9 +23,14 @@ import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.contentproviders.ContactActivity;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.security.Permission;
 import java.util.ArrayList;
 
 public class NewContactsActivity extends AppCompatActivity {
@@ -27,6 +38,8 @@ public class NewContactsActivity extends AppCompatActivity {
     private ArrayList<NewContactsModel> arrayList;
     private NewContactsAdapter adapter;
     private static ProgressDialog pd;
+    String photoPath;
+    byte[] photoByte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +49,102 @@ public class NewContactsActivity extends AppCompatActivity {
         contactListView = findViewById(R.id.contacts_listview);
         contactListView.setLayoutManager(new LinearLayoutManager(this));
 
-        new LoadContacts().execute();
+        checkPermissions();
+    }
+
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(NewContactsActivity.this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(NewContactsActivity.this, new String[]{
+                    Manifest.permission.READ_CONTACTS}, 100);
+        } else {
+            getContactList();
+        }
+    }
+
+    @SuppressLint("Range")
+    private void getContactList() {
+        arrayList = new ArrayList<>();
+        Uri uri = ContactsContract.Contacts.CONTENT_URI;
+        Cursor contactCursor = getContentResolver().query(uri, null, null, null,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
+
+        if (contactCursor.getCount() > 0) {
+
+            while (contactCursor.moveToNext()) {
+                String contactId = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String contactName = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+                Uri uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+
+                Cursor phoneCursor = getContentResolver().query(uriPhone, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{contactId}
+                        , null);
+
+                photoPath = "" + R.drawable.ic_call_image;
+                photoByte = null;
+                String contactEmailAddresses = "";
+
+                if (phoneCursor.moveToNext()) {
+                    String contactNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds
+                            .Phone.NUMBER));
+
+                    Uri myImage = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactId);
+                    InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), myImage);
+                    BufferedInputStream buf = new BufferedInputStream(photo_stream);
+                    Bitmap bit = BitmapFactory.decodeStream(buf);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bit.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    photoByte = stream.toByteArray();
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(photoByte, 0, photoByte.length);
+                    File cacheDire = getApplicationContext().getCacheDir();
+                    File tmp = new File(cacheDire.getPath() + "/_androidjunk" + contactId + ".png");
+                    try {
+                        FileOutputStream fileOutputStream = new FileOutputStream(tmp);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 10, fileOutputStream);
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    photoPath = tmp.getPath();
+
+                    Cursor emailCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                            null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId,
+                            null, null);
+                    while (emailCursor.moveToNext()) {
+                        String email = emailCursor.getString(emailCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                        contactEmailAddresses += email;
+                    }
+
+                    arrayList.add(new NewContactsModel(contactId, contactName, contactNumber, photoPath, contactEmailAddresses));
+                    emailCursor.close();
+                    phoneCursor.close();
+                }
+            }
+            contactCursor.close();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter = new NewContactsAdapter(NewContactsActivity.this, arrayList);
+        contactListView.setLayoutManager(new LinearLayoutManager(this));
+        contactListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0 && grantResults[0]
+                == PackageManager.PERMISSION_GRANTED) {
+            getContactList();
+        } else {
+            checkPermissions();
+        }
     }
 
     /*@SuppressLint("Range")
@@ -146,10 +254,9 @@ public class NewContactsActivity extends AppCompatActivity {
             } while (contactsCursor.moveToNext());
         }
         return contactList;
-    }
-*/
+    }*/
 
-    @SuppressLint("Range")
+    /*@SuppressLint("Range")
     private ArrayList<NewContactsModel> readContacts() {
         ArrayList<NewContactsModel> contactsList = new ArrayList<>();
 
@@ -247,9 +354,7 @@ public class NewContactsActivity extends AppCompatActivity {
             pd = ProgressDialog.show(NewContactsActivity.this, "Loading Contacts", "Please Wait...");
         }
 
-    }
-
-
+    }*/
 
     /*private class loadContacts extends AsyncTask<Void, Void, Void> {
 

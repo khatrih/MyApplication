@@ -35,6 +35,8 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_call_image"
         app:civ_circle_background_color="#D1D1D1"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
