@@ -6,6 +6,7 @@
     <string name="password">Password</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
+    <string name="name">Name</string>
     <string name="gender">Gender</string>
     <string name="full_name">Full Name</string>
     <string name="sign_up">sign up</string>
@@ -53,4 +54,15 @@
 
     <string name="no_data">No Data Available</string>
     <string name="contact_info">Contact info</string>
+    <string name="tvContacts">Contacts</string>
+    <string name="video_call">Video call</string>
+    <string name="more">More</string>
+    <string name="mobile_india">Mobile | India</string>
+    <string name="default_settings">Default Settings</string>
+    <string name="qr_code">QR code</string>
+    <string name="send_money">Send money</string>
+    <string name="request_money">Request money</string>
+    <string name="home">home</string>
+    <string name="to_do_list_demo">To Do List Demo</string>
+
 </resources>

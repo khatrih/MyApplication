@@ -5,141 +5,58 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public class NewContactsModel {
-    /*private String newContactsName;
-    private String newContactsNumber;
-    private String newContactsId;
-    private String newContactsImage;
+    String contactName;
+    String contactNumber;
+    Uri contactImage;
+    String contactId;
+    String contactEmail;
 
-    public NewContactsModel(String newContactsName, String newContactsNumber, String newContactsId, String newContactsImage) {
-        this.newContactsName = newContactsName;
-        this.newContactsNumber = newContactsNumber;
-        this.newContactsId = newContactsId;
-        this.newContactsImage = newContactsImage;
-    }
-
-    public String getNewContactsName() {
-        return newContactsName;
-    }
-
-    public void setNewContactsName(String newContactsName) {
-        this.newContactsName = newContactsName;
-    }
-
-    public String getNewContactsNumber() {
-        return newContactsNumber;
-    }
-
-    public void setNewContactsNumber(String newContactsNumber) {
-        this.newContactsNumber = newContactsNumber;
-    }
-
-    public String getNewContactsId() {
-        return newContactsId;
-    }
-
-    public void setNewContactsId(String newContactsId) {
-        this.newContactsId = newContactsId;
-    }
-
-    public String getNewContactsImage() {
-        return newContactsImage;
-    }
-
-    public void setNewContactsImage(String newContactsImage) {
-        this.newContactsImage = newContactsImage;
-    }*/
-
-    /*private String contactId, contactName, contactNumber, contactEmail,
-            contactPhoto, contactOtherDetails;
-
-    public NewContactsModel(String contactId, String contactName, String contactNumber, String contactEmail,
-                            String contactPhoto, String contactOtherDetails) {
-        this.contactId = contactId;
+    public NewContactsModel(String contactName, String contactNumber, Uri contactImage, String contactId,
+                            String contactEmail) {
         this.contactName = contactName;
-        this.contactEmail = contactEmail;
         this.contactNumber = contactNumber;
-        this.contactPhoto = contactPhoto;
-        this.contactOtherDetails = contactOtherDetails;
-    }
-
-    public String getContactID() {
-        return contactId;
+        this.contactImage = contactImage;
+        this.contactId = contactId;
+        this.contactEmail = contactEmail;
     }
 
     public String getContactName() {
         return contactName;
     }
 
-    public String getContactEmail() {
-        return contactEmail;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
     public String getContactNumber() {
         return contactNumber;
     }
 
-    public String getContactPhoto() {
-        return contactPhoto;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public String getContactOtherDetails() {
-        return contactOtherDetails;
-    }*/
-
-    private String callName;
-    private String callNumber;
-    private String callID;
-    private String callImage;
-    private String callEmail;
-    private String otherDetails;
-
-    public NewContactsModel(String id, String contactName, String contactNumber, String contactImage,
-            String contactEmail) {
-        this.callID = id;
-        this.callName = contactName;
-        this.callNumber = contactNumber;
-        this.callImage = contactImage;
-        this.callEmail = contactEmail;
-//        this.otherDetails = other;
+    public Uri getContactImage() {
+        return contactImage;
     }
 
-    public String getCallName() {
-        return callName;
+    public void setContactImage(Uri contactImage) {
+        this.contactImage = contactImage;
     }
 
-    public void setCallName(String callName) {
-        this.callName = callName;
+    public String getContactId() {
+        return contactId;
     }
 
-    public String getCallNumber() {
-        return callNumber;
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
-    public void setCallNumber(String callNumber) {
-        this.callNumber = callNumber;
+    public String getContactEmail() {
+        return contactEmail;
     }
 
-    public String getCallID() {
-        return callID;
-    }
-
-    public void setCallID(String callID) {
-        this.callID = callID;
-    }
-
-    public String getCallImage() {
-        return callImage;
-    }
-
-    public void setCallImage(String callImage) {
-        this.callImage = callImage;
-    }
-
-    public String getCallEmail() {
-        return callEmail;
-    }
-
-    public void setCallEmail(String callEmail) {
-        this.callEmail = callEmail;
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
     }
 }

@@ -80,9 +80,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            ivCallDisplayImage = itemView.findViewById(R.id.call_image);
-            tvCallDisPlayName = itemView.findViewById(R.id.call_name);
-            tvCallDisplayNumber = itemView.findViewById(R.id.call_number);
+            ivCallDisplayImage = itemView.findViewById(R.id.iv_contact_image);
+            tvCallDisPlayName = itemView.findViewById(R.id.tv_contact_name);
+            tvCallDisplayNumber = itemView.findViewById(R.id.tv_contact_number);
         }
     }
 }

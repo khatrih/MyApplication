@@ -13,6 +13,7 @@ import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
 import com.example.myapplication.newcontentprovider.NewContactsActivity;
 import com.example.myapplication.roomdb.RoomDBMainActivity;
+import com.example.myapplication.to_do_list.ToDoListRegistrationActivity;
 
 
 public class MainContainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,6 +22,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
     private AppCompatButton btnSQLiteDemo;
     private AppCompatButton btnRoomDBDemo;
     private AppCompatButton btnNewCPDemo;
+    private AppCompatButton btnToDoDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +34,14 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnSQLiteDemo = findViewById(R.id.sqlite_demo);
         btnRoomDBDemo = findViewById(R.id.room_db);
         btnNewCPDemo = findViewById(R.id.new_cp);
+        btnToDoDemo = findViewById(R.id.to_do_list_demo);
 
         btnRecyclerViewDemo.setOnClickListener(this);
         btnContentProviderDemo.setOnClickListener(this);
         btnSQLiteDemo.setOnClickListener(this);
         btnRoomDBDemo.setOnClickListener(this);
         btnNewCPDemo.setOnClickListener(this);
+        btnToDoDemo.setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +61,9 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         }else if (v.getId() == R.id.new_cp){
             Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
             startActivity(intentCP);
+        }else {
+            Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListRegistrationActivity.class);
+            startActivity(intentToDoList);
         }
     }
 }

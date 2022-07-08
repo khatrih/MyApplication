@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newcontentprovider.NewContactsActivity"
-    android:orientation="horizontal">
+    tools:context=".newcontentprovider.NewContactsActivity">
 
-   <!-- <androidx.appcompat.widget.Toolbar
-        android:id="@+id/mytoolbar"
+    <TextView
+        android:id="@+id/tvContacts"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+        android:text="@string/tvContacts" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contacts_listview"
+        android:id="@+id/rvContacts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/call_list_view"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvContacts"
+        tools:listitem="@layout/call_list_view" />
 
-<!--    <ListView
-        android:id="@+id/contact_listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:listitem="@layout/custom_contacts_view">
-    </ListView>-->
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -128,7 +128,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(IMAGE_COL, updatedStudentBitmap);
 
         liteDatabase.update(TABLE_NAME, values, NAME_COL + " = ? ", new String[]{name});
-        //liteDatabase.update(TABLE_NAME,values, ID_COL +"=?", new String[]{id});
+//        liteDatabase.update(TABLE_NAME,values, ID_COL +"=?", new String[]{id});
         Log.d("TAG", "addNewCourse: " + values);
         liteDatabase.close();
     }

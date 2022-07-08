@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinate_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_sheet_shapes">
+
+            <TextView
+                android:id="@+id/tv_contact_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:maxEms="7"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1234567890" />
+
+            <TextView
+                android:id="@+id/contact_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/mobile_india"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/tv_contact_number"
+                app:layout_constraintTop_toBottomOf="@id/tv_contact_number" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_circle_call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/back_ground_shapes"
+                app:layout_constraintBottom_toBottomOf="@id/contact_loc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_circle_message"
+                app:layout_constraintTop_toTopOf="@id/tv_contact_number" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/not_found_image"
+                android:src="@drawable/calling"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_call"
+                app:layout_constraintEnd_toEndOf="@id/iv_circle_call"
+                app:layout_constraintStart_toStartOf="@id/iv_circle_call"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_call" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_circle_message"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/back_ground_shapes"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_call"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_call" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/not_found_image"
+                android:src="@drawable/messaging"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_message"
+                app:layout_constraintEnd_toEndOf="@id/iv_circle_message"
+                app:layout_constraintStart_toStartOf="@id/iv_circle_message"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_message" />
+
+            <TextView
+                android:id="@+id/tv_video_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/video_call"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_video_call"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_video_call" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_circle_video_call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/back_ground_shapes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_circle_message" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/not_found_image"
+                android:src="@drawable/video_calling"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_video_call"
+                app:layout_constraintEnd_toEndOf="@id/iv_circle_video_call"
+                app:layout_constraintStart_toStartOf="@id/iv_circle_video_call"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_video_call" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_email"
+                tools:text="Email" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_circle_email"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/back_ground_shapes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_circle_video_call" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/not_found_image"
+                android:src="@drawable/mail_boxing"
+                app:layout_constraintBottom_toBottomOf="@id/iv_circle_email"
+                app:layout_constraintEnd_toEndOf="@id/iv_circle_email"
+                app:layout_constraintStart_toStartOf="@id/iv_circle_email"
+                app:layout_constraintTop_toTopOf="@id/iv_circle_email" />
+
+            <TextView
+                android:id="@+id/more_features"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/more"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_email" />
+
+            <TextView
+                android:id="@+id/default_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/default_settings"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/more_features" />
+
+            <TextView
+                android:id="@+id/qr_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/qr_code"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/default_setting" />
+
+            <TextView
+                android:id="@+id/send_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/send_money"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/qr_code" />
+
+            <TextView
+                android:id="@+id/request_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/request_money"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/send_money" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
