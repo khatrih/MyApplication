@@ -1,48 +1,59 @@
 package com.example.myapplication.to_do_list.Models;
 
 public class UserModel {
-    String userName;
-    String userEmail;
-    String userPassword;
-    String userConfirmPassword;
+    String name;
+    String email;
+    String password;
+    String id;
+    String confirmPassword;
 
-    public UserModel(String userName, String userEmail, String userPassword, String userConfirmPassword) {
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.userConfirmPassword = userConfirmPassword;
+    public UserModel() {
     }
 
-    public String getUserName() {
-        return userName;
+    public UserModel(String name, String email, String password, String confirmPassword) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getName() {
+        return name;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public String getUserConfirmPassword() {
-        return userConfirmPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setUserConfirmPassword(String userConfirmPassword) {
-        this.userConfirmPassword = userConfirmPassword;
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 }

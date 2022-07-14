@@ -65,4 +65,18 @@
     <string name="home">home</string>
     <string name="to_do_list_demo">To Do List Demo</string>
 
+    <string name="to_do_name">Name</string>
+    <string name="to_do_email">Email</string>
+    <string name="to_do_password">Password</string>
+    <string name="to_do_confirm_password">Confirm Password</string>
+    <string name="to_do_register">Register</string>
+    <string name="to_do_login">Login</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="create_account">Create Account?</string>
+    <string name="save">save</string>
+    <string name="logout">Logout</string>
+    <string name="titles">Title</string>
+    <string name="body">add content here.</string>
+    <string name="no_notes_here">No Notes Here.</string>
+
 </resources>

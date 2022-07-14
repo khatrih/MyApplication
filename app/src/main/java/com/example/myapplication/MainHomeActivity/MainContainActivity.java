@@ -13,6 +13,8 @@ import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
 import com.example.myapplication.newcontentprovider.NewContactsActivity;
 import com.example.myapplication.roomdb.RoomDBMainActivity;
+import com.example.myapplication.to_do_list.ToDoListHomeActivity;
+import com.example.myapplication.to_do_list.ToDoListLoginActivity;
 import com.example.myapplication.to_do_list.ToDoListRegistrationActivity;
 
 
@@ -62,7 +64,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
             Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
             startActivity(intentCP);
         }else {
-            Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListRegistrationActivity.class);
+            Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListLoginActivity.class);
             startActivity(intentToDoList);
         }
     }
