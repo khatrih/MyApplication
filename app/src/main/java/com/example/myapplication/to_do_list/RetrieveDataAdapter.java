@@ -2,12 +2,14 @@ package com.example.myapplication.to_do_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -16,8 +18,8 @@ import com.example.myapplication.to_do_list.Models.NotesModel;
 import java.util.ArrayList;
 
 public class RetrieveDataAdapter extends RecyclerView.Adapter<RetrieveDataAdapter.viewHolder> {
-    Context context;
-    ArrayList<NotesModel> notesModels;
+    private Context context;
+    private ArrayList<NotesModel> notesModels;
 
     public RetrieveDataAdapter(Context context, ArrayList<NotesModel> notesModels) {
         this.context = context;
@@ -36,11 +38,38 @@ public class RetrieveDataAdapter extends RecyclerView.Adapter<RetrieveDataAdapte
         NotesModel model = notesModels.get(position);
         holder.tvTitle.setText(model.getNoteTitle());
 
-        holder.itemView.setOnClickListener(v -> {
+        /*holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SingleNoteActivity.class);
             intent.putExtra("title", model.getNoteTitle());
             intent.putExtra("content", model.getNoteContent());
             context.startActivity(intent);
+        });
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, UpdateNoteActivity.class);
+            intent.putExtra("title", model.getNoteTitle());
+            intent.putExtra("content", model.getNoteContent());
+            intent.putExtra("noteId", model.getNoteId());
+            intent.putExtra("true", true);
+            context.startActivity(intent);
+        });*/
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent in = new Intent(context, ToDoListAddNotesActivity.class);
+            in.putExtra("title", model.getNoteTitle());
+            in.putExtra("content", model.getNoteContent());
+            in.putExtra("noteId", model.getNoteId());
+            in.putExtra("Flag", true);
+            context.startActivity(in);
+        });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            Bundle sendToBottomSheet = new Bundle();
+            sendToBottomSheet.putString("noteId", model.getNoteId());
+            DeleteItemBottomSheet deleteItemBottomSheet = new DeleteItemBottomSheet();
+            deleteItemBottomSheet.setArguments(sendToBottomSheet);
+            deleteItemBottomSheet.show(((FragmentActivity) context).
+                    getSupportFragmentManager(), deleteItemBottomSheet.getTag());
+            return true;
         });
     }
 
@@ -50,7 +79,7 @@ public class RetrieveDataAdapter extends RecyclerView.Adapter<RetrieveDataAdapte
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
+        private final TextView tvTitle;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);

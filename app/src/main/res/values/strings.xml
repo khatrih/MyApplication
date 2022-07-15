@@ -78,5 +78,10 @@
     <string name="titles">Title</string>
     <string name="body">add content here.</string>
     <string name="no_notes_here">No Notes Here.</string>
+    <string name="update_note">sorry, your note is not update, please try again</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="delete_1_item">Delete 1 item?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
 
 </resources>

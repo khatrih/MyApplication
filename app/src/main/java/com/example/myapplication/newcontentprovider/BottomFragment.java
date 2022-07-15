@@ -31,7 +31,6 @@ public class BottomFragment extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         return dialog;
-
     }
 
     @Nullable

@@ -26,6 +26,7 @@ public class JsonLoadActivity extends AppCompatActivity {
     ProgressBar progressBar;
     RecyclerView recyclerView;
     PostAdapter postAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

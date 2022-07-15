@@ -27,6 +27,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".to_do_list.UpdateNoteActivity"
+            android:exported="false" />
+        <activity
             android:name=".to_do_list.SingleNoteActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".to_do_list.ToDoListHomeActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".to_do_list.ToDoListLoginActivity"
             android:exported="false" />

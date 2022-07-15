@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "397142159560",
+    "firebase_url": "https://to-do-list-33fd9-default-rtdb.firebaseio.com",
     "project_id": "to-do-list-33fd9",
     "storage_bucket": "to-do-list-33fd9.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "397142159560-1eq7urgh4quqd83rl7hq6m4shgt73gjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "24662831795027788e0c00b4aa8007f62177892d"
+          }
+        },
         {
           "client_id": "397142159560-ei8jn8s7r43etmi9rvm4qffhv1roflt8.apps.googleusercontent.com",
           "client_type": 3

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class ToDoListRegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private ProgressDialog dialog;
+    private ImageView ivGoogle;
+    private ImageView ivFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,6 @@ public class ToDoListRegistrationActivity extends AppCompatActivity {
         String mPassword = sha256(password);
         String mConfirmPassword = sha256(confirmPassword);
 
-        //String confirmPasswordHashKey =  sha256(confirmPassword);
         if (name.isEmpty()) {
             teUserName.setError("please enter name");
             teUserName.requestFocus();
@@ -96,7 +98,7 @@ public class ToDoListRegistrationActivity extends AppCompatActivity {
         }
 
         dialog.show();
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, mPassword)
                 .addOnCompleteListener(task -> {
                     dialog.dismiss();
                     if (task.isSuccessful()) {
@@ -105,7 +107,7 @@ public class ToDoListRegistrationActivity extends AppCompatActivity {
                         database.getReference().child("users").child(userId).setValue(userModel);
                         finish();
                     } else {
-                        Toast.makeText(ToDoListRegistrationActivity.this, "Something went wrong" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ToDoListRegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(ToDoListRegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
