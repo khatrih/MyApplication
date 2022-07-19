@@ -6,8 +6,13 @@ public class UserModel {
     String password;
     String id;
     String confirmPassword;
+    String phoneNumber;
 
     public UserModel() {
+    }
+
+    public UserModel(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public UserModel(String name, String email) {
@@ -60,5 +65,13 @@ public class UserModel {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

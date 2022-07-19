@@ -53,6 +53,7 @@ public class ToDoListLoginActivity extends AppCompatActivity {
         TextView tvRegister = findViewById(R.id.txt_register);
 
         ImageView ivGoogle = findViewById(R.id.tv_google);
+        ImageView ivPhone = findViewById(R.id.tv_facebook);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -76,6 +77,9 @@ public class ToDoListLoginActivity extends AppCompatActivity {
         mSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
         ivGoogle.setOnClickListener(v -> googleSignIn());
+        ivPhone.setOnClickListener(v -> {
+            startActivity(new Intent(this, PhoneLoginActivity.class));
+        });
     }
 
     private void googleSignIn() {
@@ -139,13 +143,14 @@ public class ToDoListLoginActivity extends AppCompatActivity {
                 Toast.makeText(ToDoListLoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         if (firebaseUser != null) {
+            finish();
             startActivity(new Intent(ToDoListLoginActivity.this, ToDoListHomeActivity.class));
         }
     }

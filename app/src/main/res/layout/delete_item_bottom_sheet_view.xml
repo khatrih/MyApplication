@@ -41,7 +41,6 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="30dp"
             android:background="@drawable/btn_background"
-            android:backgroundTint="#E3E0E0"
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textColor="@color/black"

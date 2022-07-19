@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.MainHomeActivity.MainContainActivity;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ToDoListHomeActivity extends AppCompatActivity {
+public class ToDoListHomeActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView rvNotes;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
@@ -33,6 +34,7 @@ public class ToDoListHomeActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private RetrieveDataAdapter adapter;
     private NotesModel model;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class ToDoListHomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.to_do_list_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.floatingAction);
+        floatingActionButton = findViewById(R.id.floatingAction);
         rvNotes = findViewById(R.id.rv_notes);
         adapter = new RetrieveDataAdapter(ToDoListHomeActivity.this, notesModel);
 
@@ -50,10 +52,6 @@ public class ToDoListHomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
-
-        floatingActionButton.setOnClickListener(v -> {
-            startActivity(new Intent(ToDoListHomeActivity.this, ToDoListAddNotesActivity.class));
-        });
 
         dialog = new ProgressDialog(ToDoListHomeActivity.this);
         dialog.setMessage("Loading...");
@@ -64,6 +62,7 @@ public class ToDoListHomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        floatingActionButton.setOnClickListener(this);
         String userId = mAuth.getCurrentUser().getUid();
         reference.child("users").child(userId).child("Notes").
                 get().addOnSuccessListener(dataSnapshot -> {
@@ -80,6 +79,12 @@ public class ToDoListHomeActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(ToDoListHomeActivity.this, "network" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -107,9 +112,10 @@ public class ToDoListHomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        Intent in = new Intent(ToDoListHomeActivity.this, MainContainActivity.class);
-        startActivity(in);
-        finish();
+    public void onClick(View v) {
+        if (v.getId() == R.id.floatingAction) {
+            startActivity(new Intent(ToDoListHomeActivity.this, ToDoListAddNotesActivity.class));
+            floatingActionButton.setOnClickListener(null);
+        }
     }
 }

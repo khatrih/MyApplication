@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +27,6 @@ public class ToDoListRegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private ProgressDialog dialog;
-    private ImageView ivGoogle;
-    private ImageView ivFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/back_ground_shapes.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/bottom_sheet_shapes.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/btn_backgraound.xml" value="0.197" />
+        <entry key="app/src/main/res/drawable/btn_background.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/calling.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/facebook.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_call.xml" value="0.197" />
@@ -43,6 +44,7 @@
         <entry key="app/src/main/res/layout/activity_main_thread.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_multiple_threads.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_new_contacts.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/activity_phone_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_recycler_view_demo.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_room_dbmain.xml" value="0.35625" />

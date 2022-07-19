@@ -24,8 +24,8 @@ public class DeleteItemBottomSheet extends BottomSheetDialogFragment {
     BottomSheetDialog dialog;
     BottomSheetBehavior<View> bottomSheetBehavior;
     View rootView;
-    private Button btnCancel;
     private Button btnDelete;
+    private Button btnCancel;
 
     @NonNull
     @Override
@@ -38,6 +38,7 @@ public class DeleteItemBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.delete_item_bottom_sheet_view, container, false);
+
         btnDelete = rootView.findViewById(R.id.btn_delete);
         btnCancel = rootView.findViewById(R.id.btn_cancel);
 

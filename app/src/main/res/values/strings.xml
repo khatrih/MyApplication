@@ -5,6 +5,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="password">Password</string>
     <string name="phone">Phone</string>
+    <string name="otp">OTP</string>
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="gender">Gender</string>
@@ -83,5 +84,7 @@
     <string name="delete_1_item">Delete 1 item?</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="send">Send</string>
+    <string name="verify">Verify</string>
 
 </resources>

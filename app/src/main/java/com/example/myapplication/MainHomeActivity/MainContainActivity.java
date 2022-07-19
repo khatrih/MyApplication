@@ -68,4 +68,9 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
             startActivity(intentToDoList);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
