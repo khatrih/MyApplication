@@ -21,6 +21,7 @@ public class StudentsModel {
     @ColumnInfo(name = "gender")
     public String sGender;
 
+
     public StudentsModel(int sId, String sName, String sEmail, String sAddress, String sMobileNo,
                          String sQualification, String sGender) {
         this.sId = sId;

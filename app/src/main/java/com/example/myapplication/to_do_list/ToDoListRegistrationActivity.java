@@ -18,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
-
 public class ToDoListRegistrationActivity extends AppCompatActivity {
     private TextInputEditText teUserName;
     private TextInputEditText teUserEmail;

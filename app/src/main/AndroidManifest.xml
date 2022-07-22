@@ -27,21 +27,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
+        <!--<meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/my_notes" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />-->
+
+        <service
+            android:name=".to_do_list.MessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".to_do_list.PhoneLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".to_do_list.UpdateNoteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".to_do_list.SingleNoteActivity"
             android:exported="false" />
         <activity
             android:name=".to_do_list.ToDoListAddNotesActivity"
             android:exported="false" />
         <activity
             android:name=".to_do_list.ToDoListHomeActivity"
-            android:exported="true" />
+            android:parentActivityName=".MainHomeActivity.MainContainActivity" />
         <activity
             android:name=".to_do_list.ToDoListLoginActivity"
             android:exported="false" />
@@ -72,10 +82,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".contentproviders.ContactActivity"
             android:exported="true" />

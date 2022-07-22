@@ -1,0 +1,70 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "c179dbac6a06fffc55ed914f34e5b656",
+    "entities": [
+      {
+        "tableName": "student_tbl",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `student_name` TEXT, `student_email` TEXT, `student_address` TEXT, `student_mobile_no` TEXT, `student_qualified` TEXT, `gender` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "sId",
+            "columnName": "sId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sName",
+            "columnName": "student_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sEmail",
+            "columnName": "student_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sAddress",
+            "columnName": "student_address",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sMobileNo",
+            "columnName": "student_mobile_no",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sQualification",
+            "columnName": "student_qualified",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sGender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "sId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c179dbac6a06fffc55ed914f34e5b656')"
+    ]
+  }
+}

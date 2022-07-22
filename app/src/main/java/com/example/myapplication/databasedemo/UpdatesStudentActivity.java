@@ -25,7 +25,6 @@ public class UpdatesStudentActivity extends AppCompatActivity {
     private EditText etStudAddress;
     private EditText etStudQualification;
     private ImageView ivStudentImage;
-    private AppCompatButton btnUpdateCourseData;
     private DatabaseHandler dbHandler;
     private static final String STUDENT_ID = "id";
     private static final String STUDENT_NAME = "NAME";
@@ -48,7 +47,7 @@ public class UpdatesStudentActivity extends AppCompatActivity {
         etStudAddress = findViewById(R.id.et_student_address);
         etStudQualification = findViewById(R.id.et_student_qualification);
         ivStudentImage = findViewById(R.id.img_update_student_image);
-        btnUpdateCourseData = findViewById(R.id.btn_update_data);
+        AppCompatButton btnUpdateCourseData = findViewById(R.id.btn_update_data);
 
         String name = getIntent().getStringExtra(STUDENT_NAME);
         String email = getIntent().getStringExtra(STUDENT_EMAIL);

@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
@@ -15,8 +16,6 @@ import com.example.myapplication.newcontentprovider.NewContactsActivity;
 import com.example.myapplication.roomdb.RoomDBMainActivity;
 import com.example.myapplication.to_do_list.ToDoListHomeActivity;
 import com.example.myapplication.to_do_list.ToDoListLoginActivity;
-import com.example.myapplication.to_do_list.ToDoListRegistrationActivity;
-
 
 public class MainContainActivity extends AppCompatActivity implements View.OnClickListener {
     private AppCompatButton btnRecyclerViewDemo;
@@ -44,6 +43,12 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnRoomDBDemo.setOnClickListener(this);
         btnNewCPDemo.setOnClickListener(this);
         btnToDoDemo.setOnClickListener(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListHomeActivity.class);
+            startActivity(intentToDoList);
+        }
     }
 
     @Override
@@ -57,13 +62,13 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         } else if (v.getId() == R.id.sqlite_demo) {
             Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.room_db){
+        } else if (v.getId() == R.id.room_db) {
             Intent intentRoomDB = new Intent(MainContainActivity.this, RoomDBMainActivity.class);
             startActivity(intentRoomDB);
-        }else if (v.getId() == R.id.new_cp){
+        } else if (v.getId() == R.id.new_cp) {
             Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
             startActivity(intentCP);
-        }else {
+        } else {
             Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListLoginActivity.class);
             startActivity(intentToDoList);
         }

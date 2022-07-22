@@ -86,5 +86,6 @@
     <string name="delete">Delete</string>
     <string name="send">Send</string>
     <string name="verify">Verify</string>
+    <string name="note">Notes</string>
 
 </resources>

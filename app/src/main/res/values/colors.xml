@@ -13,5 +13,6 @@
     <color name="red">#D34949</color>
     <color name="blue">#68B2ED</color>
     <color name="pink">#DF83A2</color>
+    <color name="notification_app_color">#4fd1d9</color>
 
 </resources>

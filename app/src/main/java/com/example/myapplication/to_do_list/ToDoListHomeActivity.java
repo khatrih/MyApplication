@@ -10,12 +10,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.myapplication.MainHomeActivity.MainContainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.to_do_list.Models.NotesModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,16 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
         dialog.setMessage("Loading...");
         dialog.show();
         dialog.setCancelable(false);
+
+        //generate token for test
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+            String token = task.getResult();
+            Log.d("TAG", "FCM Token:" + token);
+        });
     }
 
     @Override
@@ -65,7 +76,7 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
         floatingActionButton.setOnClickListener(this);
         String userId = mAuth.getCurrentUser().getUid();
         reference.child("users").child(userId).child("Notes").
-                get().addOnSuccessListener(dataSnapshot -> {
+                get().addOnSuccessListener((DataSnapshot dataSnapshot) -> {
                     dialog.dismiss();
                     notesModel.clear();
                     for (DataSnapshot ss : dataSnapshot.getChildren()) {

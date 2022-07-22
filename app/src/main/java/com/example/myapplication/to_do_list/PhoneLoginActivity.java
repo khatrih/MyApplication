@@ -56,28 +56,6 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 String phone = "+91 " + teUserPhone.getText().toString();
                 sendVerificationCode(phone);
             }
-
-            /*mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                @Override
-                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                    Log.d(TAG, "onVerificationCompleted: " + phoneAuthCredential);
-                    signInWithPhoneAuthCredential(phoneAuthCredential);
-                }
-
-                @Override
-                public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Log.w(TAG, "onVerificationFailed", e);
-
-                }
-
-                @Override
-                public void onCodeSent(@NonNull String verificationId, @NonNull
-                        PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                    Log.d(TAG, "onCodeSent: " + verificationId);
-                    mVerificationId = verificationId;
-                    mResendToken = forceResendingToken;
-                }
-            };*/
         });
 
         btnVerifyOtp.setOnClickListener(v -> {
@@ -87,22 +65,6 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 verifyCode(teUserPhoneOtp.getText().toString());
             }
         });
-    }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        String userId = task.getResult().getUser().getUid();
-                        String number = task.getResult().getUser().getPhoneNumber();
-                        UserModel userModel = new UserModel(number);
-                        database.getReference().child("users").child(userId).setValue(userModel);
-                        startActivity(new Intent(this, ToDoListHomeActivity.class));
-                        finish();
-                    } else {
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-                    }
-                });
     }
 
     private void sendVerificationCode(String phoneNumber) {
@@ -141,6 +103,22 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         signInWithPhoneAuthCredential(credential);
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String userId = task.getResult().getUser().getUid();
+                        String number = task.getResult().getUser().getPhoneNumber();
+                        UserModel userModel = new UserModel(number);
+                        database.getReference().child("users").child(userId).setValue(userModel);
+                        startActivity(new Intent(this, ToDoListHomeActivity.class));
+                        finish();
+                    } else {
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                    }
+                });
     }
 
 }

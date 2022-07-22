@@ -41,7 +41,6 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
     private String qualification;
     private String gender;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +171,7 @@ public class UpdateStudentRDBActivity extends AppCompatActivity {
             StudentDataBase dataBase = StudentDataBase.getInstance(UpdateStudentRDBActivity.this);
             StudentDao dao = dataBase.getStudentDao();
 
-            dao.updateStudentData(sId, name, email, address, mobileNo, qualification);
+            dao.updateStudentData(sId, name, email, address, mobileNo, qualification, gender);
             finish();
         }
     }

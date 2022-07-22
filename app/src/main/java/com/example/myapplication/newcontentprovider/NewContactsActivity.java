@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class NewContactsActivity extends AppCompatActivity {
     private RecyclerView contactListView;
-    private ArrayList<NewContactsModel> newContactsModels;
+    private ArrayList<NewContactsModel> newContactsModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class NewContactsActivity extends AppCompatActivity {
     }
 
     private void checkPermissions() {
+        //CHECK SELF PERMISSION
         if (ContextCompat.checkSelfPermission(NewContactsActivity.this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NewContactsActivity.this, new String[]{
@@ -49,6 +50,7 @@ public class NewContactsActivity extends AppCompatActivity {
     @SuppressLint("Range")
     private void getContactList() {
         newContactsModels = new ArrayList<>();
+        //ContactsContract defines an extensible database of contact-related information
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
         Cursor contactCursor = getContentResolver().query(uri, null, null, null,
                 ContactsContract.Contacts.DISPLAY_NAME + " ASC ");

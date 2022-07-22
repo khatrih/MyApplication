@@ -83,6 +83,7 @@ public class FetchingDataActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         btnAddStudentData.setOnClickListener(v -> {
             Intent intent = new Intent(FetchingDataActivity.this, DataBaseMainActivity.class);
             startActivity(intent);

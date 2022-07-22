@@ -60,7 +60,8 @@ public class AddRecordsActivity extends AppCompatActivity {
         ArrayAdapter<String> genderList = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sGenderList);
         isSelectGender.setAdapter(genderList);
 
-        isSelectQualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        /*isSelectQualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getQualificationText = isSelectQualification.getSelectedItem().toString();
@@ -69,9 +70,9 @@ public class AddRecordsActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
 
-        isSelectGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*isSelectGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getGenderText = isSelectGender.getSelectedItem().toString();
@@ -80,15 +81,18 @@ public class AddRecordsActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
 
         btnSaveData.setOnClickListener(v -> {
             String name = etStudentName.getText().toString();
             String email = etStudentEmail.getText().toString();
             String address = etStudentAddress.getText().toString();
             String phoneNo = etStudentPhoneNo.getText().toString();
-            String qualified = getQualificationText;
-            String gender = getGenderText;
+            String qualified = isSelectQualification.getSelectedItem().toString();
+            String gender = isSelectGender.getSelectedItem().toString();
+
+//            String qualified = getQualificationText;
+//            String gender = getGenderText;
 
             if (name.matches("")) {
                 etStudentName.setError("enter valid name");
@@ -121,7 +125,7 @@ public class AddRecordsActivity extends AppCompatActivity {
             StudentDataBase dataBase = StudentDataBase.getInstance(AddRecordsActivity.this);
 
             StudentDao studentDao = dataBase.getStudentDao();
-            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified, gender);
+            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified, gender);//
             studentDao.insertRecords(studentsModel);
             finish();
 

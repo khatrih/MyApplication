@@ -77,6 +77,7 @@ public class ToDoListLoginActivity extends AppCompatActivity {
         mSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
         ivGoogle.setOnClickListener(v -> googleSignIn());
+
         ivPhone.setOnClickListener(v -> {
             startActivity(new Intent(this, PhoneLoginActivity.class));
         });
@@ -144,7 +145,6 @@ public class ToDoListLoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onStart() {

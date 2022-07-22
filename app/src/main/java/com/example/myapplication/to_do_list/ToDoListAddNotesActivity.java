@@ -36,7 +36,6 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.to_do_list_mToolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -44,8 +43,7 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
         etNotesTitle = findViewById(R.id.title_notes);
         etNotesBody = findViewById(R.id.body_notes);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String userId = auth.getCurrentUser().getUid();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         database = FirebaseDatabase.getInstance();
 
         isUpdate = getIntent().getBooleanExtra("Flag", false);

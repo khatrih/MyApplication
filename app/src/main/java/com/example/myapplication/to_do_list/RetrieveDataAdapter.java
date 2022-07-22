@@ -38,21 +38,6 @@ public class RetrieveDataAdapter extends RecyclerView.Adapter<RetrieveDataAdapte
         NotesModel model = notesModels.get(position);
         holder.tvTitle.setText(model.getNoteTitle());
 
-        /*holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, SingleNoteActivity.class);
-            intent.putExtra("title", model.getNoteTitle());
-            intent.putExtra("content", model.getNoteContent());
-            context.startActivity(intent);
-        });
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, UpdateNoteActivity.class);
-            intent.putExtra("title", model.getNoteTitle());
-            intent.putExtra("content", model.getNoteContent());
-            intent.putExtra("noteId", model.getNoteId());
-            intent.putExtra("true", true);
-            context.startActivity(intent);
-        });*/
-
         holder.itemView.setOnClickListener(v -> {
             Intent in = new Intent(context, ToDoListAddNotesActivity.class);
             in.putExtra("title", model.getNoteTitle());
