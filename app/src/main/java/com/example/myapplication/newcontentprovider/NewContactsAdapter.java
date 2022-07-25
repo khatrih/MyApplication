@@ -12,15 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.contentproviders.SingleCallDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.viewHolder> {
 
-    Context context;
-    ArrayList<NewContactsModel> contactsList;
+    private Context context;
+    private ArrayList<NewContactsModel> contactsList;
+
 
     public NewContactsAdapter(Context context, ArrayList<NewContactsModel> contactsList) {
         this.context = context;
@@ -36,22 +37,18 @@ public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        NewContactsModel newContactsModel = contactsList.get(position);
+        NewContactsModel newContactsModel = contactsList.get(holder.getAdapterPosition());
 
         holder.tvCallDisPlayName.setText(newContactsModel.getContactName());
         holder.tvCallDisplayNumber.setText(newContactsModel.getContactNumber());
 
-        Picasso.get().load(newContactsModel.contactImage)
+        Picasso.get().load(newContactsModel.getContactImage())
                 .placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, SingleCallDetailActivity.class);
-            intent.putExtra("callerName", newContactsModel.getContactName());
-            intent.putExtra("callerNumber", newContactsModel.getContactNumber());
-            intent.putExtra("callerId", newContactsModel.getContactId());
-            intent.putExtra("callerImage", newContactsModel.getContactImage().toString());
-            intent.putExtra("callerEmail", newContactsModel.getContactEmail());
-            context.startActivity(intent);
+            Intent objIntent = new Intent(context, SingleCallDetailActivity.class);
+            objIntent.putExtra("contactModel", newContactsModel);
+            context.startActivity(objIntent);
         });
     }
 
@@ -60,7 +57,7 @@ public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.
         return contactsList.size();
     }
 
-    public static class viewHolder extends RecyclerView.ViewHolder {
+    public class viewHolder extends RecyclerView.ViewHolder {
         private ImageView ivCallDisplayImage;
         private TextView tvCallDisPlayName;
         private TextView tvCallDisplayNumber;

@@ -7,11 +7,13 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.myapplication.MainHomeActivity.MainContainActivity;
 import com.example.myapplication.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -26,6 +28,12 @@ public class MessageReceiver extends FirebaseMessagingService {
         }
     }
 
+    @Override
+    public void onNewToken(@NonNull String token) {
+        Log.e("FireToken", token);
+        super.onNewToken(token);
+    }
+
     private RemoteViews getNotificationDesign(String notificationTitle, String notificationBody) {
         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.to_do_list_notification);
         remoteViews.setTextViewText(R.id.notification_title, notificationTitle);
@@ -37,13 +45,24 @@ public class MessageReceiver extends FirebaseMessagingService {
     private void showNotification(String notificationTitle, String notificationBody) {
         String channelID = "notification_channel";
 
-        Intent intent = new Intent(this, ToDoListHomeActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(this, MainContainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(intent);
+        stackBuilder.addParentStack(MainContainActivity.class);
+        stackBuilder.addNextIntent(intent);
+
+        Intent intentEmailView = new Intent(this, ToDoListHomeActivity.class);
+        intentEmailView.putExtra("EmailId", "you can Pass emailId here");
+        stackBuilder.addNextIntent(intentEmailView);
+
+//        Intent intent = new Intent(this, ToDoListHomeActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addNextIntentWithParentStack(intent);
+        //stackBuilder.addParentStack(MainContainActivity.class);
+        //stackBuilder.addNextIntent(intent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,
-                PendingIntent.FLAG_IMMUTABLE);
+                PendingIntent.FLAG_UPDATE_CURRENT);
         //PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), channelID)

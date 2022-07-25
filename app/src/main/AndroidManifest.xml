@@ -19,14 +19,11 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
+        android:theme="@style/Theme.MyApplication">
 
         <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -51,7 +48,11 @@
             android:exported="false" />
         <activity
             android:name=".to_do_list.ToDoListHomeActivity"
-            android:parentActivityName=".MainHomeActivity.MainContainActivity" />
+            android:parentActivityName=".MainHomeActivity.MainContainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainHomeActivity.MainContainActivity" />
+        </activity>
         <activity
             android:name=".to_do_list.ToDoListLoginActivity"
             android:exported="false" />
@@ -62,11 +63,9 @@
         <activity
             android:name=".newcontentprovider.NewContactsActivity"
             android:exported="false" />
+
         <activity
-            android:name=".contentproviders.SingleCallDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".roomdb.UpdateStudentRDBActivity"
+            android:name=".newcontentprovider.SingleCallDetailActivity"
             android:exported="false" />
         <activity
             android:name=".roomdb.AddRecordsActivity"
@@ -93,13 +92,10 @@
             android:name=".databasedemo.FetchingDataActivity"
             android:exported="true" />
         <activity
-            android:name=".databasedemo.ViewCourseActivity"
-            android:exported="true" />
-        <activity
             android:name=".multiplethreading.MultipleThreadsActivity"
             android:exported="true" />
         <activity
-            android:name=".databasedemo.DataBaseMainActivity"
+            android:name=".databasedemo.AddUpdateActivity"
             android:exported="true" />
         <activity
             android:name=".threading.MainThreadActivity"

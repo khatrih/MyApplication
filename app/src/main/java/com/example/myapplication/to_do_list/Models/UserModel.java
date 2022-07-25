@@ -1,12 +1,14 @@
 package com.example.myapplication.to_do_list.Models;
 
+import java.io.Serializable;
+
 public class UserModel {
-    String name;
-    String email;
-    String password;
-    String id;
-    String confirmPassword;
-    String phoneNumber;
+    private String name;
+    private String email;
+    private String password;
+    private String id;
+    private String confirmPassword;
+    private String phoneNumber;
 
     public UserModel() {
     }

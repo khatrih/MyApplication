@@ -1,4 +1,4 @@
-package com.example.myapplication.contentproviders;
+package com.example.myapplication.newcontentprovider;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.newcontentprovider.BottomFragment;
 import com.squareup.picasso.Picasso;
+
 
 public class SingleCallDetailActivity extends AppCompatActivity {
 
@@ -35,11 +35,11 @@ public class SingleCallDetailActivity extends AppCompatActivity {
 
         initializingAllView();
 
-        String callerName = getIntent().getStringExtra("callerName");
-        String callerNumber = getIntent().getStringExtra("callerNumber");
-        String callerEmail = getIntent().getStringExtra("callerEmail");
-        String callerImage = getIntent().getStringExtra("callerImage");
-        Uri uriImage = Uri.parse(callerImage);
+        NewContactsModel newContactsModel = getIntent().getParcelableExtra("contactModel");
+
+        String callerName = newContactsModel.getContactName();
+        String callerNumber = newContactsModel.getContactNumber();
+        String callerEmail = newContactsModel.getContactEmail();
 
         if (callerEmail.matches("")) {
             ivEmailIcon.setVisibility(View.GONE);
@@ -53,7 +53,7 @@ public class SingleCallDetailActivity extends AppCompatActivity {
         }
         tvCallerName.setText(callerName);
         tvCallerNumber.setText(callerNumber);
-        Picasso.get().load(uriImage).placeholder(R.drawable.ic_call_image).into(ivCallerImage);
+        Picasso.get().load(newContactsModel.getContactImage()).placeholder(R.drawable.ic_call_image).into(ivCallerImage);
 
         tvCallerNumber.setOnClickListener(v -> {
             Intent callingIntent = new Intent(Intent.ACTION_DIAL);
@@ -83,7 +83,6 @@ public class SingleCallDetailActivity extends AppCompatActivity {
             emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{callerEmail});
             startActivity(emailIntent);
         });
-
 
         //send data to BottomSheet
         Bundle sendToBottomSheet = new Bundle();

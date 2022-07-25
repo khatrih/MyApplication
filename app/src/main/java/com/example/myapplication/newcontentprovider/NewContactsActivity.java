@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -18,12 +19,15 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 
 import com.example.myapplication.R;
+import com.example.myapplication.to_do_list.ToDoListLoginActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class NewContactsActivity extends AppCompatActivity {
     private RecyclerView contactListView;
     private ArrayList<NewContactsModel> newContactsModels = new ArrayList<>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,8 @@ public class NewContactsActivity extends AppCompatActivity {
 
         contactListView = findViewById(R.id.rvContacts);
         contactListView.setLayoutManager(new LinearLayoutManager(this));
-
+        dialog = new ProgressDialog(NewContactsActivity.this);
+        dialog.setMessage("please wait...");
         checkPermissions();
     }
 
@@ -54,7 +59,7 @@ public class NewContactsActivity extends AppCompatActivity {
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
         Cursor contactCursor = getContentResolver().query(uri, null, null, null,
                 ContactsContract.Contacts.DISPLAY_NAME + " ASC ");
-
+        dialog.show();
         if (contactCursor.getCount() > 0) {
             while (contactCursor.moveToNext()) {
                 String contactId = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -69,27 +74,23 @@ public class NewContactsActivity extends AppCompatActivity {
                     String contactNumber = dataCursor.getString(dataCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
                     Uri myImage = getPhotoUri(Long.parseLong(contactId));
-                    Cursor emails = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    Cursor emailsCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[]{contactId}, null);
 
-                    if (emails.moveToFirst()) {
-                        String Email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                    if (emailsCursor.moveToFirst()) {
+                        String Email = emailsCursor.getString(emailsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
                         contactEmail += Email;
                     }
+                    dialog.dismiss();
                     newContactsModels.add(new NewContactsModel(contactName, contactNumber, myImage, contactId, contactEmail));
-                    emails.close();
+                    NewContactsAdapter adapter = new NewContactsAdapter(NewContactsActivity.this, newContactsModels);
+                    contactListView.setAdapter(adapter);
+                    emailsCursor.close();
                     dataCursor.close();
                 }
             }
             contactCursor.close();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        NewContactsAdapter adapter = new NewContactsAdapter(NewContactsActivity.this, newContactsModels);
-        contactListView.setAdapter(adapter);
     }
 
     @Override

@@ -88,120 +88,126 @@
             app:layout_constraintTop_toTopOf="@id/product_name"
             tools:text="55.55 4545644" />
 
-        <ImageView
-            android:id="@+id/add_product_quality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/image"
-            android:src="@drawable/add"
-            app:layout_constraintBottom_toBottomOf="@id/remove_product_quality"
-            app:layout_constraintEnd_toStartOf="@id/product_quantity"
-            app:layout_constraintTop_toTopOf="@id/remove_product_quality" />
-
-        <TextView
-            android:id="@+id/product_quantity"
-            android:layout_width="28dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/remove_product_quality"
-            app:layout_constraintEnd_toStartOf="@+id/remove_product_quality"
-            app:layout_constraintTop_toTopOf="@id/remove_product_quality"
-            tools:text="1" />
-
-        <ImageView
-            android:id="@+id/remove_product_quality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="6dp"
-            android:contentDescription="@string/image"
-            android:src="@drawable/remove"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
         <RatingBar
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp"
             android:foregroundGravity="center"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rating_number"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_image" />
 
         <TextView
             android:id="@+id/rating_number"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:ellipsize="end"
-            android:maxWidth="25dp"
+            android:layout_marginStart="56dp"
             android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="@id/ratingBar"
-            app:layout_constraintStart_toEndOf="@id/ratingBar"
-            app:layout_constraintTop_toTopOf="@id/ratingBar"
+            app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+            app:layout_constraintEnd_toStartOf="@+id/product_comment"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintStart_toStartOf="@+id/ratingBar"
             tools:text="545" />
 
         <ImageView
-            android:id="@+id/product_pin"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="30dp"
-            android:contentDescription="@string/image"
-            android:src="@drawable/pin"
-            app:layout_constraintBottom_toBottomOf="@id/product_comment"
-            app:layout_constraintStart_toEndOf="@id/comment_message"
-            app:layout_constraintTop_toTopOf="@id/product_comment" />
-
-        <TextView
-            android:id="@+id/pin_message"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="24dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxWidth="30dp"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/product_pin"
-            app:layout_constraintStart_toEndOf="@id/product_pin"
-            app:layout_constraintTop_toTopOf="@id/product_pin"
-            tools:text="05" />
-
-        <ImageView
             android:id="@+id/product_comment"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/image"
-            android:src="@drawable/comment"
+            android:src="@drawable/ic_bubble_comment"
             app:layout_constraintBottom_toBottomOf="@id/rating_number"
-            app:layout_constraintStart_toEndOf="@id/rating_number"
-            app:layout_constraintTop_toTopOf="@id/rating_number" />
+            app:layout_constraintEnd_toStartOf="@+id/comment_message"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/rating_number" />
 
         <TextView
             android:id="@+id/comment_message"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginEnd="24dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
             android:lines="1"
-            android:maxWidth="30dp"
             app:layout_constraintBottom_toBottomOf="@id/product_comment"
-            app:layout_constraintStart_toEndOf="@id/product_comment"
-            app:layout_constraintTop_toTopOf="@id/product_comment"
+            app:layout_constraintEnd_toEndOf="@+id/product_comment"
+            app:layout_constraintEnd_toStartOf="@+id/product_pin"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/product_comment"
+            app:layout_constraintStart_toStartOf="@+id/product_comment"
             tools:text="12" />
+
+        <ImageView
+            android:id="@+id/product_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image"
+            android:src="@drawable/pin"
+            app:layout_constraintBottom_toBottomOf="@id/product_comment"
+            app:layout_constraintEnd_toStartOf="@+id/pin_message"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/comment_message" />
+
+        <TextView
+            android:id="@+id/pin_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/product_pin"
+            app:layout_constraintEnd_toEndOf="@+id/product_pin"
+            app:layout_constraintEnd_toStartOf="@+id/add_product_quality"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/product_pin"
+            app:layout_constraintStart_toStartOf="@+id/product_pin"
+            tools:text="05" />
+
+        <ImageView
+            android:id="@+id/add_product_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image"
+            android:src="@drawable/add"
+            app:layout_constraintBottom_toBottomOf="@id/pin_message"
+            app:layout_constraintEnd_toEndOf="@+id/product_quantity"
+            app:layout_constraintEnd_toStartOf="@+id/product_quantity"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin_message"
+            app:layout_constraintStart_toStartOf="@+id/product_quantity" />
+
+        <TextView
+            android:id="@+id/product_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/add_product_quality"
+            app:layout_constraintEnd_toStartOf="@+id/remove_product_quality"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/add_product_quality"
+            app:layout_constraintTop_toTopOf="@id/add_product_quality"
+            tools:text="1000" />
+
+        <ImageView
+            android:id="@+id/remove_product_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/remove"
+            app:layout_constraintBottom_toBottomOf="@id/add_product_quality"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/product_quantity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

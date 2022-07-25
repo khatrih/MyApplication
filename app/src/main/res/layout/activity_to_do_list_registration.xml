@@ -112,6 +112,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/material_field_register_confirm_password" />

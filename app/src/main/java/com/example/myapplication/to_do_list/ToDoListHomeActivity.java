@@ -14,28 +14,33 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.to_do_list.Models.NotesModel;
+import com.example.myapplication.to_do_list.interfaces.NotesInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ToDoListHomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class ToDoListHomeActivity extends AppCompatActivity implements View.OnClickListener, NotesInterface, DeleteItemBottomSheet.OnRemoveListener {
     private RecyclerView rvNotes;
+    private TextView tvNoData;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
-    private ArrayList<NotesModel> notesModel = new ArrayList<>();
-    private ProgressDialog dialog;
-    private RetrieveDataAdapter adapter;
+    private ArrayList<NotesModel> notesModelList = new ArrayList<>();
+    private ProgressDialog progressDialog;
     private NotesModel model;
     private FloatingActionButton floatingActionButton;
+    private String userId;
+    private static final String TAG = "TAG";
+    private RetrieveDataAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,56 +51,61 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
         setSupportActionBar(toolbar);
 
         floatingActionButton = findViewById(R.id.floatingAction);
+        tvNoData = findViewById(R.id.tv_no_data);
         rvNotes = findViewById(R.id.rv_notes);
-        adapter = new RetrieveDataAdapter(ToDoListHomeActivity.this, notesModel);
-
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
+        userId = mAuth.getCurrentUser().getUid();
 
-        dialog = new ProgressDialog(ToDoListHomeActivity.this);
-        dialog.setMessage("Loading...");
-        dialog.show();
-        dialog.setCancelable(false);
 
-        //generate token for test
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.w("TAG", "Fetching FCM registration token failed", task.getException());
-                return;
-            }
-            String token = task.getResult();
-            Log.d("TAG", "FCM Token:" + token);
-        });
+        progressDialog = new ProgressDialog(ToDoListHomeActivity.this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        DeleteItemBottomSheet.setRemoveListener(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         floatingActionButton.setOnClickListener(this);
-        String userId = mAuth.getCurrentUser().getUid();
-        reference.child("users").child(userId).child("Notes").
-                get().addOnSuccessListener((DataSnapshot dataSnapshot) -> {
-                    dialog.dismiss();
-                    notesModel.clear();
-                    for (DataSnapshot ss : dataSnapshot.getChildren()) {
-                        model = ss.getValue(NotesModel.class);
-                        assert model != null;
-                        model.setNoteId(ss.getKey());
-                        notesModel.add(model);
+        reference.child("users").child(userId).child("Notes")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        progressDialog.dismiss();
+                        notesModelList.clear();
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                model = dataSnapshot.getValue(NotesModel.class);
+                                assert model != null;
+                                model.setNoteId(dataSnapshot.getKey());
+                                notesModelList.add(model);
+                            }
+                        }
+                        setAdapter(notesModelList);
                     }
-                    rvNotes.setAdapter(adapter);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(ToDoListHomeActivity.this, "network" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("TAG", "onCancelled: ");
+                    }
                 });
+    }
+
+    void setAdapter(ArrayList<NotesModel> noteList) {
+        adapter = new RetrieveDataAdapter(ToDoListHomeActivity.this,
+                noteList, ToDoListHomeActivity.this);
+        rvNotes.setAdapter(adapter);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
     }
 
     @Override
@@ -129,4 +139,30 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
             floatingActionButton.setOnClickListener(null);
         }
     }
+
+    @Override
+    public void deleteNote(int position) {
+        Bundle bundle = new Bundle();
+        DeleteItemBottomSheet deleteItemBottomSheet = new DeleteItemBottomSheet();
+        bundle.putString("ID", notesModelList.get(position).getNoteId());
+        bundle.putString("title", notesModelList.get(position).getNoteTitle());
+        bundle.putInt("position", position);
+        deleteItemBottomSheet.setArguments(bundle);
+        deleteItemBottomSheet.show(getSupportFragmentManager(), "ModelBottomSheet");//deleteItemBottomSheet.getTag()
+
+    }
+
+    @Override
+    public void onRemove(int position) {
+        notesModelList.remove(position);
+    }
+
+
 }
+//                    if (notesModel.isEmpty()) {
+//                        tvNoData.setText(R.string.no_data);
+//                    } else {
+//                        tvNoData.setVisibility(View.GONE);
+//                        rvNotes.setVisibility(View.VISIBLE);
+//                        rvNotes.setAdapter(adapter);
+//                    }

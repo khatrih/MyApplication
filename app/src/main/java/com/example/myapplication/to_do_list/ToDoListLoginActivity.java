@@ -100,7 +100,6 @@ public class ToDoListLoginActivity extends AppCompatActivity {
                 Log.w("TAG", "Google sign in failed", e);
             }
         }
-
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {

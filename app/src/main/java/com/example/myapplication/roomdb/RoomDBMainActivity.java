@@ -53,21 +53,6 @@ public class RoomDBMainActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    /*class fetchDataFromBackGround extends Thread {
-        @Override
-        public void run() {
-            super.run();
-            StudentDataBase dataBase = Room.databaseBuilder(RoomDBMainActivity.this,
-                    StudentDataBase.class, "student_database").allowMainThreadQueries().build();
-
-            StudentDao studentDao = dataBase.getStudentDao();
-            List<StudentsModel> models = studentDao.getAllStudentData();
-            RoomDBAdapter adapter = new RoomDBAdapter(models, RoomDBMainActivity.this);
-            rvStudentData.setAdapter(adapter);
-            finish();
-        }
-    }*/
-
     @Override
     public void onClick(View v) {
         Intent in = new Intent(RoomDBMainActivity.this, AddRecordsActivity.class);

@@ -44,11 +44,11 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnNewCPDemo.setOnClickListener(this);
         btnToDoDemo.setOnClickListener(this);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
+        /*Bundle bundle = getIntent().getExtras();
+        if (bundle != null && !bundle.isEmpty()) {
             Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListHomeActivity.class);
             startActivity(intentToDoList);
-        }
+        }*/
     }
 
     @Override
@@ -68,7 +68,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         } else if (v.getId() == R.id.new_cp) {
             Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
             startActivity(intentCP);
-        } else {
+        } else if (v.getId() == R.id.to_do_list_demo){
             Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListLoginActivity.class);
             startActivity(intentToDoList);
         }

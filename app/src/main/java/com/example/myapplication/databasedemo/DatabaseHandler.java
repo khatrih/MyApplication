@@ -68,25 +68,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    //readable data
-    public ArrayList<CourseDataModel> readCourse() {
-        SQLiteDatabase sdb = this.getReadableDatabase();
-        Cursor cursor = sdb.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        ArrayList<CourseDataModel> dataModels = new ArrayList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            if (cursor.moveToFirst()) {
-                do {
-                    dataModels.add(new CourseDataModel(cursor.getString(1),
-                            cursor.getString(2), cursor.getString(3),
-                            cursor.getString(4), cursor.getString(5),
-                            cursor.getBlob(6)));
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-        return dataModels;
-    }
-
     //fetching data
     public ArrayList<CourseDataModel> fetchData(String degreeType) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -114,12 +95,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void updateStudentDetails(String name, String studentName, String studentEmail, String studentAddress,
                                      String studentPhone, String studentQualification, Bitmap studImage) {
+
         SQLiteDatabase liteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         studImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
         byte[] updatedStudentBitmap = stream.toByteArray();
+
         values.put(NAME_COL, studentName);
         values.put(EMAIL_COL, studentEmail);
         values.put(ADDRESS_COL, studentAddress);

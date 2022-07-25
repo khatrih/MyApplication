@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,14 +21,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class ToDoListAddNotesActivity extends AppCompatActivity {
 
     private EditText etNotesTitle;
     private EditText etNotesBody;
     private FirebaseDatabase database;
     private DatabaseReference reference;
-    private NotesModel notesModel;
     private boolean isUpdate = false;
+    private static final String TAG = "TAG";
+    String userId;
+    NotesModel notesModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,71 +44,19 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         etNotesTitle = findViewById(R.id.title_notes);
         etNotesBody = findViewById(R.id.body_notes);
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         database = FirebaseDatabase.getInstance();
 
         isUpdate = getIntent().getBooleanExtra("Flag", false);
-        String Title = getIntent().getStringExtra("title");
-        String Content = getIntent().getStringExtra("content");
-        String Id = getIntent().getStringExtra("noteId");
-
-        etNotesTitle.setText(Title);
-        etNotesBody.setText(Content);
-//        reference = database.getReference().child("Notes").push();
-        reference = database.getReference().child("users").child(userId).child("Notes").push();
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.save_notes) {
-                if (isUpdate) {
-                    String updatedTitle = etNotesTitle.getText().toString();
-                    String updatedContent = etNotesBody.getText().toString();
-                    notesModel = new NotesModel(updatedTitle, updatedContent);
-                    reference = database.getReference().child("users").child(userId).child("Notes").child(Id);
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            notesModel = new NotesModel(updatedTitle, updatedContent);
-                            reference.setValue(notesModel).addOnSuccessListener(unused -> {
-                                reference.setValue(notesModel);
-                                finish();
-                            }).addOnFailureListener(e -> Toast.makeText(ToDoListAddNotesActivity.this, R.string.update_note, Toast.LENGTH_SHORT).show());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-                } else {
-                    if (etNotesTitle.getText().toString().isEmpty() || etNotesBody.getText().toString().isEmpty()) {
-                        Toast.makeText(this, "Please add title and content here", Toast.LENGTH_SHORT).show();
-                        return true;
-                    } else {
-                        String title = etNotesTitle.getText().toString();
-                        String body = etNotesBody.getText().toString();
-                        reference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                notesModel = new NotesModel(title, body);
-                                reference.setValue(notesModel).addOnSuccessListener(unused -> {
-                                    reference.setValue(notesModel);
-                                    finish();
-                                }).addOnFailureListener(e -> Toast.makeText(ToDoListAddNotesActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-                }
-            }
-            return false;
-        });
+        notesModel = getIntent().getParcelableExtra("NotesModel");
+        if (isUpdate) {
+            etNotesTitle.setText(notesModel.getNoteTitle());
+            etNotesBody.setText(notesModel.getNoteContent());
+        }
     }
 
     @Override
@@ -111,4 +65,58 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.option_save_menu, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.save_notes:
+                String title = etNotesTitle.getText().toString();
+                String body = etNotesBody.getText().toString();
+                if (isUpdate) {
+                    reference = database.getReference().child("users").child(userId).child("Notes").child(notesModel.getNoteId());
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            snapshot.getRef().setValue(new NotesModel(title, body));
+                            reference.setValue(new NotesModel(title, body));
+                            Log.d(TAG, "onDataChange: update " + snapshot.getKey());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d(TAG, "onCancelled: " + error.getMessage());
+                        }
+                    });
+                } else {
+                    if (etNotesTitle.getText().toString().isEmpty() || etNotesBody.getText().toString().isEmpty()) {
+                        Toast.makeText(this, "Please add title and content here", Toast.LENGTH_SHORT).show();
+                        return true;
+                    } else {
+                        reference = database.getReference().child("users").child(userId).child("Notes").push();
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                reference.setValue(new NotesModel(title, body));
+                                Log.d(TAG, "onDataChange: add " + snapshot.getKey());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.d(TAG, "onCancelled: " + error.getMessage());
+                            }
+                        });
+                    }
+                }
+                finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

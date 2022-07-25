@@ -1,6 +1,8 @@
 package com.example.myapplication.databasedemo;
 
-public class CourseDataModel {
+import java.io.Serializable;
+
+public class CourseDataModel implements Serializable {
     private int sId;
     private String sName;
     private String sEmail;
