@@ -11,7 +11,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ContentInfoCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -21,13 +20,6 @@ import java.util.List;
 public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder> {
     List<StudentsModel> studentsModels;
     Context context;
-    private static final String STUDENT_ID = "id";
-    private static final String STUDENT_NAME = "name";
-    private static final String STUDENT_EMAIL = "email";
-    private static final String STUDENT_ADDRESS = "address";
-    private static final String STUDENT_PHONE_NO = "mobile_no";
-    private static final String STUDENT_QUALIFICATION = "qualification";
-    private static final String STUDENT_GENDER = "gender";
 
     public RoomDBAdapter(List<StudentsModel> studentsModels, Context context) {
         this.studentsModels = studentsModels;
@@ -58,14 +50,9 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
             popupMenu.setOnMenuItemClickListener(item -> {
                 int itemId = item.getItemId();
                 if (itemId == R.id.menu_update) {
-                    Intent intent = new Intent(context, UpdateStudentRDBActivity.class);
-                    intent.putExtra(STUDENT_ID, String.valueOf(model.getsId()));
-                    intent.putExtra(STUDENT_NAME, model.getsName());
-                    intent.putExtra(STUDENT_EMAIL, model.getsEmail());
-                    intent.putExtra(STUDENT_ADDRESS, model.getsAddress());
-                    intent.putExtra(STUDENT_PHONE_NO, model.getsMobileNo());
-                    intent.putExtra(STUDENT_QUALIFICATION, model.getsQualification());
-                    intent.putExtra(STUDENT_GENDER, model.getsGender());
+                    Intent intent = new Intent(context, AddRecordsActivity.class);
+                    intent.putExtra("studentModel", model);
+                    intent.putExtra("isUpdate", true);
                     context.startActivity(intent);
                 } else if (itemId == R.id.menu_delete) {
                     new AlertDialog.Builder(context)

@@ -1,10 +1,13 @@
 package com.example.myapplication.newcontentprovider;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class NewContactsModel {
+public class NewContactsModel implements Serializable {
     String contactName;
     String contactNumber;
     Uri contactImage;
@@ -59,4 +62,5 @@ public class NewContactsModel {
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
+
 }

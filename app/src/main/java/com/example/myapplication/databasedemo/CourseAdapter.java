@@ -60,15 +60,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
         holder.ivStudentImage.setImageBitmap(bitImage);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent i = new Intent(context, UpdatesStudentActivity.class);
+            Intent i = new Intent(context, AddUpdateActivity.class);
             //pass model class
-            i.putExtra(STUDENT_ID, model.getsId());
-            i.putExtra(STUDENT_NAME, model.getsName());
-            i.putExtra(STUDENT_EMAIL, model.getsEmail());
-            i.putExtra(STUDENT_ADDRESS, model.getSAddress());
-            i.putExtra(STUDENT_CONTACT_NO, model.getsPhoneNUmber());
-            i.putExtra(STUDENT_COURSE_NAME, model.getsDegreeType());
-            i.putExtra(STUDENT_IMAGE, model.getsImage());
+            i.putExtra("CourseModel", model);
+            i.putExtra("isUpdated", true);
             context.startActivity(i);
         });
 
@@ -80,7 +75,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dbHandler.deleteData(model.getsName());
-//                            dataModel.remove(position);
+                            //dataModel.remove(position);
                             notifyDataSetChanged();
                             Toast.makeText(context, "item deleted", Toast.LENGTH_SHORT).show();
                         }

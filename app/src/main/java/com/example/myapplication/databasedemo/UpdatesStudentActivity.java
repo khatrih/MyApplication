@@ -1,21 +1,23 @@
 package com.example.myapplication.databasedemo;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.contentproviders.ContactsModel;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class UpdatesStudentActivity extends AppCompatActivity {
 
@@ -26,14 +28,8 @@ public class UpdatesStudentActivity extends AppCompatActivity {
     private EditText etStudQualification;
     private ImageView ivStudentImage;
     private DatabaseHandler dbHandler;
-    private static final String STUDENT_ID = "id";
-    private static final String STUDENT_NAME = "NAME";
-    private static final String STUDENT_EMAIL = "EMAIL";
-    private static final String STUDENT_ADDRESS = "ADDRESS";
-    private static final String STUDENT_CONTACT_NO = "CONTACT";
-    private static final String STUDENT_COURSE_NAME = "COURSE_NAME";
-    private static final String STUDENT_IMAGE = "IMAGE";
-    ArrayList<CourseDataModel> list;
+    private Bitmap imageStore;
+    private static final int SELECT_PICTURE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +45,22 @@ public class UpdatesStudentActivity extends AppCompatActivity {
         ivStudentImage = findViewById(R.id.img_update_student_image);
         AppCompatButton btnUpdateCourseData = findViewById(R.id.btn_update_data);
 
-        String name = getIntent().getStringExtra(STUDENT_NAME);
-        String email = getIntent().getStringExtra(STUDENT_EMAIL);
-        String contactsNo = getIntent().getStringExtra(STUDENT_CONTACT_NO);
-        String address = getIntent().getStringExtra(STUDENT_ADDRESS);
-        String courseName = getIntent().getStringExtra(STUDENT_COURSE_NAME);
-        byte[] image = getIntent().getByteArrayExtra(STUDENT_IMAGE);
-        int ids = getIntent().getIntExtra(STUDENT_ID, 1);
-        Bitmap bitImage = BitmapFactory.decodeByteArray(image, 0, image.length);
+        ivStudentImage.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent();
+            galleryIntent.setType("image/*");
+            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(galleryIntent, "select picture"), SELECT_PICTURE);
+        });
 
-        etStudName.setText(name);
-        etStudEmail.setText(email);
-        etStudNumber.setText(contactsNo);
-        etStudAddress.setText(address);
-        etStudQualification.setText(courseName);
+        Intent i = getIntent();
+        CourseDataModel courseDataModel = (CourseDataModel) i.getSerializableExtra("CourseModel");
+        String name = courseDataModel.getsName();
+        etStudName.setText(courseDataModel.getsName());
+        etStudEmail.setText(courseDataModel.getsEmail());
+        etStudNumber.setText(courseDataModel.getsPhoneNUmber());
+        etStudAddress.setText(courseDataModel.getSAddress());
+        etStudQualification.setText(courseDataModel.getsDegreeType());
+        Bitmap bitImage = BitmapFactory.decodeByteArray(courseDataModel.getsImage(), 0, courseDataModel.getsImage().length);
         ivStudentImage.setImageBitmap(bitImage);
 
         btnUpdateCourseData.setOnClickListener(v -> {
@@ -89,15 +87,25 @@ public class UpdatesStudentActivity extends AppCompatActivity {
                 return;
             }
 
-            dbHandler.updateStudentDetails(name, nameStudent, emailStudent, addressStudent, phoneStudent, QuaStudent, bitImage);
-
+            dbHandler.updateStudentDetails(name, nameStudent, emailStudent, addressStudent, phoneStudent, QuaStudent, imageStore);
             Log.d("TAG", "Updated done ");
-            etStudName.setText("");
-            etStudEmail.setText("");
-            etStudNumber.setText("");
-            etStudAddress.setText("");
-            etStudQualification.setText("");
-            ivStudentImage.setImageResource(R.drawable.ic_round_image);
+            finish();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
+            if (data != null) {
+                Uri selectedImageUri = data.getData();
+                try {
+                    imageStore = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    ivStudentImage.setImageBitmap(imageStore);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

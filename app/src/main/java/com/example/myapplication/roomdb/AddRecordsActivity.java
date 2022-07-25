@@ -3,10 +3,9 @@ package com.example.myapplication.roomdb;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,18 +17,15 @@ import java.util.ArrayList;
 
 public class AddRecordsActivity extends AppCompatActivity {
 
-    private int sId;
     private EditText etStudentName;
     private EditText etStudentEmail;
     private EditText etStudentPhoneNo;
     private EditText etStudentAddress;
-    private Button btnSaveData;
-    private ArrayList<String> mCourseList;
-    private ArrayList<String> sGenderList;
-    private AppCompatSpinner isSelectQualification;
-    private Spinner isSelectGender;
-    private String getQualificationText;
-    private String getGenderText;
+    private AppCompatSpinner studentQualificationSpinner;
+    private Spinner studentGenderSpinner;
+    private boolean isUpdate = false;
+    private StudentsModel studentsModel;
+    private StudentDao studentDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,59 +36,49 @@ public class AddRecordsActivity extends AppCompatActivity {
         etStudentEmail = findViewById(R.id.et_email);
         etStudentAddress = findViewById(R.id.et_address);
         etStudentPhoneNo = findViewById(R.id.et_phone_number);
-        btnSaveData = findViewById(R.id.btn_save);
-        isSelectQualification = findViewById(R.id.spin_qualification);
-        isSelectGender = findViewById(R.id.spin_gender);
+        Button btnSaveData = findViewById(R.id.btn_save);
+        studentQualificationSpinner = findViewById(R.id.spin_qualification);
+        studentGenderSpinner = findViewById(R.id.spin_gender);
 
-        mCourseList = new ArrayList<>();
+        StudentDataBase dataBase = StudentDataBase.getInstance(AddRecordsActivity.this);
+        studentDao = dataBase.getStudentDao();
+
+        ArrayList<String> mCourseList = new ArrayList<>();
         mCourseList.add("select course");
         mCourseList.add("MCA");
         mCourseList.add("MBA");
 
-        sGenderList = new ArrayList<>();
+        ArrayList<String> sGenderList = new ArrayList<>();
         sGenderList.add("select gender");
         sGenderList.add("Male");
         sGenderList.add("Female");
 
         ArrayAdapter<String> courseList = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mCourseList);
-        isSelectQualification.setAdapter(courseList);
+        studentQualificationSpinner.setAdapter(courseList);
 
         ArrayAdapter<String> genderList = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sGenderList);
-        isSelectGender.setAdapter(genderList);
+        studentGenderSpinner.setAdapter(genderList);
 
+        isUpdate = getIntent().getBooleanExtra("isUpdate", false);
 
-        /*isSelectQualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getQualificationText = isSelectQualification.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });*/
-
-        /*isSelectGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getGenderText = isSelectGender.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });*/
-
+        if (isUpdate) {
+            btnSaveData.setText(R.string.update_btn);
+            studentsModel = (StudentsModel) getIntent().getSerializableExtra("studentModel");
+            etStudentName.setText(studentsModel.getsName());
+            etStudentEmail.setText(studentsModel.getsEmail());
+            etStudentAddress.setText(studentsModel.getsAddress());
+            etStudentPhoneNo.setText(studentsModel.getsMobileNo());
+            studentQualificationSpinner.setSelection(courseList.getPosition(studentsModel.sQualification));
+            studentGenderSpinner.setSelection(genderList.getPosition(studentsModel.getsGender()));
+        }
         btnSaveData.setOnClickListener(v -> {
+
             String name = etStudentName.getText().toString();
             String email = etStudentEmail.getText().toString();
             String address = etStudentAddress.getText().toString();
             String phoneNo = etStudentPhoneNo.getText().toString();
-            String qualified = isSelectQualification.getSelectedItem().toString();
-            String gender = isSelectGender.getSelectedItem().toString();
-
-//            String qualified = getQualificationText;
-//            String gender = getGenderText;
+            String qualified = studentQualificationSpinner.getSelectedItem().toString();
+            String gender = studentGenderSpinner.getSelectedItem().toString();
 
             if (name.matches("")) {
                 etStudentName.setError("enter valid name");
@@ -115,20 +101,38 @@ public class AddRecordsActivity extends AppCompatActivity {
                 return;
             }
             if (qualified.matches("select course")) {
-                isSelectQualification.requestFocus();
+                studentQualificationSpinner.requestFocus();
                 return;
             }
             if (gender.matches("select gender")) {
-                isSelectGender.requestFocus();
+                studentGenderSpinner.requestFocus();
                 return;
             }
-            StudentDataBase dataBase = StudentDataBase.getInstance(AddRecordsActivity.this);
 
-            StudentDao studentDao = dataBase.getStudentDao();
-            StudentsModel studentsModel = new StudentsModel(sId, name, email, address, phoneNo, qualified, gender);//
-            studentDao.insertRecords(studentsModel);
+            if (isUpdate) {
+                btnSaveData.setText(R.string.update_btn);
+                studentDao.updateStudentData(studentsModel.getsId(), name, email, address, phoneNo, qualified, gender);
+            } else {
+                studentsModel = new StudentsModel(name, email, address, phoneNo, qualified, gender);//
+                studentDao.insertRecords(studentsModel);
+            }
             finish();
-
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddRecordsActivity.this);
+        alertDialog.setTitle("Back");
+        if (isUpdate) {
+            alertDialog.setMessage("Are you sure you don't want to update?");
+        } else {
+            alertDialog.setMessage("Are you sure you don't want to save");
+        }
+        alertDialog.setCancelable(false)
+                .setPositiveButton("yes", (dialog, which) -> finish())
+                .setNegativeButton("no", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 }

@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "student_tbl")
-public class StudentsModel {
+public class StudentsModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int sId;
     @ColumnInfo(name = "student_name")
@@ -21,10 +23,7 @@ public class StudentsModel {
     @ColumnInfo(name = "gender")
     public String sGender;
 
-
-    public StudentsModel(int sId, String sName, String sEmail, String sAddress, String sMobileNo,
-                         String sQualification, String sGender) {
-        this.sId = sId;
+    public StudentsModel(String sName, String sEmail, String sAddress, String sMobileNo, String sQualification, String sGender) {
         this.sName = sName;
         this.sEmail = sEmail;
         this.sAddress = sAddress;

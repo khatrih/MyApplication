@@ -63,10 +63,7 @@
             android:name=".newcontentprovider.NewContactsActivity"
             android:exported="false" />
         <activity
-            android:name=".contentproviders.SingleCallDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".roomdb.UpdateStudentRDBActivity"
+            android:name=".newcontentprovider.SingleCallDetailActivity"
             android:exported="false" />
         <activity
             android:name=".roomdb.AddRecordsActivity"
@@ -93,13 +90,10 @@
             android:name=".databasedemo.FetchingDataActivity"
             android:exported="true" />
         <activity
-            android:name=".databasedemo.ViewCourseActivity"
-            android:exported="true" />
-        <activity
             android:name=".multiplethreading.MultipleThreadsActivity"
             android:exported="true" />
         <activity
-            android:name=".databasedemo.DataBaseMainActivity"
+            android:name=".databasedemo.AddUpdateActivity"
             android:exported="true" />
         <activity
             android:name=".threading.MainThreadActivity"

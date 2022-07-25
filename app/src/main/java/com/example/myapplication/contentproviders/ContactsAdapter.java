@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.newcontentprovider.SingleCallDetailActivity;
 
 import java.util.ArrayList;
 
@@ -58,14 +59,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.viewHo
 
         //Picasso.get().load().placeholder(R.drawable.ic_call_image).into(holder.ivCallDisplayImage);
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent in = new Intent(context, SingleCallDetailActivity.class);
-            in.putExtra("name", contactsModel.getCallName());
-            in.putExtra("number", contactsModel.getCallNumber());
-            in.putExtra("callerId", contactsModel.getCallID());
-            in.putExtra("callerImage", contactsModel.getImage());
-            context.startActivity(in);
-        });
     }
 
     @Override

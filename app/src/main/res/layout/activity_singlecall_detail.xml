@@ -5,7 +5,7 @@
     android:id="@+id/coordinate_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contentproviders.SingleCallDetailActivity">
+    tools:context=".newcontentprovider.SingleCallDetailActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"

@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.contentproviders.SingleCallDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,11 +45,12 @@ public class NewContactsAdapter extends RecyclerView.Adapter<NewContactsAdapter.
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SingleCallDetailActivity.class);
-            intent.putExtra("callerName", newContactsModel.getContactName());
+            intent.putExtra("NewContactsModel", newContactsModel);
+            /*intent.putExtra("callerName", newContactsModel.getContactName());
             intent.putExtra("callerNumber", newContactsModel.getContactNumber());
             intent.putExtra("callerId", newContactsModel.getContactId());
             intent.putExtra("callerImage", newContactsModel.getContactImage().toString());
-            intent.putExtra("callerEmail", newContactsModel.getContactEmail());
+            intent.putExtra("callerEmail", newContactsModel.getContactEmail());*/
             context.startActivity(intent);
         });
     }
