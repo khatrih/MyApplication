@@ -49,7 +49,6 @@ public class DeleteItemBottomSheet extends BottomSheetDialogFragment {
                             snapshot.getRef().removeValue();
                             Log.d(TAG, "onDataChange: delete " + snapshot.getKey());
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.d(TAG, "onCancelled: " + error.getMessage());

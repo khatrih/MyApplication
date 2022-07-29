@@ -84,7 +84,6 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
                             reference.setValue(new NotesModel(title, body));
                             Log.d(TAG, "onDataChange: update " + snapshot.getKey());
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.d(TAG, "onCancelled: " + error.getMessage());
