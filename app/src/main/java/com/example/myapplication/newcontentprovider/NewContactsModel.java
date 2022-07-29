@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class NewContactsModel implements Parcelable{
+public class NewContactsModel implements Parcelable {
     String contactName;
     String contactNumber;
     Uri contactImage;
