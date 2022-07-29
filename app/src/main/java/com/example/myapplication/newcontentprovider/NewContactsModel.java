@@ -7,15 +7,12 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class NewContactsModel implements Parcelable {
-    private String contactName;
-    private String contactNumber;
-    private Uri contactImage;
-    private String contactId;
-    private String contactEmail;
-
-    public NewContactsModel() {
-    }
+public class NewContactsModel {
+    String contactName;
+    String contactNumber;
+    Uri contactImage;
+    String contactId;
+    String contactEmail;
 
     public NewContactsModel(String contactName, String contactNumber, Uri contactImage, String contactId,
                             String contactEmail) {

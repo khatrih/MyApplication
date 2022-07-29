@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -119,6 +121,7 @@ public class AddRecordsActivity extends AppCompatActivity {
                 studentDao.insertRecords(studentsModel);
             }
             finish();
+
         });
     }
 

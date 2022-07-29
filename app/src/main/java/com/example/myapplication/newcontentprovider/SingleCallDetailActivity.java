@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.newcontentprovider.BottomFragment;
+import com.example.myapplication.newcontentprovider.NewContactsModel;
 import com.squareup.picasso.Picasso;
 
 
