@@ -72,7 +72,7 @@ public class AddRecordsActivity extends AppCompatActivity {
             etStudentEmail.setText(studentsModel.getsEmail());
             etStudentAddress.setText(studentsModel.getsAddress());
             etStudentPhoneNo.setText(studentsModel.getsMobileNo());
-            studentQualificationSpinner.setSelection(courseList.getPosition(studentsModel.sQualification));
+            studentQualificationSpinner.setSelection(courseList.getPosition(studentsModel.getsQualification()));
             studentGenderSpinner.setSelection(genderList.getPosition(studentsModel.getsGender()));
         }
         btnSaveData.setOnClickListener(v -> {

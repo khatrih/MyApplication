@@ -24,14 +24,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-
-        <!--<meta-data
+        <activity
+            android:name=".apidemo.RTFAddUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".apidemo.RTFHomeActivity"
+            android:exported="false" />
+        <!--
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/my_notes" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/black" />-->
-
+            android:resource="@color/black" />
+        -->
         <service
             android:name=".to_do_list.MessageReceiver"
             android:exported="false">
@@ -63,7 +69,6 @@
         <activity
             android:name=".newcontentprovider.NewContactsActivity"
             android:exported="false" />
-
         <activity
             android:name=".newcontentprovider.SingleCallDetailActivity"
             android:exported="false" />
@@ -81,10 +86,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".contentproviders.ContactActivity"
             android:exported="true" />

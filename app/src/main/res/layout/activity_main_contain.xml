@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/contentProviderDemo"
+        android:id="@+id/ApisDemo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/content_provider_demo"
+        android:text="@string/apis_demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerDemo" />
@@ -34,7 +34,7 @@
         android:text="@string/sqlite_demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contentProviderDemo" />
+        app:layout_constraintTop_toBottomOf="@id/ApisDemo" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/room_db"

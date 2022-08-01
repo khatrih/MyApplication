@@ -36,7 +36,7 @@ public class DeleteItemBottomSheet extends BottomSheetDialogFragment {
         Bundle getId = getArguments();
         String Id = getId.getString("ID");
         String title = getId.getString("title");
-        txt_delete_item.setText("Are sure you want delete " + title + "?");
+        txt_delete_item.setText("Are sure you want delete " + title + " ?");
         int position = getId.getInt("position");
 
         btnDelete.setOnClickListener(v -> {
@@ -49,6 +49,7 @@ public class DeleteItemBottomSheet extends BottomSheetDialogFragment {
                             snapshot.getRef().removeValue();
                             Log.d(TAG, "onDataChange: delete " + snapshot.getKey());
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.d(TAG, "onCancelled: " + error.getMessage());

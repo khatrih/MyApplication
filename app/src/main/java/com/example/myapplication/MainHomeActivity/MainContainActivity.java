@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
+import com.example.myapplication.apidemo.RTFHomeActivity;
 import com.example.myapplication.contentproviders.ContactActivity;
 import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
@@ -19,7 +20,7 @@ import com.example.myapplication.to_do_list.ToDoListLoginActivity;
 
 public class MainContainActivity extends AppCompatActivity implements View.OnClickListener {
     private AppCompatButton btnRecyclerViewDemo;
-    private AppCompatButton btnContentProviderDemo;
+    private AppCompatButton btnApisDemo;
     private AppCompatButton btnSQLiteDemo;
     private AppCompatButton btnRoomDBDemo;
     private AppCompatButton btnNewCPDemo;
@@ -31,14 +32,14 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_main_contain);
 
         btnRecyclerViewDemo = findViewById(R.id.recyclerDemo);
-        btnContentProviderDemo = findViewById(R.id.contentProviderDemo);
+        btnApisDemo = findViewById(R.id.ApisDemo);
         btnSQLiteDemo = findViewById(R.id.sqlite_demo);
         btnRoomDBDemo = findViewById(R.id.room_db);
         btnNewCPDemo = findViewById(R.id.new_cp);
         btnToDoDemo = findViewById(R.id.to_do_list_demo);
 
         btnRecyclerViewDemo.setOnClickListener(this);
-        btnContentProviderDemo.setOnClickListener(this);
+        btnApisDemo.setOnClickListener(this);
         btnSQLiteDemo.setOnClickListener(this);
         btnRoomDBDemo.setOnClickListener(this);
         btnNewCPDemo.setOnClickListener(this);
@@ -56,9 +57,9 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         if (v.getId() == R.id.recyclerDemo) {
             Intent in = new Intent(MainContainActivity.this, HomeProductActivity.class);
             startActivity(in);
-        } else if (v.getId() == R.id.contentProviderDemo) {
-            Intent inContentProvider = new Intent(MainContainActivity.this, ContactActivity.class);
-            startActivity(inContentProvider);
+        } else if (v.getId() == R.id.ApisDemo) {
+            Intent intentApis = new Intent(MainContainActivity.this, RTFHomeActivity.class);
+            startActivity(intentApis);
         } else if (v.getId() == R.id.sqlite_demo) {
             Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
             startActivity(intent);

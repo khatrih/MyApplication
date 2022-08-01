@@ -7,6 +7,7 @@
     <string name="phone">Phone</string>
     <string name="otp">OTP</string>
     <string name="email">Email</string>
+    <string name="status">Status</string>
     <string name="name">Name</string>
     <string name="gender">Gender</string>
     <string name="full_name">Full Name</string>
@@ -37,7 +38,7 @@
     <string name="no_contacts_list">NO Contacts Available</string>
     <string name="permission">permission</string>
     <string name="recyclerview_demo">RecyclerView Demo</string>
-    <string name="content_provider_demo">Content Provider Demo</string>
+    <string name="apis_demo">Apis Demo</string>
     <string name="sqlite_demo">SQLite Demo</string>
     <string name="room_db">Room DB Demo</string>
     <string name="new_cp">new Content provider</string>
