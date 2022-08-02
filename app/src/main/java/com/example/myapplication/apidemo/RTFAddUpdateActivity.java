@@ -54,7 +54,7 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
             userModel = (RTFUserModel) getIntent().getSerializableExtra("RTFUserModel");
             teUserName.setText(userModel.getName());
             teUserEmail.setText(userModel.getEmail());
-            genderSpinner.setSelection(genderAdapter.getPosition(userModel.getGender()));
+            genderSpinner.setSelection(getGenderValue(genderSpinner, userModel.getGender()));
         }
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("saving data...");
@@ -114,5 +114,14 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
         });
         progressDialog.dismiss();
         finish();
+    }
+
+    private int getGenderValue(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                return i;
+            }
+        }
+        return 0;
     }
 }
