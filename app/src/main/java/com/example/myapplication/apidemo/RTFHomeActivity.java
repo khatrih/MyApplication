@@ -88,7 +88,6 @@ public class RTFHomeActivity extends AppCompatActivity {
             }
         });
     }
-
     /*public class GetUsers extends AsyncTask<String, Void, List<RTFUserModel>> {
 
         @Override

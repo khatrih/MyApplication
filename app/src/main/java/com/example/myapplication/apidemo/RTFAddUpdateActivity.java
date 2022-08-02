@@ -1,21 +1,19 @@
 package com.example.myapplication.apidemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.example.myapplication.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +23,7 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
 
     private TextInputEditText teUserName;
     private TextInputEditText teUserEmail;
-    private AppCompatSpinner genderSpinner;
+    private Spinner genderSpinner;
     private ProgressDialog progressDialog;
     private static final String TAG = "TAG";
     private boolean isUpdate = false;
@@ -56,7 +54,6 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
             userModel = (RTFUserModel) getIntent().getSerializableExtra("RTFUserModel");
             teUserName.setText(userModel.getName());
             teUserEmail.setText(userModel.getEmail());
-//            genderSpinner.setSelection(genderAdapter.getPosition(userModel.getGender()));
             genderSpinner.setSelection(genderAdapter.getPosition(userModel.getGender()));
         }
         progressDialog = new ProgressDialog(this);
@@ -74,17 +71,16 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
                 teUserEmail.requestFocus();
                 return;
             }
-            if (genderSpinner.equals("select gender")) {
-                teUserName.setError("please select anyone");
-                teUserName.requestFocus();
+            if (genderSpinner.getSelectedItem().toString().equals("select gender")) {
+                genderSpinner.requestFocus();
                 return;
             }
-            postUserData(teUserName.getText().toString(), teUserEmail.getText().toString(),
+            onCreateUsersData(teUserName.getText().toString(), teUserEmail.getText().toString(),
                     genderSpinner.getSelectedItem().toString());
         });
     }
 
-    private void postUserData(String name, String email, String gender) {
+    private void onCreateUsersData(String name, String email, String gender) {
         progressDialog.show();
 
         String Accept = "application/json";
@@ -94,43 +90,28 @@ public class RTFAddUpdateActivity extends AppCompatActivity {
         RTFUserModel model = new RTFUserModel(name, email, gender, "active");
 
         UserApiInterface userApiInterface = RetrofitApiInstance.getApiRetrofit().create(UserApiInterface.class);
+        Call<RTFUserModel> modelCall;
         if (isUpdate) {
-            userApiInterface.updateUsers(Accept, Content_Type, Authorization, userModel.getId(), model)
-                    .enqueue(new Callback<RTFUserModel>() {
-                        @Override
-                        public void onResponse(Call<RTFUserModel> call, Response<RTFUserModel> response) {
-                            userModel = response.body();
-                            Log.d(TAG, "response code updated " + response.code());
-                            Log.d(TAG, "response name updated " + userModel.getName());
-                            Log.d(TAG, "response email updated " + userModel.getEmail());
-                            Log.d(TAG, "response gender updated " + userModel.getGender());
-                        }
-
-                        @Override
-                        public void onFailure(Call<RTFUserModel> call, Throwable t) {
-                            t.printStackTrace();
-                            Log.d(TAG, "onFailure: updated " + t.getLocalizedMessage());
-                        }
-                    });
+            modelCall = userApiInterface.updateUsers(Accept, Content_Type, Authorization, userModel.getId(), model);
         } else {
-            userApiInterface.createUsers(Accept, Content_Type, Authorization, model)
-                    .enqueue(new Callback<RTFUserModel>() {
-                        @Override
-                        public void onResponse(Call<RTFUserModel> call, Response<RTFUserModel> response) {
-                            userModel = response.body();
-                            Log.d(TAG, "response code add " + response.code());
-                            Log.d(TAG, "response name add " + userModel.getName());
-                            Log.d(TAG, "response email add " + userModel.getEmail());
-                            Log.d(TAG, "response gender add " + userModel.getGender());
-                        }
-
-                        @Override
-                        public void onFailure(Call<RTFUserModel> call, Throwable t) {
-                            t.printStackTrace();
-                            Log.d(TAG, "onFailure: add" + t.getLocalizedMessage());
-                        }
-                    });
+            modelCall = userApiInterface.createUsers(Accept, Content_Type, Authorization, model);
         }
+        modelCall.enqueue(new Callback<RTFUserModel>() {
+            @Override
+            public void onResponse(@NonNull Call<RTFUserModel> call, @NonNull Response<RTFUserModel> response) {
+                userModel = response.body();
+                Log.d(TAG, "response code: " + response.code());
+                Log.d(TAG, "response name: " + userModel.getName());
+                Log.d(TAG, "response email: " + userModel.getEmail());
+                Log.d(TAG, "response gender: " + userModel.getGender());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RTFUserModel> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                Log.d(TAG, "onFailure: updated " + t.getLocalizedMessage());
+            }
+        });
         progressDialog.dismiss();
         finish();
     }

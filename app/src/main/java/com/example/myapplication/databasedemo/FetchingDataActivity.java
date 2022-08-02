@@ -21,6 +21,7 @@ public class FetchingDataActivity extends AppCompatActivity {
     private RecyclerView rvStudentList;
     private DatabaseHandler dbHandler;
     private AppCompatSpinner filterCourseSpinner;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class FetchingDataActivity extends AppCompatActivity {
         mCourseList.add("MCA");
         mCourseList.add("MBA");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mCourseList);
+        adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mCourseList);
         filterCourseSpinner.setAdapter(adapter);
 
         dbHandler = new DatabaseHandler(FetchingDataActivity.this);
@@ -52,9 +53,25 @@ public class FetchingDataActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String degreeType = filterCourseSpinner.getSelectedItem().toString();
-        ArrayList<CourseDataModel> courseDataModels = dbHandler.fetchData(degreeType);
-        CourseAdapter courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
-        rvStudentList.setAdapter(courseAdapter);
+        studentData();
     }
+
+    private void studentData() {
+        filterCourseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String degreeType = (String) adapterView.getItemAtPosition(position);
+                ArrayList<CourseDataModel> courseDataModels = dbHandler.fetchData(degreeType);
+                CourseAdapter courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
+                rvStudentList.setAdapter(courseAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+
 }

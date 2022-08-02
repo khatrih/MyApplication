@@ -73,6 +73,10 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         floatingActionButton.setOnClickListener(this);
+        getNotes();
+    }
+
+    private void getNotes() {
         reference.child("users").child(userId).child("Notes")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -85,6 +89,13 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
                                 assert model != null;
                                 model.setNoteId(dataSnapshot.getKey());
                                 notesModelList.add(model);
+                            }
+                            if (notesModelList.isEmpty()) {
+                                tvNoData.setText(R.string.no_data);
+                            } else {
+                                tvNoData.setVisibility(View.GONE);
+                                rvNotes.setVisibility(View.VISIBLE);
+                                rvNotes.setAdapter(adapter);
                             }
                         }
                         setAdapter(notesModelList);
@@ -124,9 +135,7 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
                         mAuth.signOut();
                         startActivity(new Intent(ToDoListHomeActivity.this, ToDoListLoginActivity.class));
                     }))
-                    .setNegativeButton("no", ((dialogInterface, i) -> {
-                        dialogInterface.dismiss();
-                    }))
+                    .setNegativeButton("no", ((dialogInterface, i) -> dialogInterface.dismiss()))
                     .create().show();
         }
         return super.onOptionsItemSelected(item);
@@ -148,7 +157,7 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
         bundle.putString("title", notesModelList.get(position).getNoteTitle());
         bundle.putInt("position", position);
         deleteItemBottomSheet.setArguments(bundle);
-        deleteItemBottomSheet.show(getSupportFragmentManager(), "ModelBottomSheet");//deleteItemBottomSheet.getTag()
+        deleteItemBottomSheet.show(getSupportFragmentManager(), "ModelBottomSheet");
 
     }
 
@@ -157,12 +166,4 @@ public class ToDoListHomeActivity extends AppCompatActivity implements View.OnCl
         notesModelList.remove(position);
     }
 
-
 }
-//                    if (notesModel.isEmpty()) {
-//                        tvNoData.setText(R.string.no_data);
-//                    } else {
-//                        tvNoData.setVisibility(View.GONE);
-//                        rvNotes.setVisibility(View.VISIBLE);
-//                        rvNotes.setAdapter(adapter);
-//                    }

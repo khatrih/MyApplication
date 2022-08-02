@@ -44,5 +44,4 @@ public interface UserApiInterface {
             @Header("Authorization") String Authorization,
             @Path("id") int id
     );
-
 }

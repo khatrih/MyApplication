@@ -76,13 +76,16 @@ public class UserApiAdapter extends RecyclerView.Adapter<UserApiAdapter.viewHold
                                         .enqueue(new Callback<RTFUserModel>() {
                                             @Override
                                             public void onResponse(Call<RTFUserModel> call, Response<RTFUserModel> response) {
-                                                rtfUserModelList.remove(position);
+                                                rtfUserModelList.remove(holder.getAdapterPosition());
+                                                notifyItemRemoved(holder.getAdapterPosition());
+                                                dialog.dismiss();
                                                 Log.d("TAG", "onResponse: delete " + response.code());
                                             }
 
                                             @Override
                                             public void onFailure(Call<RTFUserModel> call, Throwable t) {
                                                 t.printStackTrace();
+                                                dialog.dismiss();
                                                 Log.d("TAG", "onFailure: delete" + t.getLocalizedMessage());
                                             }
                                         });
@@ -98,6 +101,7 @@ public class UserApiAdapter extends RecyclerView.Adapter<UserApiAdapter.viewHold
             popupMenu.show();
         });
     }
+
 
     @Override
     public int getItemCount() {
