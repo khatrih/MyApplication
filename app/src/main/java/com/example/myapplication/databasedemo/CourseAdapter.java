@@ -75,8 +75,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.myViewHold
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dbHandler.deleteData(model.getsName());
-                            //dataModel.remove(position);
-                            notifyDataSetChanged();
+                            dataModel.remove(position);
+                            notifyItemRemoved(position);
                             Toast.makeText(context, "item deleted", Toast.LENGTH_SHORT).show();
                         }
                     })

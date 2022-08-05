@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".canvasdemo.PaintHomeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/canvas_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Canvas"
+        app:titleTextColor="@color/white" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/element_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardBackgroundColor="#E0E0E0"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_pencil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_pencil"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_eraser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_eraser"
+                app:layout_constraintStart_toEndOf="@id/iv_pencil"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_save_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_save_alt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/oval_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_oval"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_pencil" />
+
+            <ImageView
+                android:id="@+id/square_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_square"
+                app:layout_constraintBottom_toBottomOf="@id/oval_shape"
+                app:layout_constraintStart_toEndOf="@id/oval_shape"
+                app:layout_constraintTop_toTopOf="@id/oval_shape" />
+
+            <ImageView
+                android:id="@+id/triangle_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_triangle"
+                app:layout_constraintBottom_toBottomOf="@id/square_shape"
+                app:layout_constraintStart_toEndOf="@id/square_shape"
+                app:layout_constraintTop_toTopOf="@id/square_shape" />
+
+            <ImageView
+                android:id="@+id/rectangle_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_rectangle"
+                app:layout_constraintBottom_toBottomOf="@id/triangle_shape"
+                app:layout_constraintStart_toEndOf="@id/triangle_shape"
+                app:layout_constraintTop_toTopOf="@id/triangle_shape" />
+
+            <ImageView
+                android:id="@+id/hexagon_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_hexagon"
+                app:layout_constraintBottom_toBottomOf="@id/rectangle_shape"
+                app:layout_constraintStart_toEndOf="@id/rectangle_shape"
+                app:layout_constraintTop_toTopOf="@id/rectangle_shape" />
+
+            <ImageView
+                android:id="@+id/star_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="@id/iv_eraser"
+                app:layout_constraintStart_toEndOf="@id/iv_eraser"
+                app:layout_constraintTop_toTopOf="@id/iv_eraser" />
+
+            <ImageView
+                android:id="@+id/diamond_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_diamond"
+                app:layout_constraintBottom_toBottomOf="@id/star_shape"
+                app:layout_constraintStart_toEndOf="@id/star_shape"
+                app:layout_constraintTop_toTopOf="@id/star_shape" />
+
+            <ImageView
+                android:id="@+id/thunder_bolt_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_bolt_thunder"
+                app:layout_constraintBottom_toBottomOf="@id/diamond_shape"
+                app:layout_constraintStart_toEndOf="@id/diamond_shape"
+                app:layout_constraintTop_toTopOf="@id/diamond_shape" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/lll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/element_card_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/canvas_toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

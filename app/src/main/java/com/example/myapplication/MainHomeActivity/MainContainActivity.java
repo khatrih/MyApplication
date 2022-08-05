@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.myapplication.R;
 import com.example.myapplication.apidemo.RTFHomeActivity;
+import com.example.myapplication.canvasdemo.PaintHomeActivity;
 import com.example.myapplication.contentproviders.ContactActivity;
 import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
@@ -25,6 +26,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
     private AppCompatButton btnRoomDBDemo;
     private AppCompatButton btnNewCPDemo;
     private AppCompatButton btnToDoDemo;
+    private AppCompatButton btnCanvasDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnRoomDBDemo = findViewById(R.id.room_db);
         btnNewCPDemo = findViewById(R.id.new_cp);
         btnToDoDemo = findViewById(R.id.to_do_list_demo);
+        btnCanvasDemo = findViewById(R.id.canvas_demo);
 
         btnRecyclerViewDemo.setOnClickListener(this);
         btnApisDemo.setOnClickListener(this);
@@ -44,6 +47,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnRoomDBDemo.setOnClickListener(this);
         btnNewCPDemo.setOnClickListener(this);
         btnToDoDemo.setOnClickListener(this);
+        btnCanvasDemo.setOnClickListener(this);
 
         /*Bundle bundle = getIntent().getExtras();
         if (bundle != null && !bundle.isEmpty()) {
@@ -55,23 +59,19 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.recyclerDemo) {
-            Intent in = new Intent(MainContainActivity.this, HomeProductActivity.class);
-            startActivity(in);
+            startActivity(new Intent(MainContainActivity.this, HomeProductActivity.class));
         } else if (v.getId() == R.id.ApisDemo) {
-            Intent intentApis = new Intent(MainContainActivity.this, RTFHomeActivity.class);
-            startActivity(intentApis);
+            startActivity(new Intent(MainContainActivity.this, RTFHomeActivity.class));
         } else if (v.getId() == R.id.sqlite_demo) {
-            Intent intent = new Intent(MainContainActivity.this, FetchingDataActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainContainActivity.this, FetchingDataActivity.class));
         } else if (v.getId() == R.id.room_db) {
-            Intent intentRoomDB = new Intent(MainContainActivity.this, RoomDBMainActivity.class);
-            startActivity(intentRoomDB);
+            startActivity(new Intent(MainContainActivity.this, RoomDBMainActivity.class));
         } else if (v.getId() == R.id.new_cp) {
-            Intent intentCP = new Intent(MainContainActivity.this, NewContactsActivity.class);
-            startActivity(intentCP);
-        } else if (v.getId() == R.id.to_do_list_demo){
-            Intent intentToDoList = new Intent(MainContainActivity.this, ToDoListLoginActivity.class);
-            startActivity(intentToDoList);
+            startActivity(new Intent(MainContainActivity.this, NewContactsActivity.class));
+        } else if (v.getId() == R.id.to_do_list_demo) {
+            startActivity(new Intent(MainContainActivity.this, ToDoListLoginActivity.class));
+        } else if (v.getId() == R.id.canvas_demo) {
+            startActivity(new Intent(MainContainActivity.this, PaintHomeActivity.class));
         }
     }
 

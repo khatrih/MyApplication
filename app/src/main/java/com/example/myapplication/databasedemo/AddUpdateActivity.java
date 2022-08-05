@@ -79,7 +79,6 @@ public class AddUpdateActivity extends AppCompatActivity {
             etStudentAddress.setText(courseDataModel.getSAddress());
             studentQualificationSpinner.setSelection(courseList.getPosition(courseDataModel.getsDegreeType()));
             bitmapImage = BitmapFactory.decodeByteArray(courseDataModel.getsImage(), 0, courseDataModel.getsImage().length);
-//            Bitmap bitmap = ((BitmapDrawable) ivStudentImage.getDrawable()).getBitmap();
             ivStudentImage.setImageBitmap(bitmapImage);
         }
 
@@ -126,7 +125,6 @@ public class AddUpdateActivity extends AppCompatActivity {
             dbHandler.updateStudentDetails(courseDataModel.getsName(), sName, sEmail, sAddress, sPhoneNumber, sQualification, bitmapImage);
             Toast.makeText(AddUpdateActivity.this, "Record Successfully updated", Toast.LENGTH_SHORT).show();
         } else {
-
             dbHandler.addNewCourse(sName, sEmail, sAddress, sPhoneNumber, sQualification, bitmapImage);
             Toast.makeText(AddUpdateActivity.this, "Record Successfully added", Toast.LENGTH_SHORT).show();
         }

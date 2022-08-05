@@ -27,13 +27,11 @@ public class RTFHomeActivity extends AppCompatActivity {
     private static final String Accept = "application/json";
     private static final String Content_Type = "application/json";
     private static final String Authorization = "Bearer 2d29e9b750eb0c822aa99f5bce491a2c18017a025b1dc0a01d86c6ec4015bee7";
+    private static final String TAG = "TAG";
     private RecyclerView rvUsers;
     private TextView textView;
-    private static final String TAG = "TAG";
     private List<RTFUserModel> rtfUserModelList;
-    private UserApiAdapter adapter;
     private ProgressDialog progressDialog;
-    private UserApiInterface userApiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +45,10 @@ public class RTFHomeActivity extends AppCompatActivity {
 
         floatingActionButton.setOnClickListener(v ->
                 startActivity(new Intent(this, RTFAddUpdateActivity.class)));
-
         progressDialog = new ProgressDialog(RTFHomeActivity.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
-        rtfUserModelList = new ArrayList<>();
-        userApiInterface = RetrofitApiInstance.getApiRetrofit().create(UserApiInterface.class);
     }
 
     @Override
@@ -64,18 +58,20 @@ public class RTFHomeActivity extends AppCompatActivity {
     }
 
     private void getUsers() {
+        rtfUserModelList = new ArrayList<>();
+        UserApiInterface userApiInterface = RetrofitApiInstance.getApiRetrofit().create(UserApiInterface.class);
         userApiInterface.getApiUsers(Accept, Content_Type, Authorization).enqueue(new Callback<List<RTFUserModel>>() {
             @Override
             public void onResponse(@NonNull Call<List<RTFUserModel>> call, @NonNull Response<List<RTFUserModel>> response) {
                 if (response.body() != null) {
-                    progressDialog.dismiss();
                     rtfUserModelList = response.body();
+                    progressDialog.dismiss();
                     if (rtfUserModelList.isEmpty()) {
                         textView.setText(R.string.no_data);
                     } else {
                         rvUsers.setVisibility(View.VISIBLE);
                         textView.setVisibility(View.GONE);
-                        adapter = new UserApiAdapter(rtfUserModelList, RTFHomeActivity.this);
+                        UserApiAdapter adapter = new UserApiAdapter(rtfUserModelList, RTFHomeActivity.this);
                         rvUsers.setAdapter(adapter);
                     }
                 }
@@ -88,46 +84,4 @@ public class RTFHomeActivity extends AppCompatActivity {
             }
         });
     }
-    /*public class GetUsers extends AsyncTask<String, Void, List<RTFUserModel>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.show();
-        }
-
-        @Override
-        protected List<RTFUserModel> doInBackground(String... strings) {
-            rtfUserModelList = new ArrayList<>();
-            userApiInterface.getApiUsers().enqueue(new Callback<List<RTFUserModel>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<RTFUserModel>> call, @NonNull Response<List<RTFUserModel>> response) {
-                    if (response.body() != null) {
-                        rtfUserModelList = response.body();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<List<RTFUserModel>> call, @NonNull Throwable t) {
-                    t.printStackTrace();
-                    Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-                }
-            });
-            return rtfUserModelList;
-        }
-
-        @Override
-        protected void onPostExecute(List<RTFUserModel> rtfUserModels) {
-            super.onPostExecute(rtfUserModels);
-            progressDialog.dismiss();
-            if (rtfUserModels.isEmpty()) {
-                textView.setText(R.string.no_data);
-            } else {
-                rvUsers.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.GONE);
-                UserApiAdapter adapter = new UserApiAdapter(rtfUserModels, RTFHomeActivity.this);
-                rvUsers.setAdapter(adapter);
-            }
-        }
-    }*/
 }

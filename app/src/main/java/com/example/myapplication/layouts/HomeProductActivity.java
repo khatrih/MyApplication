@@ -31,11 +31,11 @@ public class HomeProductActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    ArrayList<CardItemModel> itemsList;
+    private ArrayList<CardItemModel> itemsList;
     private static final String PREFERENCES_NAME = "my_prefs";
     private static final String CARD_ITEM_LIST = "items_list";
-    SharedPreferences sharedPreferences;
-    InputStream inputStream;
+    private SharedPreferences sharedPreferences;
+    private InputStream inputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

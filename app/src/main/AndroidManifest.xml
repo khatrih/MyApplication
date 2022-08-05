@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".canvasdemo.PaintHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".apidemo.RTFAddUpdateActivity"
             android:exported="false" />
         <activity
@@ -77,9 +80,6 @@
             android:exported="false" />
         <activity
             android:name=".roomdb.RoomDBMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".databasedemo.UpdatesStudentActivity"
             android:exported="false" />
         <activity
             android:name=".MainHomeActivity.MainContainActivity"

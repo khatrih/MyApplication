@@ -64,7 +64,7 @@ public class RoomDBAdapter extends RecyclerView.Adapter<RoomDBAdapter.viewHolder
                                 StudentDao studentDao = dataBase.getStudentDao();
                                 studentDao.deletedStudentData(model.getsId());
                                 studentsModels.remove(position);
-                                notifyDataSetChanged();
+                                notifyItemRemoved(position);
                             })
                             .setNegativeButton("no", (dialog, which) -> {
                                 dialog.dismiss();

@@ -22,6 +22,7 @@ public class FetchingDataActivity extends AppCompatActivity {
     private DatabaseHandler dbHandler;
     private AppCompatSpinner filterCourseSpinner;
     ArrayAdapter<String> adapter;
+    ArrayList<CourseDataModel> courseDataModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,11 @@ public class FetchingDataActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        String degreeType = (String) filterCourseSpinner.getSelectedItem();
+        courseDataModels = dbHandler.fetchData(degreeType);
+        CourseAdapter courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
+        rvStudentList.setAdapter(courseAdapter);
+        adapter.notifyDataSetChanged();
         studentData();
     }
 
@@ -62,13 +68,15 @@ public class FetchingDataActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String degreeType = (String) adapterView.getItemAtPosition(position);
-                ArrayList<CourseDataModel> courseDataModels = dbHandler.fetchData(degreeType);
+                courseDataModels = dbHandler.fetchData(degreeType);
                 CourseAdapter courseAdapter = new CourseAdapter(courseDataModels, FetchingDataActivity.this);
                 rvStudentList.setAdapter(courseAdapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
