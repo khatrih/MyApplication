@@ -89,6 +89,8 @@
     <string name="verify">Verify</string>
     <string name="note">Notes</string>
     <string name="canvas_demo">Canvas Demo</string>
+    <string name="map_demo">Map Demo</string>
     <string name="clear_draw">clear</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

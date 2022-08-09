@@ -192,6 +192,7 @@ public class PaintViewer extends View {
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
+                onManageSquare(xAxis, yAxis);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:

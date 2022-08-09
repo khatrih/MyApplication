@@ -5,18 +5,16 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
 import com.example.myapplication.apidemo.RTFHomeActivity;
 import com.example.myapplication.canvasdemo.PaintHomeActivity;
-import com.example.myapplication.contentproviders.ContactActivity;
 import com.example.myapplication.databasedemo.FetchingDataActivity;
 import com.example.myapplication.layouts.HomeProductActivity;
+import com.example.myapplication.map.MapsActivity;
 import com.example.myapplication.newcontentprovider.NewContactsActivity;
 import com.example.myapplication.roomdb.RoomDBMainActivity;
-import com.example.myapplication.to_do_list.ToDoListHomeActivity;
 import com.example.myapplication.to_do_list.ToDoListLoginActivity;
 
 public class MainContainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +25,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
     private AppCompatButton btnNewCPDemo;
     private AppCompatButton btnToDoDemo;
     private AppCompatButton btnCanvasDemo;
+    private AppCompatButton btnMapDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnNewCPDemo = findViewById(R.id.new_cp);
         btnToDoDemo = findViewById(R.id.to_do_list_demo);
         btnCanvasDemo = findViewById(R.id.canvas_demo);
+        btnMapDemo = findViewById(R.id.map_demo);
 
         btnRecyclerViewDemo.setOnClickListener(this);
         btnApisDemo.setOnClickListener(this);
@@ -48,6 +48,7 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
         btnNewCPDemo.setOnClickListener(this);
         btnToDoDemo.setOnClickListener(this);
         btnCanvasDemo.setOnClickListener(this);
+        btnMapDemo.setOnClickListener(this);
 
         /*Bundle bundle = getIntent().getExtras();
         if (bundle != null && !bundle.isEmpty()) {
@@ -72,6 +73,8 @@ public class MainContainActivity extends AppCompatActivity implements View.OnCli
             startActivity(new Intent(MainContainActivity.this, ToDoListLoginActivity.class));
         } else if (v.getId() == R.id.canvas_demo) {
             startActivity(new Intent(MainContainActivity.this, PaintHomeActivity.class));
+        }else if (v.getId() == R.id.map_demo) {
+            startActivity(new Intent(MainContainActivity.this, MapsActivity.class));
         }
     }
 
