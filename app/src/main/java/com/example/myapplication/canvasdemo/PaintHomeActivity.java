@@ -7,22 +7,26 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
-import android.widget.ImageView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.myapplication.R;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class PaintHomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class PaintHomeActivity extends AppCompatActivity {
 
     private PaintViewer paintViewer;
 
@@ -37,47 +41,58 @@ public class PaintHomeActivity extends AppCompatActivity implements View.OnClick
         LinearLayout layout = findViewById(R.id.lll);
         layout.addView(paintViewer);
 
-        ImageView ivBrush = findViewById(R.id.iv_pencil);
-        ImageView ivEraser = findViewById(R.id.iv_eraser);
-        ImageView ivSave = findViewById(R.id.iv_save_img);
-        ImageView ivRectangle = findViewById(R.id.rectangle_shape);
-        ImageView ivSquare = findViewById(R.id.square_shape);
-        ImageView ivCircle = findViewById(R.id.oval_shape);
-        ImageView ivTriangle = findViewById(R.id.triangle_shape);
+        AppCompatButton btnClearDraw = findViewById(R.id.clear_draw);
+        btnClearDraw.setOnClickListener(v -> {
+            paintViewer.undo();
+            Toast.makeText(this, "cleared", Toast.LENGTH_SHORT).show();
+        });
 
-        ivBrush.setOnClickListener(this);
-        ivEraser.setOnClickListener(this);
-        ivSave.setOnClickListener(this);
-        ivRectangle.setOnClickListener(this);
-        ivSquare.setOnClickListener(this);
-        ivCircle.setOnClickListener(this);
-        ivTriangle.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.iv_pencil) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.paint_element_, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.option_pencil) {
             paintViewer.currentShape = PaintViewer.SMOOTH_LINE;
             Toast.makeText(this, "brush", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.iv_eraser) {
-            paintViewer.undo();
-            Toast.makeText(this, "eraser", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.iv_save_img) {
-            downloadCanvasImage();
-        } else if (id == R.id.rectangle_shape) {
+        } else if (itemId == R.id.option_rectangle) {
             paintViewer.currentShape = PaintViewer.RECTANGLE_SHAPE;
             Toast.makeText(this, "rectangle", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.square_shape) {
+        } else if (itemId == R.id.option_square) {
             paintViewer.currentShape = PaintViewer.SQUARE_SHAPE;
             Toast.makeText(this, "Square", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.oval_shape) {
+        } else if (itemId == R.id.option_oval) {
+            paintViewer.currentShape = PaintViewer.OVAL_SHAPE;
+            Toast.makeText(this, "oval", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.option_circle) {
             paintViewer.currentShape = PaintViewer.CIRCLE_SHAPE;
             Toast.makeText(this, "Circle", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.triangle_shape) {
+        } else if (itemId == R.id.option_triangle) {
             paintViewer.currentShape = PaintViewer.TRIANGLE_SHAPE;
             Toast.makeText(this, "Triangle", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.option_save_image) {
+            downloadCanvasImage();
+            Toast.makeText(this, "save image", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.option_color_palette) {
+            new ColorPickerDialog.Builder(this)
+                    .setTitle("ColorPicker Dialog")
+                    .setPreferenceName("MyColorPickerDialog")
+                    .setPositiveButton("OK", (ColorEnvelopeListener) (envelope, fromUser) -> {
+                        paintViewer.setColor(envelope.getColor());
+                    })
+                    .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.dismiss())
+                    .attachAlphaSlideBar(true)
+                    .attachBrightnessSlideBar(true)
+                    .setBottomSpace(12)
+                    .show();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void downloadCanvasImage() {

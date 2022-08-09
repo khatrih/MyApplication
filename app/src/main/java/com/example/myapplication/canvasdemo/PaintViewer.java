@@ -27,6 +27,7 @@ public class PaintViewer extends View {
     public static final int SQUARE_SHAPE = 3;
     public static final int CIRCLE_SHAPE = 4;
     public static final int TRIANGLE_SHAPE = 5;
+    public static final int OVAL_SHAPE = 6;
     public boolean isDrawing = false;
     public int currentShape;
     public int triangleTouchCount = 0;
@@ -53,6 +54,10 @@ public class PaintViewer extends View {
         mCanvas = new Canvas(mBitmap);
     }
 
+    public void setColor(int color) {
+        mPaint.setColor(color);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -73,6 +78,9 @@ public class PaintViewer extends View {
                     break;
                 case TRIANGLE_SHAPE:
                     onTriangleDraw(canvas);
+                    break;
+                case OVAL_SHAPE:
+                    onOvalDraw(canvas);
                     break;
             }
         }
@@ -111,6 +119,9 @@ public class PaintViewer extends View {
             case TRIANGLE_SHAPE:
                 onTriangleTouchEvent(event);
                 break;
+            case OVAL_SHAPE:
+                onOvalTouchEvent(event);
+                break;
         }
         return true;
     }
@@ -120,19 +131,20 @@ public class PaintViewer extends View {
     }
 
     private void onSignatureTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mPath.moveTo(x, y);
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            mPath.lineTo(x, y);
-            mCanvas.drawPath(mPath, mPaint);
-            invalidate();
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            isDrawing = false;
-            mPath.reset();
-            invalidate();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mPath.moveTo(event.getX(), event.getY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                mPath.lineTo(event.getX(), event.getY());
+                mCanvas.drawPath(mPath, mPaint);
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                isDrawing = false;
+                mPath.reset();
+                invalidate();
+                break;
         }
     }
 
@@ -195,12 +207,16 @@ public class PaintViewer extends View {
         float dx = Math.abs(xAxisStart - x);
         float dy = Math.abs(yAxisStart - y);
         float max = Math.max(dx, dy);
-        xAxis = xAxisStart - x < 0 ? xAxisStart + max : xAxisStart - max;
+        if (xAxisStart - x < 0) {
+            xAxis = xAxisStart + max;
+        } else {
+            xAxis = xAxisStart - max;
+        }
         yAxis = yAxisStart - y < 0 ? yAxisStart + max : yAxisStart - max;
     }
 
     private void onCircleDraw(Canvas canvas) {
-        canvas.drawOval(xAxisStart, yAxisStart, xAxisEnd, yAxisEnd, mPaint);
+        canvas.drawCircle(xAxis, yAxis, calculateRadius(xAxisStart, yAxisStart, xAxis, yAxis), mPaint);
     }
 
     private void onCircleTouchEvent(MotionEvent event) {
@@ -212,15 +228,19 @@ public class PaintViewer extends View {
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                xAxisEnd = event.getX();
-                yAxisEnd = event.getY();
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                mCanvas.drawOval(xAxisStart, yAxisStart, xAxisEnd, yAxisEnd, mPaint);
+                isDrawing = false;
+                mCanvas.drawCircle(xAxis, yAxis, calculateRadius(xAxisStart, yAxisStart, xAxis, yAxis), mPaint);
                 invalidate();
                 break;
         }
+    }
+
+    private float calculateRadius(float x1, float y1, float x2, float y2) {
+        float result = (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+        return result;
     }
 
     private void onTriangleDraw(Canvas canvas) {
@@ -265,4 +285,28 @@ public class PaintViewer extends View {
         }
     }
 
+    private void onOvalDraw(Canvas canvas) {
+        canvas.drawOval(xAxisStart, yAxisStart, xAxisEnd, yAxisEnd, mPaint);
+    }
+
+    private void onOvalTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isDrawing = true;
+                xAxisStart = xAxis;
+                yAxisStart = yAxis;
+                invalidate();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                xAxisEnd = event.getX();
+                yAxisEnd = event.getY();
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                isDrawing = false;
+                mCanvas.drawOval(xAxisStart, yAxisStart, xAxisEnd, yAxisEnd, mPaint);
+                invalidate();
+                break;
+        }
+    }
 }
