@@ -8,11 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
-
     <color name="red">#D34949</color>
     <color name="blue">#68B2ED</color>
     <color name="pink">#DF83A2</color>
     <color name="notification_app_color">#4fd1d9</color>
+    <color name="navigation_color">#f2f5fc</color>
 
 </resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_type_bottom_sheet_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="16dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/map_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/map_type"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/close_view_sheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/default_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/terrain"
+        app:layout_constraintEnd_toStartOf="@+id/satellite_type"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_type" />
+
+    <TextView
+        android:id="@+id/default_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Default"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/default_type"
+        app:layout_constraintStart_toStartOf="@id/default_type"
+        app:layout_constraintTop_toBottomOf="@id/default_type" />
+
+    <ImageView
+        android:id="@+id/satellite_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/terrain"
+        app:layout_constraintBottom_toBottomOf="@id/default_type"
+        app:layout_constraintEnd_toStartOf="@+id/terrain_type"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/default_type" />
+
+    <TextView
+        android:id="@+id/satellite_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Satellite"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/satellite_type"
+        app:layout_constraintStart_toStartOf="@id/satellite_type"
+        app:layout_constraintTop_toBottomOf="@id/satellite_type" />
+
+    <ImageView
+        android:id="@+id/terrain_type"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/terrain"
+        app:layout_constraintBottom_toBottomOf="@id/default_type"
+        app:layout_constraintEnd_toStartOf="@+id/close_view_sheet"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/satellite_type" />
+
+    <TextView
+        android:id="@+id/terrain_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Terrain"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/terrain_type"
+        app:layout_constraintStart_toStartOf="@id/terrain_type"
+        app:layout_constraintTop_toBottomOf="@id/terrain_type" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#C8C8C8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/default_map" />
+
+    <TextView
+        android:id="@+id/map_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/map_details"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_line" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

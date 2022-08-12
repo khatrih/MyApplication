@@ -92,5 +92,7 @@
     <string name="map_demo">Map Demo</string>
     <string name="clear_draw">clear</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="map_type">Map type</string>
+    <string name="map_details">Map details</string>
 
 </resources>

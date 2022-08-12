@@ -2,17 +2,24 @@ package com.example.myapplication.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityMapsBinding;
@@ -29,7 +36,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
@@ -46,9 +57,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -58,6 +71,78 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fabCurrentLocation.setOnClickListener(v -> {
             askCurrentLocation();
         });
+
+        binding.svLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String searchLocation = binding.svLocation.getQuery().toString();
+
+                List<Address> addressList = null;
+
+                if (searchLocation != null || searchLocation.equals("")) {
+                    Geocoder geocoder = new Geocoder(MapsActivity.this);
+
+                    try {
+                        addressList = geocoder.getFromLocationName(searchLocation, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Address address = addressList.get(0);
+
+                    LatLng searchLatLang = new LatLng(address.getLatitude(), address.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(searchLatLang).title(searchLocation));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(searchLatLang, 18f));
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        binding.fabDestination.setOnClickListener(v -> {
+            startActivity(new Intent(this, SearchActivity.class));
+        });
+
+        binding.fabMapType.setOnClickListener(v -> {
+            showBottomSheetDailog();
+        });
+    }
+
+    private void showBottomSheetDailog() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.maps_type_view_sheet);
+
+        ImageView closeBottomSheet = bottomSheetDialog.findViewById(R.id.close_view_sheet);
+        closeBottomSheet.setOnClickListener(v1 -> bottomSheetDialog.dismiss());
+
+        TextView defaultType = bottomSheetDialog.findViewById(R.id.default_map);
+        ImageView defaultMapType = bottomSheetDialog.findViewById(R.id.default_type);
+        defaultMapType.setOnClickListener(v2 -> {
+            defaultType.setTextColor(getColor(R.color.blue));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            bottomSheetDialog.dismiss();
+        });
+
+        TextView satelliteType = bottomSheetDialog.findViewById(R.id.satellite_map);
+        ImageView satelliteMapType = bottomSheetDialog.findViewById(R.id.satellite_type);
+        satelliteMapType.setOnClickListener(v3 -> {
+            satelliteType.setTextColor(Color.BLUE);
+            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            bottomSheetDialog.dismiss();
+        });
+
+        TextView terrainType = bottomSheetDialog.findViewById(R.id.terrain_map);
+        ImageView terrainMapType = bottomSheetDialog.findViewById(R.id.terrain_type);
+        terrainMapType.setOnClickListener(v3 -> {
+            terrainType.setTextColor(Color.BLUE);
+            mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.show();
     }
 
     @Override
@@ -69,6 +154,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(amdLatLng).title("Ahmedabad"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(amdLatLng));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(amdLatLng, 16f));
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setCompassEnabled(false);
     }
 
     private void askCurrentLocation() {
