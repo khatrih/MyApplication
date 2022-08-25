@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.CardListAdapter;
 import com.example.myapplication.layouts.interfaces.UpdatedLists;
-import com.example.myapplication.model.CardItemModel;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -19,11 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.util.ArrayList;
 

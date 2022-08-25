@@ -2,7 +2,6 @@ package com.example.myapplication.map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,7 +34,6 @@ public class SearchActivity extends AppCompatActivity implements PlacesAutoCompl
     private String startLocation;
     private String endLocation;
     private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +106,7 @@ public class SearchActivity extends AppCompatActivity implements PlacesAutoCompl
         super.onBackPressed();
     }
 
-    private TextWatcher filterTextWatcher = new TextWatcher() {
+    private final TextWatcher filterTextWatcher = new TextWatcher() {
         public void afterTextChanged(Editable s) {
             if (!s.toString().equals("")) {
                 mAutoCompleteAdapter.getFilter().filter(s.toString());

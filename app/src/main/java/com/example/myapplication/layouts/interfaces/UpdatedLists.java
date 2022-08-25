@@ -1,6 +1,6 @@
 package com.example.myapplication.layouts.interfaces;
 
-import com.example.myapplication.model.CardItemModel;
+import com.example.myapplication.layouts.CardItemModel;
 
 import java.util.ArrayList;
 

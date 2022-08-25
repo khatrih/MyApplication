@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.layouts.interfaces.UpdatedLists;
-import com.example.myapplication.model.CardItemModel;
+import com.example.myapplication.layouts.CardItemModel;
 
 import java.util.ArrayList;
 

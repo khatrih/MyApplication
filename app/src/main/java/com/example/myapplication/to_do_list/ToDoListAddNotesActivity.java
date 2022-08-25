@@ -80,7 +80,7 @@ public class ToDoListAddNotesActivity extends AppCompatActivity {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            snapshot.getRef().setValue(new NotesModel(title, body));
+                            //snapshot.getRef().setValue(new NotesModel(title, body));
                             reference.setValue(new NotesModel(title, body));
                             Log.d(TAG, "onDataChange: update " + snapshot.getKey());
                         }

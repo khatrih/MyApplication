@@ -72,8 +72,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Address address;
     private List<Address> addressList;
     private static final int REQUEST_CODE = 0x9345;
-    private LatLng fromLatLng;
-    private LatLng toLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        FloatingActionButton fabCurrentLocation = findViewById(R.id.fab_current_location);
-        fabCurrentLocation.setOnClickListener(v -> {
-            askCurrentLocation();
-        });
+        binding.fabCurrentLocation.setOnClickListener(v -> askCurrentLocation());
 
         binding.svLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -120,13 +115,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        binding.fabDestination.setOnClickListener(v -> {
-            startActivityForResult(new Intent(this, SearchActivity.class), REQUEST_CODE);
-        });
+        binding.fabDestination.setOnClickListener(v -> startActivityForResult(new Intent(
+                this, SearchActivity.class), REQUEST_CODE));
 
-        binding.fabMapType.setOnClickListener(v -> {
-            showBottomSheetDailog();
-        });
+        binding.fabMapType.setOnClickListener(v -> showBottomSheetDailog());
     }
 
     private void showBottomSheetDailog() {
@@ -182,9 +174,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
                 String source = data.getStringExtra(SearchActivity.SOURCE_NAME);
-                fromLatLng = data.getParcelableExtra(SearchActivity.SOURCE);
+                LatLng fromLatLng = data.getParcelableExtra(SearchActivity.SOURCE);
+
                 String destination = data.getStringExtra(SearchActivity.DESTINATION_NAME);
-                toLatLng = data.getParcelableExtra(SearchActivity.DESTINATION);
+                LatLng toLatLng = data.getParcelableExtra(SearchActivity.DESTINATION);
+
                 Log.d("TAG", "onActivityResult: " + fromLatLng);
                 Log.d("TAG", "onActivityResult: " + toLatLng);
 
@@ -238,8 +232,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
-                        .setPositiveButton("ok", (dialog, which) -> ActivityCompat.requestPermissions(MapsActivity.this, new String[]
+                        .setMessage("This app needs the Location permission, " +
+                                "please accept to use location functionality")
+                        .setPositiveButton("ok", (dialog, which) -> ActivityCompat
+                                .requestPermissions(MapsActivity.this, new String[]
                                 {Manifest.permission.ACCESS_FINE_LOCATION}, 10))
                         .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
                         .create().show();
@@ -258,7 +254,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         }
     }
 
@@ -286,7 +283,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f));
 
         if (mGoogleApiClient != null) { //stop location updates
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
+                    this);
         }
     }
 
@@ -294,7 +292,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onPause() {
         super.onPause();
         if (mGoogleApiClient != null) { //stop location updates when Activity is no longer active
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
+                    this);
         }
     }
 
@@ -304,11 +303,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String sensor = "sensor=false";
         String parameters = str_origin + "&" + str_dest + "&" + sensor;
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
     }
 
-    @SuppressLint("LongLogTag")
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -355,7 +352,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+    private class ParserTask extends
+            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
             JSONObject jObject;
@@ -376,14 +374,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             PolylineOptions lineOptions = null;
             Log.e("results", result + "");
             if (result.size() < 1) {
-                Toast.makeText(MapsActivity.this, "No Points", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this,
+                        "No Points", Toast.LENGTH_SHORT).show();
                 return;
             }
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<>();
                 lineOptions = new PolylineOptions();
                 List<HashMap<String, String>> path = result.get(i);
-                Log.e("points", path + "");
+                Log.e("points", path + " ");
                 for (int j = 0; j < path.size(); j++) {
                     HashMap<String, String> point = path.get(j);
                     if (j == 0) {
